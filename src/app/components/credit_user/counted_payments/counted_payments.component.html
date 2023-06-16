@@ -1,0 +1,130 @@
+<app-header titulo="Pagos Contados" menu="Creditos"></app-header>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="fromDate">Fecha-Inicial</label>
+            <owl-date-time [showSecondsTimer]="true" dataType="string" dateFormat="YYYYMMDD HHmmss"
+                [(ngModel)]="fromDate" name="fromDate"></owl-date-time>
+                <!-- [locale]="es" -->
+        </div>
+        <div class="col-md-4">
+            <label for="toDate">Fecha-Final</label>
+            <owl-date-time [showSecondsTimer]="true" dataType="string"  dateFormat="YYYYMMDD HHmmss"
+                [(ngModel)]="toDate" name="toDate"></owl-date-time>
+                <!-- [locale]="es" -->
+        </div>
+        <div class="col-md-4">
+            <label for="Bombero">Bombero</label>
+            <select name="bomberoSelected" [(ngModel)]="bomberoSelected" class="form-control">
+                <option *ngFor="let bombero of bomberos" value="{{bombero.name}}">{{bombero.name}}</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="Bombero">Producto</label>
+            <select name="product" [(ngModel)]="product" class="form-control">
+                <option *ngFor="let product of products" value="{{product.name}}">{{product.name}}</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="Bombero">Cliente</label>
+            <input class="form-control" type="text" name="client_code" [(ngModel)]="client_code">
+        </div>
+        <!-- <div class="col-md-4">
+            <label for="cedula">Cedula</label>
+            <input class="form-control" type="text" name="client_cedula" [(ngModel)]="client_cedula">
+        </div> -->
+
+         <div class="col-md-4">
+            <label for="Bombero">Tipo de descuento</label>
+            <select name="discount_type" [(ngModel)]="discount_type" class="form-control">
+                <option value="Pago Contado|Descuento Instantaneo" selected>Todos</option>
+                <option value="Pago Contado" selected>Pago Contado</option>
+                <option value="Descuento Instantaneo">Descuento Instantaneo</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" (click)="getCountedPayments()" class="btn btn-success">
+                <i class="fa fa-table" aria-hidden="true"></i> Consultar</button>
+        </div>
+        &nbsp;
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" (click)="exportCountedPaymentsToExcel()" class="btn btn-info">Exportar a Excel</button>
+        </div>
+    </div>
+    <div class="text-center" *ngIf="loadingData">
+        <div class="hidden">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table width="100%" class="table display responsive table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Fecha-Pago</th>
+                    <th>Método-Pago</th>
+                    <th>Dato-Otro</th>
+                    <th>Tarjeta</th>
+                    <th>Bombero</th>
+                    <th>Cliente</th>
+                    <th>RNC</th>
+                    <th>Turno</th>
+                    <th>Lado</th>
+                    <th>Manguera</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Monto venta</th>
+                    <th>Descuento</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let counted_payment of counted_payments | paginate: {id:'serverConsulting', itemsPerPage: 10, currentPage: p, totalItems:total }">
+                    <td>{{counted_payment.fecha_pago}}</td>
+                    <td>{{counted_payment.metodo_pago}}</td>
+                    <td>{{counted_payment.dato_otro}}</td>
+                    <td>{{counted_payment.tarjeta}}</td>
+                    <td>{{counted_payment.bombero}}</td>
+                    <td>{{counted_payment.cliente}}</td>
+                    <td>{{counted_payment.rnc}}</td>
+                    <td>{{counted_payment?.venta_sistema?.Turno}}</td>
+                    <td>{{counted_payment?.venta_sistema?.Pump}}</td>
+                    <td>{{counted_payment?.venta_sistema?.Nozzle}}</td>
+                    <td>{{counted_payment?.venta_sistema?.ProductName}}</td>
+                    <td>{{counted_payment?.venta_sistema?.Precio}}</td>
+                    <td>{{counted_payment.money | number: '1.2-4'}}</td>
+                    <td>{{counted_payment.discountAmount | number: '1.2-4'}}</td>
+                    <td>{{(counted_payment.money - counted_payment.discountAmount) | number: '1.2-4'}}</td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Total sin descuento:</td>
+                    <td>{{total_credit_discount | number: '1.2-4'}}</td>
+                    <td></td>
+                    <td>Total:</td>
+                    <td>{{total_credit | number: '1.2-4'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <pagination-controls (pageChange)="getCountedPayments($event)" id="serverConsulting" previousLabel="Anterior"
+                nextLabel="Siguiente" screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página"
+                screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+        </div>
+    </div>
+</div>

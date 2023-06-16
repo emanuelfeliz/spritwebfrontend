@@ -1,0 +1,56 @@
+<app-header titulo="Incentivos" menu="Ofertas"></app-header>
+<div class="container-fluid">
+    <button type="button" class="btn btn-outline-danger" (click)="initEntidad(); crear = false;" *ngIf="crear">Cancelar</button>
+    <button type="button" class="btn btn-outline-info" (click)="crear = true;" *ngIf="!crear">Crear incentivo</button>
+    <form #formIncentivo="ngForm" (ngSubmit)="guardar()" *ngIf="crear" class="mt-5">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" name="nombre" placeholder="Nombre" [(ngModel)]="incentivo.nombre">
+        </div>
+        <div class="form-group">
+            <label for="tipo">Tipo</label>
+            <select name="tipo" class="form-control" [(ngModel)]="incentivo.tipo">
+                <option value="">Seleccione un tipo de incentivo</option>
+                <option [value]="TiposIncentivoEnum.cliente">{{ TiposIncentivoEnum.cliente }}</option>
+                <option [value]="TiposIncentivoEnum.empleado">{{ TiposIncentivoEnum.empleado }}</option>
+                <option [value]="TiposIncentivoEnum.flotilla">{{ TiposIncentivoEnum.flotilla }}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="puntos">Puntos de fidelización</label>
+            <input type="text" class="form-control" name="puntos" placeholder="Puntos de fidelización" [(ngModel)]="incentivo.puntos">
+        </div>
+        <input type="submit" value="Guardar" class="btn btn-success">
+    </form>
+    <div class="table-responsive mt-5">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">Código</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Tipo</th>
+                    <th class="text-center">Puntos de fidelización</th>
+                    <th class="text-center">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let incentivo of incentivos | paginate: {itemsPerPage: 10, currentPage: pagina, totalItems: incentivos.length }">
+                    <td class="text-center">{{ incentivo.codigo }}</td>
+                    <td class="text-center">{{ incentivo.nombre }}</td>
+                    <td class="text-center">{{ incentivo.tipo }}</td>
+                    <td class="text-center">{{ incentivo.puntos }}</td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-outline-warning" (click)="modificar(incentivo)">Modificar</button>
+                        <button type="button" class="btn btn-outline-danger" (click)="confirmar(incentivo)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <pagination-controls (pageChange)="cargar($event)" previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Paginación"
+                screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+        </div>
+    </div>
+    <iframe frameborder="0" style="display: none;" #iframe></iframe>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="form-inline">
+    <button type="button" name="button" class="btn btn-outline-primary btn-lg" (click)="GoBack()">(*) Volver</button>
+  </div>
+  <app-sale *ngIf="venta" [venta]="venta" [i]="indice"></app-sale>
+  <h3 class="text-center">Seleccione el Comodin</h3>
+  <div class="text-center">
+    <div class="btn-group-vertical" role="group" aria-label="Basic example">
+      <button (click)="fidelizaciones('fidelizaciones')" type="button" class="btn btn-warning btn-lg">(1) Fidelizar venta</button>
+      <button (click)="fidelizaciones('canje')" type="button" class="btn btn-success btn-lg">(2) Canjear puntos</button>
+      <button (click)="incentivo()" type="button" class="btn btn-secondary btn-lg">(3) Canjear incentivo</button>
+      <button (click)="prepago()" type="button" class="btn btn-primary btn-lg">(4) Prepago</button>
+      <button (click)="normal()" type="button" class="btn btn-dark btn-lg">(5) Continuar Sin Comodin</button>
+    </div>
+  </div>
+</div>

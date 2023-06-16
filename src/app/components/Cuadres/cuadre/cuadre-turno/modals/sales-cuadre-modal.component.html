@@ -1,0 +1,251 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Facturacion</h4>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="alert" role="alert">
+                    <h4 class="alert-heading text-center">Venta</h4>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <td>Cantidad</td>
+                                <td>Producto</td>
+                                <td>ITBIS</td>
+                                <td>Precio</td>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let producto of comprobanteDataModel.productos">
+                                <th>{{producto.quantity}}</th>
+                                <th>{{producto.product}}</th>
+                                <th>{{producto.itbis ? producto.price * 0.18 : 0  | number:'1.0-2'}}</th>
+                                <th>{{producto.price}}</th>
+                            </tr>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td>SubTotal</td>
+                                <th>{{comprobanteDataModel.total}}</th>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <th>{{totalProducts}}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div tabindex='1' id="focus_negativo" class="alert" role="alert">
+                    <form>
+                        <div class="form-group">
+                            <label>Bombero Autenticado</label>
+                            <input name="bombero" [(ngModel)]="comprobanteDataModel.bombero" disabled
+                                class="form-control" />
+                        </div>
+                    </form>
+                </div>
+                <div tabindex='1' id="focus1" class="alert" [ngClass]="{'alert-success':OPCION_ACTUAL===1}"
+                    role="alert">
+                    <div class="row">
+                        <div class="form-group">
+                            <h3 class="text-center">Seleccione el tipo de Pago</h3>
+                        </div>
+                        <div class="form-group">
+                            <button id="btnEfectivo" (click)="changeTipoPago('Efectivo')" type="button"
+                                class="BTP btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                                title="Tooltip on top">
+                                (1)-Efectivo
+                            </button>
+                            <button id="btnTarjeta" (click)="changeTipoPago('Tarjeta')" type="button"
+                                class="BTP btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                                title="Tooltip on top">
+                                (2)-Tarjeta
+                            </button>
+                            <button id="btnOtros" (click)="changeTipoPago('Otros')" type="button"
+                                class="BTP btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                                title="Tooltip on top">
+                                (3)-Otros
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div tabindex='1' id="focus2" class="alert" [ngClass]="{'alert-success':OPCION_ACTUAL===2}"
+                    role="alert">
+                    <form *ngIf="comprobanteDataModel.metodo_pago=='Tarjeta'">
+                        <h3 class="text-center">Complete el formulario</h3>
+                        <div class="form-group">
+                            <label>Numero de Tarjeta</label>
+                            <input autocomplete="off" id="tarjetaInput" (focus)="toggleKeyboardInput(false)"
+                                (focusout)="toggleKeyboardInput(true)" name="tarjeta"
+                                [(ngModel)]="comprobanteDataModel.tarjeta" (keyup.enter)="focusInput('#placaInput')"
+                                class="form-control" placeholder="Numero de Tarjeta" maxlength="4" />
+                        </div>
+                        <div class="form-group">
+                            <label>Numero de Placa</label>
+                            <div class="input-group">
+                                <div class="input-group-btn search-panel">
+                                    <button style="border: 1px solid gray; margin-right: 0px;" type="button"
+                                        class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        <span id="search_concept">{{arrayWordPlaca[0]}}</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" style="OVERFLOW-Y: scroll; HEIGHT: 202PX;">
+                                        <li *ngFor="let letra of arrayWordPlaca" (click)="onClickLetraPlaca(letra)">
+                                            <a style="cursor: pointer;">{{letra}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="search_param" value="all" id="search_param">
+                                <input type="text" autocomplete="off" id="placaInput"
+                                    (focus)="toggleKeyboardInput(false)" (focusout)="toggleKeyboardInput(true)"
+                                    name="numeroPlaca" [(ngModel)]="comprobanteDataModel.numeroPlaca"
+                                    (keyup.enter)="OPCION_ACTUAL=4;adaptarMenu();" class="form-control"
+                                    placeholder="Numero de Placa" maxlength="7" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div tabindex='1' id="focus3" class="alert" [ngClass]="{'alert-success':OPCION_ACTUAL===3}"
+                    role="alert">
+                    <form *ngIf="comprobanteDataModel.metodo_pago=='Otros'">
+                        <h3 class="text-center">Seleccione la opción y presione (/) para continuar</h3>
+                        <h4 class="text-center">Vales(V.) y Calibración(C.)</h4>
+                        <div class="form-group">
+                            <div class="row row-flex row-flex-wrap">
+                                <span class="BX btn btn-secondary" id="btnSelectTipoOtro1"
+                                    (click)="selectTipoDatoOtros(1,'Prepagos')">Prepagos(1)</span>
+                                <span class="BX btn btn-secondary" id="btnSelectTipoOtro2"
+                                    (click)="selectTipoDatoOtros(2,'Cheques')">Cheques(2)</span>
+                                <span class="BX btn btn-secondary" id="btnSelectTipoOtro3"
+                                    (click)="selectTipoDatoOtros(3,'Vales de Credito')">V. Crédito(3)</span>
+                                <span class="BX btn btn-secondary" id="btnSelectTipoOtro4"
+                                    (click)="selectTipoDatoOtros(4,'Vales de estación Planta')">V. E. Planta(4)</span>
+                                <span class="BX btn btn-secondary" id="btnSelectTipoOtro5"
+                                    (click)="selectTipoDatoOtros(5,'Vales de estación Mensajeria')">V. E.
+                                    Mensajeria(5)</span>
+                                <span class="BX btn btn-secondary" id="btnSelectTipoOtro6"
+                                    (click)="selectTipoDatoOtros(6,'Vales de estación Consumo')">V. E. Consumo(6)</span>
+                                <span class="BX btn btn-secondary" id="btnSelectTipoOtro7"
+                                    (click)="selectTipoDatoOtros(7,'Calibración Mezcla')">C. Mezcla(7)</span>
+                                <span class="BX btn btn-secondary" id="btnSelectTipoOtro8"
+                                    (click)="selectTipoDatoOtros(8,'Calibración Mantenimiento')">C.
+                                    Mantenimiento(8)</span>
+                                <span class="BX btn btn-secondary" id="btnSelectTipoOtro9"
+                                    (click)="selectTipoDatoOtros(9,'Pago Contado')">Pago Contado(9)</span>
+                                <span class="BX btn btn-secondary" id="btnSelectTipoOtro0"
+                                    (click)="selectTipoDatoOtros(0,'Bono gas')">Bono gas(0)</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo-Dato</label>
+                            <input id="tipo_otro" name="tipo_otro" [(ngModel)]="comprobanteDataModel.tipo_otro"
+                                class="form-control" disabled />
+                        </div>
+                        <div class="form-group">
+                            <label>Dato</label>
+                            <input id="datoInput" (focus)="toggleKeyboardInput(false)"
+                                (focusout)="toggleKeyboardInput(true)" name="placa"
+                                [(ngModel)]="comprobanteDataModel.dato_otro"
+                                (keyup.enter)="OPCION_ACTUAL=3;adaptarMenu();" class="form-control"
+                                placeholder="Dato Otros" />
+                        </div>
+
+                        <div *ngIf="permiso_otro_name == 'tpo_vale_credito' || permiso_otro_name == 'tpo_pago_contado'"
+                            class="form-group">
+                            <div class="form-group">
+                                <label>RNC</label>
+                                <input id="rnc_clientInput" #rnc (focus)="toggleKeyboardInput(false)"
+                                    (focusout)="toggleKeyboardInput(true)" name="rnc"
+                                    (keyup.enter)="searchCreditUser(rnc.value)" class="form-control"
+                                    placeholder="RNC" />
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input id="rnc_client_nameInput" class="form-control" [(ngModel)]="client_rnc" disabled
+                                    name="client_name" />
+                            </div>
+                            <div class="text-center" *ngIf="loadingRnc">
+                                <div class="hidden loading">
+                                    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div tabindex='1' id="focus4" class="alert" [ngClass]="{'alert-success':OPCION_ACTUAL===4}"
+                    role="alert">
+                    <div class="row">
+                        <h3 class="text-center">Seleccione la opción deseada</h3>
+                        <div class="col-md-4">
+                            <button id="btnToggleRnc" (click)="toggleRnc()" type="button" class="btn btn-danger"
+                                data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                (1)-Comprobante
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button (click)="imprimir()" type="button" class="btn btn-primary" data-toggle="tooltip"
+                                data-placement="top" title="Tooltip on top">
+                                (2)-Imprimir
+                            </button>
+                        </div>
+                        <div class="col-md-4"
+                            *ngIf="comprobanteDataModel.metodo_pago=='Tarjeta' || comprobanteDataModel.metodo_pago=='Otros'">
+                            <button (click)="pagar()" type="button" class="btn btn-success" data-toggle="tooltip"
+                                data-placement="top" title="Tooltip on top">
+                                (3)-Pagar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div tabindex='1' id="focus5" class="alert" [ngClass]="{'alert-success':OPCION_ACTUAL===5}"
+                    role="alert">
+                    <div *ngIf="creatingRnc">
+                        <h3 class="text-center">Seleccione el tipo de comprobante</h3>
+                        <br>
+                        <form>
+                            <div class="form-group">
+                                <label>RNC</label>
+                                <input id="rncInput" (focus)="toggleKeyboardInput(false)"
+                                    (focusout)="toggleKeyboardInput(true)" name="rnc"
+                                    [(ngModel)]="comprobanteDataModel.rnc"
+                                    (keyup.enter)="buscarRnc(comprobanteDataModel.rnc)" class="form-control"
+                                    placeholder="RNC" />
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input id="clienteInput" class="form-control" disabled name="cliente"
+                                    [(ngModel)]="comprobanteDataModel.cliente" />
+                            </div>
+                            <div class="text-center" *ngIf="loadingRnc">
+                                <div class="hidden loading">
+                                    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="col-md-12 text-center">
+                            <div class="btn-group-vertical">
+                                <button (click)="seleccionarComprobante(i,TIPO_COMPROBANTE)"
+                                    *ngFor="let TIPO_COMPROBANTE of TIPOS_COMPROBANTES; let i=index"
+                                    id="btnAbrirTipoPago{{i+1}}" class="BC btn btn-secondary">
+                                    {{TIPO_COMPROBANTE.nombre}}
+                                </button>
+                                <br>
+                            </div>
+                        </div>
+                        <button (click)="saveComprobante()" [disabled]="!DataValidada()"
+                            class="btn btn-primary">(/)-Guardar Comprobante</button>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button (click)="cerrarTodo()" class="btn btn-success">(*)-Cancelar Operación</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

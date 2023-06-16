@@ -1,0 +1,137 @@
+.callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+  }
+  .callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+  .callout p:last-child {
+    margin-bottom: 0;
+  }
+  .callout code {
+    border-radius: 3px;
+  }
+  .callout + .bs-callout {
+    margin-top: -5px;
+  }
+  .callout-default {
+    border-left-color: #777;
+  }
+  .callout-default h4 {
+    color: #777;
+  }
+  .callout-primary {
+    border-left-color: #428bca;
+  }
+  .callout-primary h4 {
+    color: #428bca;
+  }
+  .callout-success {
+    border-left-color: #5cb85c;
+  }
+  .callout-success h4 {
+    color: #5cb85c;
+  }
+  .callout-danger {
+    border-left-color: #d9534f;
+  }
+  .callout-danger h4 {
+    color: #d9534f;
+  }
+  .callout-warning {
+    border-left-color: #f0ad4e;
+  }
+  .callout-warning h4 {
+    color: #f0ad4e;
+  }
+  .callout-info {
+    border-left-color: #5bc0de;
+  }
+  .callout-info h4 {
+    color: #5bc0de;
+  }
+  .callout-bdc {
+    border-left-color: #29527a;
+  }
+  .callout-bdc h4 {
+    color: #29527a;
+  }
+
+.count_bottom i {
+    width:12px
+}
+
+.green {
+  color: #5cb85c;
+}
+
+.red {
+  color: red;
+}
+
+.scroll {
+  height:500px;
+  overflow-y: scroll;
+}
+
+.active-nav-item {
+  border: 2px solid #5bc0de!important;
+  border-radius: 16px;
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.alingClass {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+/**Desktop**/
+@media (min-width: 1281px) {
+
+  .brand{
+    visibility: hidden;
+    margin: .35rem!important;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+
+  .brand{
+    visibility: hidden;
+    margin: .35rem!important;
+  }
+}
+
+/**Mobile**/
+@media (min-width: 320px) and (max-width: 480px) {
+  .navbar-nav {
+    margin: .5rem !important;
+  }
+
+  .brand {
+    margin: .35rem!important;
+  }
+
+  .button-co {
+    margin: .35rem!important;
+  }
+}
+
+.small-text {
+  font-size: 0.67rem;
+}
+
+.reduce-space {
+  margin-bottom: 0.1rem;
+}
+
+.alert {
+  margin-bottom: 0.0rem;
+}

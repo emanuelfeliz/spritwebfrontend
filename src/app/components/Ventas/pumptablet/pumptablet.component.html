@@ -1,0 +1,51 @@
+<app-header titulo="Pump Tablet" menu="Ventas"></app-header>
+
+<div class="container-fluid">
+  <div class="text-center">
+    <div *ngIf="loading">
+      <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <!-- <div *ngIf="!connectedToHub" class="alert alert-danger" role="alert">
+    No hay conexion con los dispensadores a traves del hub
+  </div> -->
+  <div class="row row-flex row-flex-wrap">
+    <pump-pump-tablet (seleccionarCheckByPump)="selectCheckByPump($event)"
+    class="form-group text-center col-md-2 col-xs-12" *ngFor="let resumenLado of ResumenesLados" [habilitarBoton]=false
+    [habilitarChecks]=true [ResumenLado]="resumenLado"></pump-pump-tablet>
+  </div>
+  <div *ngIf="authData.responseAuth.Response.func_abrir_cerrar_seleccionados">
+    <button (click)="aperturarLadosSeleccionados();" [disabled]="!ladosSeleccionados.length>0" class="btn btn-outline-dark m-2">Aperturar lados seleccionados</button>
+    <button (click)="closeSelectedPump();" [disabled]="!ladosSeleccionados.length>0" class="btn btn-outline-danger">Cerrar lados seleccionados</button>
+    <button (click)="toggleSeleccionTodos();" class="btn btn-outline-warning  m-2">Seleccionar/Deseleccionar todos</button>
+  </div>
+  <div class="text-center">
+    <label class="control-label" for="cboDispensador">Dispensador</label>
+    <select [(ngModel)]="dispenserSelected" (change)="changeDispenser()" class="form-control">
+      <option *ngFor="let dispensador of DispensadoresInfo.list">{{dispensador}}</option>
+    </select>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+        <table-pump-tablet (CerrarLadoParent)="closePump($event)" [TurnoActual]="TAA" [Lado]="LA"
+        [FechaCierre]="FCA" [PumpTabletDataSelected]="PumpTabletDataSelected" tipo='A'
+        [Lista]="PumpTabletDataSelected ? PumpTabletDataSelected.Lado1.List : null"></table-pump-tablet>
+    </div>
+    <div class="col-md-6">
+        <table-pump-tablet (CerrarLadoParent)="closePump($event)" [TurnoActual]="TAB" [Lado]="LB"
+        [FechaCierre]="FCB" [PumpTabletDataSelected]="PumpTabletDataSelected" tipo='B'
+        [Lista]="PumpTabletDataSelected ? PumpTabletDataSelected.Lado2.List : null"></table-pump-tablet>
+    </div>
+  </div>
+  <br>
+  <div class="text-center">
+    <button class="btn btn-primary btn-lg" [disabled]="!authData.responseAuth.Response.allow_close_dispenser_pumptable" (click)="closeDispenser()">Cerrar Dispensador</button>
+  </div>
+
+  <div class="text-center">
+    <button class="btn btn-dark btn-lg" [disabled]="!authData.responseAuth.Response.allow_close_day_pumptable" (click)="closeDay()">Cerrar Día</button>
+  </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

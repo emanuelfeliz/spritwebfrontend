@@ -1,0 +1,175 @@
+<app-header titulo="Clientes" menu="Descuento"></app-header>
+<div class="container-fluid">
+  <section class="bg-light rounded mb-2 pt-2">
+    <div class="row">
+      <div class="col-md-10">
+        <div class="mb-3">
+          <input
+            type="text"
+            [(ngModel)]="search"
+            #ctrl="ngModel"
+            (keyup)="getClients()"
+            class="form-control search"
+            placeholder="Buscar por Nombre | Documento"
+          />
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button
+          class="btn btn-success"
+          data-toggle="modal"
+          data-target="#modal"
+          (click)="newClient()"
+        >
+          Crear nuevo <i class="fa fa-save"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Tipo Documento</th>
+              <th scope="col">Documento</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let client of clients
+                  | paginate
+                    : {
+                        id: 'serverConsulting',
+                        itemsPerPage: limit,
+                        currentPage: page,
+                        totalItems: total
+                      }
+              "
+            >
+              <th scope="row">{{ client.Id }}</th>
+              <td>{{ client.Name }}</td>
+              <td>{{ client.DocumentType }}</td>
+              <td>{{ client.DocumentNumber }}</td>
+              <td>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button
+                    (click)="editClient(client)"
+                    type="button"
+                    class="btn btn-info btn-sm"
+                    data-toggle="modal"
+                    data-target="#modal"
+                  >
+                    Editar <i class="fa fa-pencil"></i>
+                  </button>
+                  <button
+                    (click)="confirmDelete(client)"
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                  >
+                    Eliminar <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="text-center">
+          <pagination-controls
+            (pageChange)="getClients($event)"
+            id="serverConsulting"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            screenReaderPaginationLabel="Paginación"
+            screenReaderPageLabel="Página"
+            screenReaderCurrentLabel="Se encuentra en la página"
+          ></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div
+  class="modal fade bd-example-modal-lg"
+  id="modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{tituloModal}} cliente</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <label for="name" class="form-label">Nombre</label>
+              <input
+                [(ngModel)]="client.Name"
+                #ctrl="ngModel"
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Digite el Nombre"
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="DocumentType" class="form-label"
+                >Tipo Documento</label
+              >
+              <select
+                [(ngModel)]="client.DocumentType"
+                #ctrl="ngModel"
+                class="form-control"
+                id="DocumentType"
+              >
+                <option value="null" selected>
+                  Seleccione el tipo de documento
+                </option>
+                <option value="RNC">RNC</option>
+                <option value="Cedula">Cedula</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="Document" class="form-label">Documento</label>
+              <input
+                [(ngModel)]="client.DocumentNumber"
+                #ctrl="ngModel"
+                type="text"
+                class="form-control"
+                id="Document"
+                placeholder="Digite el Documento"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="saveClient()"  data-dismiss="modal" class="btn btn-info">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

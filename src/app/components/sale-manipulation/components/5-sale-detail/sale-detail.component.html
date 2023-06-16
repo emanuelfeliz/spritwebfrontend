@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="form-inline">
+    <button type="button" name="button" class="btn btn-outline-primary btn-lg" (click)="GoBack()">(*) Volver</button>
+  </div>
+  <app-sale *ngIf="venta" [venta]="venta" [i]="indice"></app-sale>
+  <h3 class="text-center">Seleccione la Opción</h3>
+  <div class="text-center">
+    <div class="btn-group-vertical" role="group" aria-label="Basic example">
+      <button (click)="print()" type="button" class="btn btn-warning btn-lg">(1) Imprimir</button>
+      <button (click)="pay()" type="button" class="btn btn-primary btn-lg">(2) Pagar</button>
+      <button (click)="invoice()" type="button" class="btn btn-dark btn-lg">(3) Comprobante</button>
+    </div>
+  </div>
+</div>

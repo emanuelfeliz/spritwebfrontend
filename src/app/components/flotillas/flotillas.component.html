@@ -1,0 +1,38 @@
+<app-header titulo="Flotillas" menu="Ofertas"></app-header>
+<div class="container-fluid">
+    <button type="button" class="btn btn-outline-danger" (click)="initEntidad(); crear = false;" *ngIf="crear">Cancelar</button>
+    <button type="button" class="btn btn-outline-info" (click)="crear = true;" *ngIf="!crear">Crear flotilla</button>
+    <form #formIncentivo="ngForm" (ngSubmit)="guardar()" *ngIf="crear" class="mt-5">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" name="nombre" [(ngModel)]="flotilla.nombre" placeholder="Nombre">
+        </div>
+        <input type="submit" value="Guardar" class="btn btn-success">
+    </form>
+    <div class="table-responsive mt-5">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">Código</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let flotilla of flotillas | paginate: {itemsPerPage: 10, currentPage: pagina, totalItems: flotillas.length }">
+                    <td class="text-center">{{ flotilla.codigo }}</td>
+                    <td class="text-center">{{ flotilla.nombre }}</td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-outline-warning" (click)="modificar(flotilla)">Modificar</button>
+                        <button type="button" class="btn btn-outline-danger" (click)="confirmar(flotilla)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <pagination-controls (pageChange)="cargar($event)" previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Paginación"
+                screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

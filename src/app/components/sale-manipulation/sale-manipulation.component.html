@@ -1,0 +1,6 @@
+<app-header titulo="Manipulacion de Ventas" menu="Ventas"></app-header>
+<div class="text-center" *ngIf="bomberoYLadoData!==null">
+    <span class="badge badge-success">Bombero Autenticado: {{bomberoYLadoData.bomberoAutenticado.bombero}}</span>
+</div>
+<router-outlet (activate)="onActivate($event)"></router-outlet>
+<app-footer></app-footer>

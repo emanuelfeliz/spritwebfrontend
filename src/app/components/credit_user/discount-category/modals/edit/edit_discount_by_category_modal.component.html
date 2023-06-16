@@ -1,0 +1,36 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button (click)="cerrar()" class="btn btn-primary">Cerrar</button>
+            <h4 class="modal-title">Editanto categoria de descuento</h4>
+        </div>
+        <form>
+            <div class="container">
+                <div class="row">
+                    <div class="form-group text-center col-md-6 col-xs-12">
+                        <label class="form-control" for="categoryname">Nombre categoria</label>
+                        <input type="text" class="form-control" name="categoryname" id="categoryname"
+                            [(ngModel)]="discountByCategory.categoryname" />
+                    </div>
+                    <div class="form-group text-center col-md-6 col-xs-12">
+                        <label class="form-control" for="categoryname">Tipo de categoria</label>
+                        <select name="tipo_otro" id="tipo_otro" [(ngModel)]="discountByCategory.categoryType"
+                            class="form-control">
+                            <option value="Descuento" selected>Descuento</option>
+                            <option value="Credito">Credito</option>
+                        </select>
+                    </div>
+                    <div class="form-group text-center col-md-6 col-xs-12">
+                        <label class="form-control" for="discountpergalon">Descuento por galon</label>
+                        <input type="number" class="form-control" name="qrCode" id="discountpergalon"
+                            [(ngModel)]="discountByCategory.discountpergalon" />
+                    </div>
+                    <div class="form-group text-center col-md-2 col-lg-2 col-xs-4">
+                        <button [disabled]="validate()" (click)="editdiscountByCategory()"
+                            class="btn btn-outline-primary">Editar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

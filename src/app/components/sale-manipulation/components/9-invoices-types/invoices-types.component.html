@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="form-inline">
+    <button type="button" name="button" class="btn btn-outline-primary btn-lg" (click)="GoBack()">(*) Volver</button>
+  </div>
+  <app-sale *ngIf="venta" [venta]="venta" [i]="indice"></app-sale>
+  <h3 class="text-center">Seleccione el Tipo de Comprobante</h3>
+
+  <div class="alert" *ngFor="let invoiceType of invoices_types;let i=index">
+    <h4 class="text-center">{{invoiceType.description}}</h4>
+    <div class="text-center">
+      <span class="badge badge-pill badge-warning">({{i}}){{invoiceType.code}}</span>
+      <span class="badge badge-pill badge-success">{{invoiceType.expiration_date}}</span>
+      <button (click)="selectInvoiceType(invoiceType)" class="btn btn-outline-dark btn-lg">Seleccionar</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+export class FacturaComprobante{
+  public constructor(
+    public ncf:string,
+    public cliente:string,
+    public rnc:string,
+    public turno: number,
+    public lado:number,
+    public manguera:number,
+    public combustible:string,
+    public volumen:number,
+    public monto:number,
+    public fecha:string,
+    public hora:string,
+    public tarjeta:string,
+    public placa:string,
+    public fecha_venta:string,
+    public tipo_ncf:string,
+    public sale_id:number,
+    public forma_pago:string,
+    public bombero:string,
+    public suppressed:boolean,
+    public totalMonto:number,
+    public totalVolumen:number,
+    public totalComprobantes:number,
+  ){}
+}

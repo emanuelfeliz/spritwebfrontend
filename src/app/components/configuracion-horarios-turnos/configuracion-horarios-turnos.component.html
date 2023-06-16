@@ -1,0 +1,77 @@
+<app-header titulo="Configuración Horarios Turnos" menu="Configuración"></app-header>
+<div class="container-fluid" style="display: block;">
+  <button (click)="botones();" class="btn btn-outline-primary" type="button" name="button">
+    {{textoBoton}}
+  </button>
+  <form *ngIf="creando || editando" #formConfiguracion="ngForm" (ngSubmit)="onSubmit();">
+    <div class="row row-flex row-flex-wrap">
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':turno.touched && (turno.value==0 || turno.value=='')}">
+        <label class="form-control-feedback" for="turno">Turno</label>
+        <input type="number" class="form-control" #turno="ngModel" [(ngModel)]="configuracion.turno" required placeholder="Turno"
+          name="turno">
+        <div class="form-control-feedback" *ngIf="turno.touched && (turno.value==0 || turno.value=='')">
+          El turno es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':hora_inicio.value=='' && hora_inicio.touched}">
+        <label class="form-control-feedback" for="hora_inicio">Hora-Inicio</label>
+        <input type="text" class="form-control" #hora_inicio="ngModel" [(ngModel)]="configuracion.hora_inicio" required placeholder="Hora-Inicio"
+          name="hora_inicio">
+        <div class="form-control-feedback" *ngIf="hora_inicio.touched && hora_inicio.value==''">
+          La hora de inicio es obligatoria
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':hora_fin.value=='' && hora_fin.touched}">
+        <label class="form-control-feedback" for="hora_fin">Hora-Fin</label>
+        <input type="text" class="form-control" #hora_fin="ngModel" [(ngModel)]="configuracion.hora_fin" required placeholder="Hora-Fin"
+          name="hora_fin">
+        <div class="form-control-feedback" *ngIf="hora_fin.touched && hora_fin.value==''">
+          La hora de fin es obligatoria
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="entre_dias">Entre Días</label>
+        <div class="checkbox">
+          <input type="checkbox" class="form-control" [checked]="configuracion.entre_dias" (change)="configuracion.entre_dias=!configuracion.entre_dias"
+            name="entre_dias">
+        </div>
+      </div>
+    </div>
+    <button [disabled]="!validateModel(configuracion)" class="btn btn-success" type="submit">{{creando? "Guardar":"Guardar cambios"}}</button>
+  </form>
+
+  <hr>
+  <div class="text-center" *ngIf="loading">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Cargando...</span>
+  </div>
+  <div class="table-responsive">
+    <table width="100%" class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">Id</th>
+          <th class="text-center">Turno</th>
+          <th class="text-center">Hora-Inicio</th>
+          <th class="text-center">Hora-Fin</th>
+          <th class="text-center">Entre Día</th>
+          <th class="text-center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let conf of configuraciones">
+          <td class="text-center">{{conf.id}}</td>
+          <td class="text-center">{{conf.turno}}</td>
+          <td class="text-center">{{conf.hora_inicio}}</td>
+          <td class="text-center">{{conf.hora_fin}}</td>
+          <td class="text-center">{{conf.entre_dias ? 'SI' : 'NO'}}</td>
+          <td class="text-center">
+            <button (click)="editarConfiguracionHorarioTurno(conf)" type="button" class="btn btn-md btn-outline-warning">Modificar</button>
+            <button (click)="confirmarBorrarConfiguracionHorarioTurno(conf)" type="button" class="btn btn-md btn-outline-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

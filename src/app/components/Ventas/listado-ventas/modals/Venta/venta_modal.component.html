@@ -1,0 +1,48 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Venta</h4>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <table class="table table-striped table-hover">
+            <tr *ngIf="ventaSistema!=null">
+              <td>Fecha</td>
+              <td>{{ventaSistema.EndDate}}</td>
+            </tr>
+            <tr *ngIf="ventaSistema!=null">
+              <td>Hora</td>
+              <td>{{ventaSistema.EndTime}}</td>
+            </tr>
+            <tr *ngIf="ventaSistema!=null">
+              <td>Manguera</td>
+              <td>{{ventaSistema.Pump}}</td>
+            </tr>
+            <tr *ngIf="ventaSistema!=null">
+              <td>Lado</td>
+              <td>{{ventaSistema.Nozzle}}</td>
+            </tr>
+            <tr>
+              <td>Volumen</td>
+              <td *ngIf="ventaSistema!=null">{{ ventaSistema.Volume | number:'1.0-2'}}</td>
+              <td *ngIf="ventaFabricada!=null">{{ ventaFabricada.Volume | number:'1.0-2'}}</td>
+            </tr>
+            <tr>
+              <td>Monto</td>
+              <td *ngIf="ventaSistema!=null">{{ventaSistema.Money | number:'1.0-2'}}</td>
+              <td *ngIf="ventaFabricada!=null">{{ventaFabricada.Money | number:'1.0-2'}}</td>
+            </tr>
+            <tr>
+              <td>Combustible</td>
+              <td *ngIf="ventaSistema!=null">{{ventaSistema.ProductName}}</td>
+              <td *ngIf="ventaFabricada!=null">{{ventaFabricada.ProductName}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="text-center">
+          <button (click)="cerrar()" class="btn btn-primary">Cerrar</button>
+      </div>
+    </div>
+  </div>
+

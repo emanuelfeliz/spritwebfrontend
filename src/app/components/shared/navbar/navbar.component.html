@@ -1,0 +1,305 @@
+<nav *ngIf="showNavBar" class="side-navbar">
+  <!-- Sidebar Header-->
+  <div class="sidebar-header d-flex align-items-center">
+    <div class="avatar">
+      <img src="assets/templates/img/avatar-1.png" alt="..." class="img-fluid rounded-circle">
+    </div>
+    <div class="title">
+      <h1 class="h4">{{responseAuth.Response.id_usuario}}</h1>
+      <p>{{responseAuth.Response.nombre}}</p>
+    </div>
+  </div>
+  <!-- Sidebar Navidation Menus-->
+  <span class="heading">Main</span>
+  <ul class="list-unstyled">
+    <li *ngIf="responseAuth.Response.dashboard" routerLinkActive="active">
+      <a [routerLink]="['home']">
+        <i class="icon-home"></i>Panel Principal</a>
+    </li>
+    <li *ngIf="responseAuth.Response.listado_ventas || responseAuth.Response.sales || responseAuth.Response.pumptablet || responseAuth.Response.consulta_ventas"
+      routerLinkActive="active">
+      <a href="#ventasDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="icon-interface-windows"></i>Ventas </a>
+      <ul id="ventasDropDown" class="collapse list-unstyled">
+        <li *ngIf="responseAuth.Response.manipulacion_ventas" routerLinkActive="active">
+          <a [routerLink]="['sale-manipulation/pumps-selection']">Manipulación de Ventas</a>
+        </li>
+        <li *ngIf="responseAuth.Response.listado_ventas" routerLinkActive="active">
+          <a [routerLink]="['listadoVentas']">Listado de Ventas</a>
+        </li>
+        <li *ngIf="responseAuth.Response.sales" routerLinkActive="active">
+          <a [routerLink]="['sales']">Facturación</a>
+        </li>
+        <li *ngIf="responseAuth.Response.multiple_bills" routerLinkActive="active">
+          <a [routerLink]="['factura-multiple']">Factura Multiple</a>
+        </li>
+        <li *ngIf="responseAuth.Response.pumptablet" routerLinkActive="active">
+          <a [routerLink]="['pumptablet']">Pump Tablet</a>
+        </li>
+        <li *ngIf="responseAuth.Response.can_see_new_pump_table" routerLinkActive="active">
+          <a [routerLink]="['new-pumptablet']">Dispensadores</a>
+        </li>
+        <li *ngIf="responseAuth.Response.consulta_ventas" routerLinkActive="active">
+          <a [routerLink]="['consultaventas']">Consulta de Ventas</a>
+        </li>
+        <li *ngIf="responseAuth.Response.pagos" routerLinkActive="active">
+          <a [routerLink]="['pagos']">Pagos</a>
+        </li>
+        <li *ngIf="responseAuth.Response.depositos" routerLinkActive="active">
+          <a [routerLink]="['depositos']">Depositos</a>
+        </li>
+        <li *ngIf="responseAuth.Response.depositos" routerLinkActive="active">
+          <a [routerLink]="['pump_tablet_closed_tickets']">Pumptablet tickets cerrado</a>
+        </li>
+        <li routerLinkActive="active">
+          <a [routerLink]="['transaction_history']">Historial de transacciones</a>
+        </li>
+      </ul>
+    </li>
+
+    <li *ngIf="responseAuth.Response.clientes_fidelizados || responseAuth.Response.configuracion_puntajes_fidelidad || responseAuth.Response.incentivos || responseAuth.Response.empleados || responseAuth.Response.flotillas"
+      routerLinkActive="active">
+      <a href="#ofertasDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="icon-interface-windows"></i>Ofertas </a>
+      <ul id="ofertasDropDown" class="collapse list-unstyled">
+           <li *ngIf="responseAuth.Response.clientes_fidelizados" routerLinkActive="active">
+          <a [routerLink]="['tipo-clientes-fidelizados']">Tipo clientes Fidelizados</a>
+        </li>
+        <li *ngIf="responseAuth.Response.clientes_fidelizados" routerLinkActive="active">
+          <a [routerLink]="['clientes-fidelizados']">Clientes Fidelizados</a>
+        </li>
+        <li *ngIf="responseAuth.Response.configuracion_puntajes_fidelidad" routerLinkActive="active">
+          <a [routerLink]="['configuracion-puntajes-fidelidad']">Configuración Puntajes de Fidelidad</a>
+        </li>
+        <li *ngIf="responseAuth.Response.incentivos" routerLinkActive="active">
+          <a [routerLink]="['incentivos']">Incentivos</a>
+        </li>
+        <li *ngIf="responseAuth.Response.empleados" routerLinkActive="active">
+          <a [routerLink]="['empleados']">Empleados</a>
+        </li>
+        <li *ngIf="responseAuth.Response.flotillas" routerLinkActive="active">
+          <a [routerLink]="['flotillas']">Flotillas</a>
+        </li>
+      </ul>
+    </li>
+    <li *ngIf="responseAuth.Response.creditos" routerLinkActive="active">
+      <a href="#credit_userDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="fa fa-money"></i>Creditos</a>
+      <ul id="credit_userDropDown" class="collapse list-unstyled">
+        <li *ngIf="responseAuth.Response.cliente_creditos" routerLinkActive="active">
+          <a [routerLink]="['credit_user']">Clientes credito</a>
+        </li>
+        <li *ngIf="responseAuth.Response.pagos_creditos" routerLinkActive="active">
+          <a [routerLink]="['credit_user_payments']">Pagos de creditos</a>
+        </li>
+        <li *ngIf="responseAuth.Response.pagos_contados" routerLinkActive="active">
+          <a [routerLink]="['counted_payments']">Pagos contados</a>
+        </li>
+        <li *ngIf="responseAuth.Response.categoria_descuento" routerLinkActive="active">
+          <a [routerLink]="['discount-by-category']">Categoria descuentos</a>
+        </li>
+        
+      </ul>
+    </li>
+
+    <li *ngIf="responseAuth.Response.allow_see_discount_client || responseAuth.Response.allow_see_discount_product_client || responseAuth.Response.allow_see_discount_tkt_plu" routerLinkActive="active" >
+      <a href="#discount_userDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="fa fa-tags"></i>Descuentos</a>
+      <ul id="discount_userDropDown" class="collapse list-unstyled">
+        <!-- //dont forget add permissions -->
+        <li  routerLinkActive="active" *ngIf="responseAuth.Response.allow_see_discount_client">
+          <a [routerLink]="['discount/discount_client']">Clientes</a>
+        </li>
+        <li  routerLinkActive="active" *ngIf="responseAuth.Response.allow_see_discount_product_client">
+          <a [routerLink]="['discount/discount_product_client']">Descuentos de productos</a>
+        </li>
+        <li  routerLinkActive="active" *ngIf="responseAuth.Response.allow_see_discount_tkt_plu">
+          <a [routerLink]="['discount/discount_tkt_plu']">Descuentos de combustibles</a>
+        </li>
+      </ul>
+    </li>
+
+
+    <li *ngIf="responseAuth.Response.consultar_cuadres || responseAuth.Response.aperturar_turno || responseAuth.Response.insertar_cuadre || responseAuth.Response.is_bombero" routerLinkActive="active">
+      <a href="#cuadresDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="fa fa-money"></i>Cuadres</a>
+      <ul id="cuadresDropDown" class="collapse list-unstyled">
+        <li *ngIf="responseAuth.Response.aperturar_turno" routerLinkActive="active">
+          <a [routerLink]="['aperturar_turno']">Aperturar Turno</a>
+        </li>
+        <li *ngIf="responseAuth.Response.insertar_cuadre" routerLinkActive="active">
+          <a [routerLink]="['cuadre']">Insertar Cuadre</a>
+        </li>
+        <li *ngIf="responseAuth.Response.consultar_cuadres" routerLinkActive="active">
+          <a [routerLink]="['consultar_cuadres']">Consultar Cuadres</a>
+        </li>
+        <li *ngIf="responseAuth.Response.is_bombero" routerLinkActive="active">
+          <a [routerLink]="['consultar_cuadres_bomberos']">Consultar Cuadres Bomberos</a>
+        </li>
+      </ul>
+    </li>
+    <li *ngIf="responseAuth.Response.estado_tanques || responseAuth.Response.configuraciontanques || responseAuth.Response.historial_tanques || responseAuth.Response.movimientos_tanques"
+      routerLinkActive="active">
+      <a href="#tanquesDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="fa fa-thermometer-empty"></i>Tanques</a>
+      <ul id="tanquesDropDown" class="collapse list-unstyled">
+          <li *ngIf="responseAuth.Response.historial_tanques" routerLinkActive="active">
+              <a [routerLink]="['volume-comparation']">Comparacion de volumenes</a>
+            </li>
+        <li *ngIf="responseAuth.Response.historial_tanques" routerLinkActive="active">
+          <a [routerLink]="['historial_tanques']">Historial de Tanques</a>
+        </li>
+        <li *ngIf="responseAuth.Response.estado_tanques" routerLinkActive="active">
+          <a [routerLink]="['estadotanques']">Estado de Tanques</a>
+        </li>
+        <li *ngIf="responseAuth.Response.estado_tanques" routerLinkActive="active">
+          <a [routerLink]="['new-tank-status']">Informacion de Tanques</a>
+        </li>
+        <li *ngIf="responseAuth.Response.configuraciontanques" routerLinkActive="active">
+          <a [routerLink]="['configuraciontanques']">Configuración de Tanques</a>
+        </li>
+        <li *ngIf="responseAuth.Response.movimientos_tanques" routerLinkActive="active">
+          <a [routerLink]="['movimientos_tanques']">Movimientos de Tanques</a>
+        </li>
+      </ul>
+    </li>
+    <li *ngIf="responseAuth.Response.prices_changes" routerLinkActive="active">
+      <a href="#configuracionDispensadoresDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="fa fa-bar-chart"></i>Configuración Dispensadores</a>
+      <ul id="configuracionDispensadoresDropDown" class="collapse list-unstyled">
+        <li *ngIf="responseAuth.Response.prices_changes" routerLinkActive="active">
+          <a [routerLink]="['priceschanges']">Cambio de Precios</a>
+        </li>
+      </ul>
+    </li>
+    <li *ngIf="responseAuth.Response.reporte_turno_periodo || responseAuth.Response.reporte_turno_curso || responseAuth.Response.reporte_turno_cerrados || responseAuth.Response.reporte_nuevos_clientes_fidelizados"
+      routerLinkActive="active">
+      <a href="#reportesDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="fa fa-bar-chart"></i>Reportes</a>
+      <ul id="reportesDropDown" class="collapse list-unstyled">
+        <li *ngIf="responseAuth.Response.reporte_turno_periodo" routerLinkActive="active">
+          <a [routerLink]="['turnosperiodo']">Reporte Periodo</a>
+        </li>
+        <li *ngIf="responseAuth.Response.reporte_turno_periodo" routerLinkActive="active">
+          <a [routerLink]="['reporteperiodoagendados']">Reporte Periodos Agendados</a>
+        </li>
+        <li *ngIf="responseAuth.Response.reporte_turno_curso" routerLinkActive="active">
+          <a style="cursor: pointer;" (click)="openTurnosCurso()">Turnos en Curso</a>
+        </li>
+        <li *ngIf="responseAuth.Response.reporte_turno_cerrados" routerLinkActive="active">
+          <a [routerLink]="['turnoscerrados']">Turnos Cerrados</a>
+        </li>
+        <li *ngIf="responseAuth.Response.reporte_turno_periodo" routerLinkActive="active">
+          <a [routerLink]="['reporte_mes']">Reporte del Mes</a>
+        </li>
+        <li *ngIf="responseAuth.Response.reporte_turno_periodo" routerLinkActive="active">
+          <a [routerLink]="['turnosdias']">Turnos Días</a>
+        </li>
+
+        <li *ngIf="responseAuth.Response.reporte_turno_periodo" routerLinkActive="active">
+          <a [routerLink]="['ventaTipoPago']">Ventas por tipo de pago</a>
+        </li>
+
+        <li *ngIf="responseAuth.Response.reporte_nuevos_clientes_fidelizados" routerLinkActive="active">
+          <a style="cursor: pointer;" (click)="openNuevosClientesFidelizados()">Nuevos clientes fidelizados</a>
+        </li>
+        <iframe frameborder="0" style="display: none;" #iframe></iframe>
+
+      </ul>
+    </li>
+    <li *ngIf="responseAuth.Response.consulta_comprobantes || responseAuth.Response.configuracion_comprobantes || responseAuth.Response.add_rnc"
+      routerLinkActive="active">
+      <a href="#vouchersDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="fa fa-list-alt"></i>Comprobantes</a>
+      <ul id="vouchersDropDown" class="collapse list-unstyled">
+        <li *ngIf="responseAuth.Response.consulta_comprobantes" routerLinkActive="active">
+          <a [routerLink]="['consultacomprobantes']">Consulta de Comprobantes</a>
+        </li>
+        <li *ngIf="responseAuth.Response.configuracion_comprobantes" routerLinkActive="active">
+          <a [routerLink]="['configuracioncomprobantes']">Configuración de Comprobantes</a>
+        </li>
+        <li *ngIf="responseAuth.Response.add_rnc" routerLinkActive="active">
+          <a [routerLink]="['new-rnc']">Agregar RNC</a>
+        </li>
+      </ul>
+    </li>
+    <li *ngIf="responseAuth.Response.categorias || responseAuth.Response.productos || responseAuth.Response.inventario || responseAuth.Response.ingresos"
+      routerLinkActive="active">
+      <a href="#almacenDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="fa fa-line-chart"></i>Almacen</a>
+      <ul id="almacenDropDown" class="collapse list-unstyled">
+        <li *ngIf="responseAuth.Response.categorias" routerLinkActive="active">
+          <a [routerLink]="['categorias']">Categorías</a>
+        </li>
+        <li *ngIf="responseAuth.Response.productos" routerLinkActive="active">
+          <a [routerLink]="['warehouse/products']">Productos</a>
+        </li>
+        <li *ngIf="responseAuth.Response.inventario" routerLinkActive="active">
+          <a [routerLink]="['inventario']">Inventario</a>
+        </li>
+        <li *ngIf="responseAuth.Response.ingresos" routerLinkActive="active">
+          <a [routerLink]="['ingresos']">Ingresos</a>
+        </li>
+      </ul>
+    </li>
+    <li *ngIf="responseAuth.Response.roles || responseAuth.Response.usuarios || responseAuth.Response.bomberos"
+      routerLinkActive="active">
+      <a href="#accesosDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="fa fa-bar-chart"></i>Accesos</a>
+      <ul id="accesosDropDown" class="collapse list-unstyled">
+        <li *ngIf="responseAuth.Response.roles" routerLinkActive="active">
+          <a [routerLink]="['roles']">Roles</a>
+        </li>
+        <li *ngIf="responseAuth.Response.usuarios" routerLinkActive="active">
+          <a [routerLink]="['usuarios']">Usuarios</a>
+        </li>
+        <li *ngIf="responseAuth.Response.bomberos" routerLinkActive="active">
+          <a [routerLink]="['bomberos']">Bomberos</a>
+        </li>
+      </ul>
+    </li>
+    <li *ngIf="responseAuth.Response.configuracion_sistema || responseAuth.Response.configuracion_horario_turnos || responseAuth.Response.acciones_servicio || responseAuth.Response.cierres_automaticos"
+      routerLinkActive="active">
+      <a href="#configuracionDropDown" aria-expanded="false" data-toggle="collapse">
+        <i class="fa fa-rocket"></i>Configuraciones</a>
+      <ul id="configuracionDropDown" class="collapse list-unstyled">
+        <li *ngIf="responseAuth.Response.configuracion_sistema" routerLinkActive="active">
+          <a [routerLink]="['configuration']">Configuración del Sistema</a>
+        </li>
+        <li *ngIf="responseAuth.Response.configuracion_horario_turnos" routerLinkActive="active">
+          <a [routerLink]="['configuracion_horarios_turno']">Configuración Horarios Turnos</a>
+        </li>
+        <li *ngIf="responseAuth.Response.configuracion_horario_turnos" routerLinkActive="active">
+          <a [routerLink]="['configuracion_horarios_dias']">Configuración Horarios Ciere Dia</a>
+        </li>
+        <li *ngIf="responseAuth.Response.acciones_servicio" routerLinkActive="active">
+          <a [routerLink]="['servicio']">Consola de Servicio</a>
+        </li>
+        <li *ngIf="responseAuth.Response.cierres_automaticos" routerLinkActive="active">
+          <a [routerLink]="['cierres-automaticos']">Cierres Autómaticos</a>
+        </li>
+
+        <!-- TODO: Create rol -->
+        <li routerLinkActive="active">
+          <a [routerLink]="['pump-service-mode-settings']">Configuración de los Dispensadores</a>
+        </li>
+
+        <li routerLinkActive="active">
+          <a [routerLink]="['coin-rates']">Tipos de Monedas</a>
+        </li>
+
+        <li routerLinkActive="active">
+          <a [routerLink]="['configuracion-tanque']">Configuraciones De Tanques</a>
+        </li>
+
+      </ul>
+    </li>
+
+
+    <li>
+      <a (click)="CerrarSesion()">
+        <i class="fa fa-sign-out-alt"></i>Cerrar Sesión </a>
+    </li>
+  </ul>
+  <span class="heading">Extras</span>
+</nav>

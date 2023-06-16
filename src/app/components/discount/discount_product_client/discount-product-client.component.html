@@ -1,0 +1,213 @@
+<app-header titulo="Descuento de productos" menu="Descuento"></app-header>
+<div class="container-fluid">
+  <section class="bg-light rounded mb-2 pt-2">
+    <div class="row">
+      <div class="col-md-10">
+        <div class="mb-3">
+          <input
+            type="text"
+            [(ngModel)]="search"
+            #ctrl="ngModel"
+            (keyup)="getDiscountProductClients()"
+            class="form-control search"
+            placeholder="Buscar por Nombre del Descuento | Producto | Cliente"
+          />
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button
+          class="btn btn-success"
+          data-toggle="modal"
+          data-target="#modal"
+          (click)="newDiscountProductClient()"
+        >
+          Crear nuevo <i class="fa fa-save"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Descuento</th>
+              <th scope="col">Producto</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Consumo Minimo</th>
+              <th scope="col">Cantidad del descuento</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let discountProductClient of discountProductClients
+                  | paginate
+                    : {
+                        id: 'serverConsulting',
+                        itemsPerPage: limit,
+                        currentPage: page,
+                        totalItems: total
+                      }
+              "
+            >
+              <th scope="row">{{ discountProductClient.Id }}</th>
+              <td>{{ discountProductClient.DiscountName }}</td>
+              <td>{{ discountProductClient.ProductName }}</td>
+              <td>{{ discountProductClient.ClientName }}</td>
+              <td>
+                {{ discountProductClient.MinimumComsuption  }}
+              </td>
+              <td>
+                {{ discountProductClient.DiscountAmount | currency: "DOP" }}
+              </td>
+              <td>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                  <button
+                    (click)="editDiscountProductClient(discountProductClient)"
+                    type="button"
+                    class="btn btn-info btn-sm"
+                    data-toggle="modal"
+                    data-target="#modal"
+                  >
+                    Editar <i class="fa fa-pencil"></i>
+                  </button>
+                  <button
+                    (click)="confirmDelete(discountProductClient)"
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                  >
+                    Eliminar <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="text-center">
+          <pagination-controls
+            (pageChange)="getDiscountProductClients($event)"
+            id="serverConsulting"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            screenReaderPaginationLabel="Paginación"
+            screenReaderPageLabel="Página"
+            screenReaderCurrentLabel="Se encuentra en la página"
+          ></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div
+  class="modal fade bd-example-modal-lg"
+  id="modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{ tituloModal }} Descuento
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <label for="name" class="form-label">Nombre del descuento</label>
+              <input
+                [(ngModel)]="discountProductClient.DiscountName"
+                #ctrl="ngModel"
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Digite el Nombre"
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="Product" class="form-label">Producto</label>
+              <select
+                [(ngModel)]="discountProductClient.ProductId"
+                #ctrl="ngModel"
+                class="form-control"
+                id="Product"
+              >
+                <option value="null" selected>
+                  Seleccione un producto
+                </option>
+                <option *ngFor="let product of products"  [value]="product.id">{{product.description}}</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="Client" class="form-label">Cliente</label>
+              <select
+                [(ngModel)]="discountProductClient.ClientId"
+                #ctrl="ngModel"
+                class="form-control"
+                id="Client"
+              >
+                <option value="null" selected>
+                  Seleccione un cliente
+                </option>
+                <option *ngFor="let discountClient of discountClients"  [value]="discountClient.Id">{{discountClient.Name}}</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="MinimumComsuption" class="form-label">Consumo minimo</label>
+              <input
+                [(ngModel)]="discountProductClient.MinimumComsuption"
+                #ctrl="ngModel"
+                type="text"
+                class="form-control"
+                id="MinimumComsuption"
+                placeholder="Digite el Nombre"
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="DiscountAmount" class="form-label">Cantidad de descuento</label>
+              <input
+                [(ngModel)]="discountProductClient.DiscountAmount"
+                #ctrl="ngModel"
+                type="text"
+                class="form-control"
+                id="DiscountAmount"
+                placeholder="Digite el Nombre"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          (click)="saveDiscountProductClient()"
+          data-dismiss="modal"
+          class="btn btn-info"
+        >
+          Guardar
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

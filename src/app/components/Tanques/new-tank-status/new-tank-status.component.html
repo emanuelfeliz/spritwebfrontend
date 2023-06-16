@@ -1,0 +1,72 @@
+<div class="row mt-3" *ngFor="let item of data">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="row text-center pt-3">
+        <div class="col-12">
+          <h5><strong>{{item.tankName}}</strong></h5>
+          <h3>{{item.percentage | number: '1.0-2'}}%</h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <span style="font-size: 14px;"><strong style="font-size: 16px;" class="mr-4">Volumen
+                        sistema</strong> {{ item.volume | number: '1.0-2'}} </span><br>
+                  </li>
+                  <li class="list-group-item">
+                    <span style="font-size: 14px;"><strong style="font-size: 16px;" class="mr-4">Tc Volumen</strong>
+                      {{item.tcVolume  | number: '1.0-2'}}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <span style="font-size: 14px;"><strong style="font-size: 16px;" class="mr-4">Volumen
+                        consola</strong> {{item.consoleVolume  | number: '1.0-2'}}</span><br>
+                  </li>
+                  <li class="list-group-item">
+                    <span style="font-size: 14px;"><strong style="font-size: 16px;" class="mr-4">Diferecia</strong>
+                      {{item.difference  | number: '1.0-2'}}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <span style="font-size: 14px;"><strong style="font-size: 16px;" class="mr-4">Volumen vacío</strong>
+                      {{item.ullage  | number: '1.0-2'}}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <span style="font-size: 14px;"><strong style="font-size: 16px;" class="mr-4">Volumen agua</strong>
+                      {{item.waterVolume  | number: '1.0-2'}}</span>
+
+                  </li>
+                  <li class="list-group-item">
+                    <span style="font-size: 14px;"><strong style="font-size: 16px;" class="mr-4">Agua</strong>
+                      {{item.water  | number: '1.0-2'}}</span>
+
+                  </li>
+                  <li class="list-group-item">
+                    <span style="font-size: 14px;"><strong style="font-size: 16px;" class="mr-4">Altura</strong>
+                      {{item.height  | number: '1.0-2'}}</span>
+
+                  </li>
+                  <li class="list-group-item">
+                    <span style="font-size: 14px;"><strong style="font-size: 16px;" class="mr-4">Temperatura</strong>
+                      {{item.temperature  | number: '1.0-2'}}</span>
+
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 ">
+            <img [src]="waterQuantity(item.color,item.percentage)" class="card-img-top" alt="...">
+          </div>
+        </div>
+      </div>
+      <div class="row text-right ">
+        <div class="offset-6 col-6 ">
+          <p style="font-size: 9px;" class="mr-2">Ultima actualizacion: <br> {{item.lastUpdatedDate}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

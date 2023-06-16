@@ -1,0 +1,83 @@
+<app-header titulo="Configuración de Comprobantes" menu="Comprobantes"></app-header>
+<div class="container-fluid">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <tr>
+                <td>
+                    <label for="cboTipo">Tipo-Comprobante</label>
+                </td>
+                <td>
+                    <select #selectedComprobante class="form-control" (change)="onComprobanteChange(selectedComprobante.value)">
+                        <option *ngFor="let comprobante of TIPOS_COMPROBANTES" [value]="comprobante.codigo">{{comprobante.nombre}}</option>
+                    </select>
+                </td>
+                <td>
+                    <label for="txtPrefijo">Serie</label>
+                </td>
+                <td>
+                    <input class="form-control" [(ngModel)]="ncfSELECTED.Serie" name=Serie />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txtDesde">Desde</label>
+                </td>
+                <td>
+                    <input type="number" class="form-control" [(ngModel)]="ncfSELECTED.Desde" name="Desde" />
+                </td>
+                <td>
+                    <label for="txtHasta">Hasta</label>
+                </td>
+                <td>
+                    <input type="number" class="form-control" [(ngModel)]="ncfSELECTED.Hasta" name="Hasta" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txtPendiente">Consecutivo</label>
+                </td>
+                <td>
+                    <input type="number" class="form-control" [(ngModel)]="ncfSELECTED.Consecutivo" name="Consecutivo" />
+                </td>
+                <td>
+                    <label for="NCFTest">NCF</label>
+                </td>
+                <td>
+                    <input [ngModel]="NCFTest" disabled class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="fecha_vencimiento">Fecha-Vencimiento</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" [(ngModel)]="ncfSELECTED.FechaVencimiento" name="FechaVencimiento"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <button [disabled]="!valido()" (click)="GuardarCambios()" class="btn btn-primary">Guardar Cambios</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="form-group col-md-6-xs-12">
+        <label>Configuración del reporte</label>
+        <div class="form-group col-md-2-xs-4">
+            <label for="Bombero">Bombero??</label>
+            <input class="checkbox-template" type="checkbox" name="" id="" checked>            
+        </div>
+        <div class="form-group col-md-2-xs-4">
+            <label for="Bombero">Lado??</label>      
+            <input class="checkbox-template" type="checkbox" name="" id="" checked>            
+        </div>
+        <div class="form-group col-md-2-xs-4">
+            <label for="Bombero">Manguera??</label>                      
+            <input class="checkbox-template" type="checkbox" name="" id="" checked>
+        </div>
+    </div>
+
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

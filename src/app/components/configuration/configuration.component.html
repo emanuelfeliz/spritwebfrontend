@@ -1,0 +1,574 @@
+<app-header titulo="Configuración del sistema" menu="Configuración"></app-header>
+<div *ngIf="DATA" class="container-fluid" style="display: block;">
+    <form>
+        <div class="row row-flex row-flex-wrap">
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="name">Nombre Estación</label>
+                <input type="text" [(ngModel)]="DATA.name" name="name" class="form-control" placeholder="Nombre Estación">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="address">Dirección</label>
+                <input [(ngModel)]="DATA.address" type="text" name="address" class="form-control" placeholder="Dirección">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="rnc">Rnc</label>
+                <input [(ngModel)]="DATA.rnc" type="number" name="rnc" class="form-control" placeholder="Rnc">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="telefono">Teléfono</label>
+                <input [(ngModel)]="DATA.telefono" type="tel" name="telefono" max="12" class="form-control" placeholder="Teléfono">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="mensaje">Mensaje</label>
+                <input [(ngModel)]="DATA.mensaje" type="text" name="mensaje" class="form-control" placeholder="Mensaje">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_exportacion_comprobante_venta">Ruta Comprobantes de Venta</label>
+                <input [(ngModel)]="DATA.ruta_exportacion_comprobante_venta" name="ruta_exportacion_comprobante_venta" type="text" class="form-control"
+                    placeholder="Ruta Comprobantes de Venta">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="sucursal">Sucursal</label>
+                <input [(ngModel)]="DATA.sucursal" name="sucursal" type="text" class="form-control" placeholder="Sucursal">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_exportacion_cierres_pumptablet">Ruta Cierres Pump Tablet</label>
+                <input [(ngModel)]="DATA.ruta_exportacion_cierres_pumptablet" name="ruta_exportacion_cierres_pumptablet" type="text" class="form-control"
+                    placeholder="Ruta Cierres Pump Tablet">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_exportacion_reporte_turno_cerrado">Ruta Reportes de Turnos Cerrados</label>
+                <input [(ngModel)]="DATA.ruta_exportacion_reporte_turno_cerrado" name="ruta_exportacion_reporte_turno_cerrado" type="text"
+                    class="form-control" placeholder="Ruta Reportes de Turnos Cerrados">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_exportacion_reporte_turno_cerrado">Ruta Excel Consulta de ventas</label>
+                <input [(ngModel)]="DATA.ruta_exportacion_reporte_consulta_ventas" name="ruta_exportacion_reporte_consulta_ventas" type="text"
+                    class="form-control" placeholder="Ruta Excel Consulta de ventas">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_exportacion_reporte_turno_curso">Ruta Reportes de Turnos en Cursos</label>
+                <input [(ngModel)]="DATA.ruta_exportacion_reporte_turno_curso" name="ruta_exportacion_reporte_turno_curso" type="text" class="form-control"
+                    placeholder="Ruta Reportes de Turnos Cursos">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_exportacion_listadocomprobantes">Ruta Listado de Comprobantes</label>
+                <input [(ngModel)]="DATA.ruta_exportacion_listadocomprobantes" name="ruta_exportacion_listadocomprobantes" type="text" class="form-control"
+                    placeholder="Ruta Reportes de Turnos Cursos">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_exportacion_reporte_turno_periodo">Ruta Reportes de Turnos por Periodo</label>
+                <input [(ngModel)]="DATA.ruta_exportacion_reporte_turno_periodo" name="ruta_exportacion_reporte_turno_periodo" type="text"
+                    class="form-control" placeholder="Ruta Reportes de Turnos por Periodo">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_exportacion_pagos">Ruta Reportes de Pagos excel</label>
+                <input [(ngModel)]="DATA.ruta_exportacion_pagos" name="ruta_exportacion_pagos" type="text" class="form-control" placeholder="Ruta Reportes de pagos excel">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_exportacion_depositos">Ruta Reportes de Depositos excel</label>
+                <input [(ngModel)]="DATA.ruta_exportacion_depositos" name="ruta_exportacion_depositos" type="text" class="form-control" placeholder="Ruta Reportes de depositos">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_exportacion_cuadres">Ruta Reportes de Cuadres excel</label>
+                <input [(ngModel)]="DATA.ruta_exportacion_cuadres" name="ruta_exportacion_cuadres" type="text" class="form-control" placeholder="Ruta Reportes de Cuadre excel">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_exportacion_cuadres">Ruta Reportes venta por tipo de pago excel</label>
+                <input [(ngModel)]="DATA.ruta_exportacion_reporte_venta_tipo_pago" name="ruta_exportacion_venta_por_tipo_pago" type="text" class="form-control" placeholder="Ruta Reportes de ventas por pago excel">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+              <label class="control-label" for="ruta_exportacion_cuadre_pdf">Ruta Reportes de cuadres</label>
+              <input [(ngModel)]="DATA.ruta_exportacion_cuadre_pdf" name="ruta_exportacion_cuadre_pdf" type="text" class="form-control" placeholder="Ruta Reportes de cuadres">
+            </div>
+            <div class="row"></div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="permitir_comprobante_venta_duplicada" name="permitir_comprobante_venta_duplicada" type="checkbox" [checked]="DATA.permitir_comprobante_venta_duplicada"
+                        (change)="DATA.permitir_comprobante_venta_duplicada=!DATA.permitir_comprobante_venta_duplicada" value=""
+                        checked="" class="checkbox-template">
+                    <label for="permitir_comprobante_venta_duplicada">Permitir comprobante de venta duplicado?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="generar_comprobante_excedio_limite" name="generar_comprobante_excedio_limite" type="checkbox" [checked]="DATA.generar_comprobante_excedio_limite"
+                        (change)="DATA.generar_comprobante_excedio_limite=!DATA.generar_comprobante_excedio_limite" value=""
+                        checked="" class="checkbox-template">
+                    <label for="generar_comprobante_excedio_limite">Generar comprobante aun haya excedido el límite?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="exportar_comprobante_venta" name="exportar_comprobante_venta" type="checkbox" [checked]="DATA.exportar_comprobante_venta"
+                        (change)="DATA.exportar_comprobante_venta=!DATA.exportar_comprobante_venta" value="" checked="" class="checkbox-template">
+                    <label for="exportar_comprobante_venta">Exportar comprobante de venta?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="exportar_cierres_pumptablet" name="exportar_cierres_pumptablet" type="checkbox" [checked]="DATA.exportar_cierres_pumptablet"
+                        (change)="DATA.exportar_cierres_pumptablet=!DATA.exportar_cierres_pumptablet" value="" checked="" class="checkbox-template">
+                    <label for="exportar_cierres_pumptablet">Exportar cierres de PumpTablet?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="exportar_reporte_turnocerrado" name="exportar_reporte_turnocerrado" type="checkbox" [checked]="DATA.exportar_reporte_turnocerrado"
+                        (change)="DATA.exportar_reporte_turnocerrado=!DATA.exportar_reporte_turnocerrado" value="" checked=""
+                        class="checkbox-template">
+                    <label for="exportar_reporte_turnocerrado">Exportar reportes de turnos cerrados?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="exportar_reporte_turnocurso" name="exportar_reporte_turnocurso" type="checkbox" [checked]="DATA.exportar_reporte_turnocurso"
+                        (change)="DATA.exportar_reporte_turnocurso=!DATA.exportar_reporte_turnocurso" value="" checked="" class="checkbox-template">
+                    <label for="exportar_reporte_turnocurso">Exportar reportes de turnos en cursos?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="exportar_reporte_turnoperiodo" name="exportar_reporte_turnoperiodo" type="checkbox" [checked]="DATA.exportar_reporte_turnoperiodo"
+                        (change)="DATA.exportar_reporte_turnoperiodo=!DATA.exportar_reporte_turnoperiodo" value="" checked=""
+                        class="checkbox-template">
+                    <label for="exportar_reporte_turnoperiodo">Exportar reportes de turnos en periodos?</label>
+                </div>
+            </div>
+            <!-- <div class="form-group text-center col-md-6 col-xs-12">
+              <div class="i-checks">
+                  <input id="autenticar_cierre_turno" name="autenticar_cierre_turno" type="checkbox" [checked]="DATA.autenticar_cierre_turno"
+                      (change)="DATA.autenticar_cierre_turno=!DATA.autenticar_cierre_turno" value="" checked=""
+                      class="checkbox-template">
+                  <label for="autenticar_cierre_turno">Pedir autenticacion cerrar turnos?</label>
+              </div>
+          </div> -->
+
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="tamano_ticket_venta">Tamaño Ticket de Venta</label>
+                <select class="form-control" name="tamano_ticket_venta" [(ngModel)]="DATA.tamano_ticket_venta">
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                </select>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="tamano_ticket_comprobante">Tamaño Ticket de Comprobante</label>
+                <select class="form-control" name="tamano_ticket_comprobante" [(ngModel)]="DATA.tamano_ticket_comprobante">
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                </select>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="tamano_ticket_apertura">Tamaño Ticket de Apertura</label>
+                <select class="form-control" name="tamano_ticket_apertura" [(ngModel)]="DATA.tamano_ticket_apertura">
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                </select>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="tamano_ticket_cierre_dispensador">Tamaño Ticket de Cierre Dispensador</label>
+                <select class="form-control" name="tamano_ticket_cierre_dispensador" [(ngModel)]="DATA.tamano_ticket_cierre_dispensador">
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                </select>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="tamano_ticket_cierre_lado">Tamaño Ticket de Cierre Lado</label>
+                <select class="form-control" name="tamano_ticket_cierre_lado" [(ngModel)]="DATA.tamano_ticket_cierre_lado">
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                </select>
+            </div>
+
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="tamano_ticket_pumpTablet">Tamaño Ticket de PumpTablet</label>
+                <select class="form-control" name="tamano_ticket_pumpTablet" [(ngModel)]="DATA.tamano_ticket_pumpTablet">
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                </select>
+            </div>
+
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="tamano_ticket_deposito">Tamaño Ticket de Depositos</label>
+                <select class="form-control" name="tamano_ticket_deposito" [(ngModel)]="DATA.tamano_ticket_deposito">
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                </select>
+            </div>
+
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="tamano_ticket_facturacion">Tamaño Ticket de Facturación</label>
+                <select class="form-control" name="tamano_ticket_facturacion" [(ngModel)]="DATA.tamano_ticket_facturacion">
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                </select>
+            </div>
+    
+            <!--   -->
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="ruta_archivo_rnc">Ruta archivo RNC</label>
+                <input name="ruta_archivo_rnc" [(ngModel)]="DATA.ruta_archivo_rnc" type="text" class="form-control"
+                    placeholder="Ruta archivo RNC">
+            </div>
+
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="rutaLogsSpiritConsolePumpLogs">Ruta Logs Spirit Console PumpLogs</label>
+                <input [(ngModel)]="DATA.rutaLogsSpiritConsolePumpLogs" name="rutaLogsSpiritConsolePumpLogs" type="text" class="form-control" placeholder="Ruta Logs Spirit Console PumpLogs">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="pumpLogFileName">Pump Log File Name</label>
+                <input [(ngModel)]="DATA.pumpLogFileName" name="pumpLogFileName" type="text" class="form-control" placeholder="Pump Log File Name">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="exportarFocusFileExcel" name="exportarFocusFileExcel" type="checkbox" [checked]="DATA.exportarFocusFileExcel"
+                        (change)="DATA.exportarFocusFileExcel=!DATA.exportarFocusFileExcel" value=""
+                        checked="" class="checkbox-template">
+                    <label for="exportarFocusFileExcel">Exportar Focus File Excel?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="rutaFocusFileExcel">Ruta Focus File Excel</label>
+                <input [(ngModel)]="DATA.rutaFocusFileExcel" name="rutaFocusFileExcel" type="text" class="form-control" placeholder="Ruta Focus File Excel">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="consoleType">Console Type</label>
+                <input [(ngModel)]="DATA.consoleType" name="consoleType" type="text" class="form-control" placeholder="Console Type">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="validationPumpsWorking">Validation Pumps Working</label>
+                <input [(ngModel)]="DATA.validationPumpsWorking" name="validationPumpsWorking" type="text" class="form-control" placeholder="Validation Pumps Working">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="delayToClosePump">Delay To Close Pump</label>
+                <input [(ngModel)]="DATA.delayToClosePump" name="delayToClosePump" type="text" class="form-control" placeholder="Delay To Close Pump">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="webpagesVersion">Web pages Version</label>
+                <input [(ngModel)]="DATA.webpagesVersion" name="webpagesVersion" type="text" class="form-control" placeholder="Web Pages Version">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="webpagesEnabled" name="webpagesEnabled" type="checkbox" [checked]="DATA.webpagesEnabled"
+                        (change)="DATA.webpagesEnabled=!DATA.webpagesEnabled" value=""
+                        checked="" class="checkbox-template">
+                    <label for="webpagesEnabled">Web Pages Enabled?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="PreserveLoginUrl" name="PreserveLoginUrl" type="checkbox" [checked]="DATA.PreserveLoginUrl"
+                        (change)="DATA.PreserveLoginUrl=!DATA.PreserveLoginUrl" value=""
+                        checked="" class="checkbox-template">
+                    <label for="PreserveLoginUrl">Preserve Login Url?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="ClientValidationEnabled" name="ClientValidationEnabled" type="checkbox" [checked]="DATA.ClientValidationEnabled"
+                        (change)="DATA.ClientValidationEnabled=!DATA.ClientValidationEnabled" value=""
+                        checked="" class="checkbox-template">
+                    <label for="ClientValidationEnabled">Client Validation Enabled?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="UnobtrusiveJavaScriptEnabled" name="UnobtrusiveJavaScriptEnabled" type="checkbox" [checked]="DATA.UnobtrusiveJavaScriptEnabled"
+                        (change)="DATA.UnobtrusiveJavaScriptEnabled=!DATA.UnobtrusiveJavaScriptEnabled" value=""
+                        checked="" class="checkbox-template">
+                    <label for="UnobtrusiveJavaScriptEnabled">Unobtrusive JavaScript Enabled?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="CrystalImageCleanerAutoStart" name="CrystalImageCleanerAutoStart" type="checkbox" [checked]="DATA.CrystalImageCleanerAutoStart"
+                        (change)="DATA.CrystalImageCleanerAutoStart=!DATA.CrystalImageCleanerAutoStart" value=""
+                        checked="" class="checkbox-template">
+                    <label for="CrystalImageCleanerAutoStart">Crystal Image Cleaner Auto Start?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="CrystalImageCleanerSleep">Crystal Image Cleaner Sleep</label>
+                <input [(ngModel)]="DATA.CrystalImageCleanerSleep" name="CrystalImageCleanerSleep" type="text" class="form-control" placeholder="Crystal Image Cleaner Sleep">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="CrystalImageCleanerAge">Crystal Image Cleaner Age</label>
+                <input [(ngModel)]="DATA.CrystalImageCleanerAge" name="CrystalImageCleanerAge" type="text" class="form-control" placeholder="Crystal Image Cleaner Age">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="listadodeventas">Listado de ventas</label>
+                <input [(ngModel)]="DATA.listadodeventas" name="listadodeventas" type="text" class="form-control" placeholder="Listado de ventas">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showConsoleVolume" name="showConsoleVolume" type="checkbox" [checked]="DATA.showConsoleVolume"
+                        (change)="DATA.showConsoleVolume=!DATA.showConsoleVolume" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showConsoleVolume">Show Console Volume?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="BigSizeTanks" name="BigSizeTanks" type="checkbox" [checked]="DATA.BigSizeTanks"
+                        (change)="DATA.BigSizeTanks=!DATA.BigSizeTanks" value=""
+                        checked="" class="checkbox-template">
+                    <label for="BigSizeTanks">Big Size Tanks?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="hideSubReport" name="hideSubReport" type="checkbox" [checked]="DATA.hideSubReport"
+                        (change)="DATA.hideSubReport=!DATA.hideSubReport" value=""
+                        checked="" class="checkbox-template">
+                    <label for="hideSubReport">Hide Sub Report?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="LimiteVentasAndroid">Limite Ventas Android</label>
+                <input [(ngModel)]="DATA.LimiteVentasAndroid" name="LimiteVentasAndroid" type="text" class="form-control" placeholder="Limite Ventas Android">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="ConsoleVolumeFromTrinityAPI" name="ConsoleVolumeFromTrinityAPI" type="checkbox" [checked]="DATA.ConsoleVolumeFromTrinityAPI"
+                        (change)="DATA.ConsoleVolumeFromTrinityAPI=!DATA.ConsoleVolumeFromTrinityAPI" value=""
+                        checked="" class="checkbox-template">
+                    <label for="ConsoleVolumeFromTrinityAPI">Console Volume From Trinity API?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showProductHeight" name="showProductHeight" type="checkbox" [checked]="DATA.showProductHeight"
+                        (change)="DATA.showProductHeight=!DATA.showProductHeight" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showProductHeight">show Product Height?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showProductVolume" name="showProductVolume" type="checkbox" [checked]="DATA.showProductVolume"
+                        (change)="DATA.showProductVolume=!DATA.showProductVolume" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showProductVolume">Show Product Volume?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showProductUllage" name="showProductUllage" type="checkbox" [checked]="DATA.showProductUllage"
+                        (change)="DATA.showProductUllage=!DATA.showProductUllage" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showProductUllage">Show Product Ullage?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showProductTCVolume" name="showProductTCVolume" type="checkbox" [checked]="DATA.showProductTCVolume"
+                        (change)="DATA.showProductTCVolume=!DATA.showProductTCVolume" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showProductTCVolume">Show Product TC Volume?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showProductMass" name="showProductMass" type="checkbox" [checked]="DATA.showProductMass"
+                        (change)="DATA.showProductMass=!DATA.showProductMass" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showProductMass">Show Product Mass?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showCalculatedProductVolume" name="showCalculatedProductVolume" type="checkbox" [checked]="DATA.showCalculatedProductVolume"
+                        (change)="DATA.showCalculatedProductVolume=!DATA.showCalculatedProductVolume" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showCalculatedProductVolume">Show Calculated Product Volume?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="ShowProductDensity" name="ShowProductDensity" type="checkbox" [checked]="DATA.ShowProductDensity"
+                        (change)="DATA.ShowProductDensity=!DATA.ShowProductDensity" value=""
+                        checked="" class="checkbox-template">
+                    <label for="ShowProductDensity">Show Product Density?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showWaterVolume" name="showWaterVolume" type="checkbox" [checked]="DATA.showWaterVolume"
+                        (change)="DATA.showWaterVolume=!DATA.showWaterVolume" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showWaterVolume">Show Water Volume?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showWaterHeight" name="showWaterHeight" type="checkbox" [checked]="DATA.showWaterHeight"
+                        (change)="DATA.showWaterHeight=!DATA.showWaterHeight" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showWaterHeight">Show Water Height?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showWaterInch" name="showWaterInch" type="checkbox" [checked]="DATA.showWaterInch"
+                        (change)="DATA.showWaterInch=!DATA.showWaterInch" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showWaterInch">Show Water Inch?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showCalculatedWaterInch" name="showCalculatedWaterInch" type="checkbox" [checked]="DATA.showCalculatedWaterInch"
+                        (change)="DATA.showCalculatedWaterInch=!DATA.showCalculatedWaterInch" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showCalculatedWaterInch">Show Calculated Water Inch?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showCalculatedWaterVolume" name="showCalculatedWaterVolume" type="checkbox" [checked]="DATA.showCalculatedWaterVolume"
+                        (change)="DATA.showCalculatedWaterVolume=!DATA.showCalculatedWaterVolume" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showCalculatedWaterVolume">Show Calculated Water Volume?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showFuelInch" name="showFuelInch" type="checkbox" [checked]="DATA.showFuelInch"
+                        (change)="DATA.showFuelInch=!DATA.showFuelInch" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showFuelInch">Show Fuel Inch?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showCalculatedFuelInch" name="showCalculatedFuelInch" type="checkbox" [checked]="DATA.showCalculatedFuelInch"
+                        (change)="DATA.showCalculatedFuelInch=!DATA.showCalculatedFuelInch" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showCalculatedFuelInch">Show Calculated Fuel Inch?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="showPercentageProbes" name="showPercentageProbes" type="checkbox" [checked]="DATA.showPercentageProbes"
+                        (change)="DATA.showPercentageProbes=!DATA.showPercentageProbes" value=""
+                        checked="" class="checkbox-template">
+                    <label for="showPercentageProbes">Show Percentage Probes?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="UseTimerForUpdateTanks" name="UseTimerForUpdateTanks" type="checkbox" [checked]="DATA.UseTimerForUpdateTanks"
+                        (change)="DATA.UseTimerForUpdateTanks=!DATA.UseTimerForUpdateTanks" value=""
+                        checked="" class="checkbox-template">
+                    <label for="UseTimerForUpdateTanks">Use Timer For Update Tanks?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="UseTimerForUpdateDashboardValues" name="UseTimerForUpdateDashboardValues" type="checkbox" [checked]="DATA.UseTimerForUpdateDashboardValues"
+                        (change)="DATA.UseTimerForUpdateDashboardValues=!DATA.UseTimerForUpdateDashboardValues" value=""
+                        checked="" class="checkbox-template">
+                    <label for="UseTimerForUpdateDashboardValues">Use Timer For Update Dashboard Values?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="LogDirectory">Log Directory</label>
+                <input [(ngModel)]="DATA.LogDirectory" name="LogDirectory" type="text" class="form-control" placeholder="Log Directory">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="blockPumpsBySmartshipConsole" name="blockPumpsBySmartshipConsole" type="checkbox" [checked]="DATA.blockPumpsBySmartshipConsole"
+                        (change)="DATA.blockPumpsBySmartshipConsole=!DATA.blockPumpsBySmartshipConsole" value=""
+                        checked="" class="checkbox-template">
+                    <label for="blockPumpsBySmartshipConsole">Block Pumps By Smartship Console?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="appUseScanner" name="appUseScanner" type="checkbox" [checked]="DATA.appUseScanner"
+                        (change)="DATA.appUseScanner=!DATA.appUseScanner" value=""
+                        checked="" class="checkbox-template">
+                    <label for="appUseScanner">App Use Scanner?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="MigrateVoucherToEntradaDiaria" name="MigrateVoucherToEntradaDiaria" type="checkbox" [checked]="DATA.MigrateVoucherToEntradaDiaria"
+                        (change)="DATA.MigrateVoucherToEntradaDiaria=!DATA.MigrateVoucherToEntradaDiaria" value=""
+                        checked="" class="checkbox-template">
+                    <label for="MigrateVoucherToEntradaDiaria">Migrate Voucher To Entrada Diaria?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="TimeToWaitForWorkWithTally">Time To Wait For Work With Tally</label>
+                <input [(ngModel)]="DATA.TimeToWaitForWorkWithTally" name="TimeToWaitForWorkWithTally" type="text" class="form-control" placeholder="Time To Wait For Work With Tally">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="GetPaymentsByShiftAndDate" name="GetPaymentsByShiftAndDate" type="checkbox" [checked]="DATA.GetPaymentsByShiftAndDate"
+                        (change)="DATA.GetPaymentsByShiftAndDate=!DATA.GetPaymentsByShiftAndDate" value=""
+                        checked="" class="checkbox-template">
+                    <label for="GetPaymentsByShiftAndDate">Get Payments By Shift And Date?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="URL_PUMPER_PRICES">URL Pumper prices</label>
+                <input [(ngModel)]="DATA.URL_PUMPER_PRICES" name="URL_PUMPER_PRICES" type="text" class="form-control" placeholder="URL Pumper prices">
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="GetDepositsByShiftAndDate" name="GetDepositsByShiftAndDate" type="checkbox" [checked]="DATA.GetDepositsByShiftAndDate"
+                        (change)="DATA.GetDepositsByShiftAndDate=!DATA.GetDepositsByShiftAndDate" value=""
+                        checked="" class="checkbox-template">
+                    <label for="GetDepositsByShiftAndDate">Get Deposits By Shift And Date?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="ShowOnlyLastShiftForJockey" name="ShowOnlyLastShiftForJockey" type="checkbox" [checked]="DATA.ShowOnlyLastShiftForJockey"
+                        (change)="DATA.ShowOnlyLastShiftForJockey=!DATA.ShowOnlyLastShiftForJockey" value=""
+                        checked="" class="checkbox-template">
+                    <label for="ShowOnlyLastShiftForJockey">Show Only Last Shift For Jockey?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="SaveDepositsWithDepositCode" name="SaveDepositsWithDepositCode" type="checkbox" [checked]="DATA.SaveDepositsWithDepositCode"
+                        (change)="DATA.SaveDepositsWithDepositCode=!DATA.SaveDepositsWithDepositCode" value=""
+                        checked="" class="checkbox-template">
+                    <label for="SaveDepositsWithDepositCode">Save Deposits With Deposit Code?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <div class="i-checks">
+                    <input id="MigrateSalesToMonteCristeDB" name="MigrateSalesToMonteCristeDB" type="checkbox" [checked]="DATA.MigrateSalesToMonteCristeDB"
+                        (change)="DATA.MigrateSalesToMonteCristeDB=!DATA.MigrateSalesToMonteCristeDB" value=""
+                        checked="" class="checkbox-template">
+                    <label for="MigrateSalesToMonteCristeDB">Migrate Sales To Monte Criste DB?</label>
+                </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+                <label class="control-label" for="appVersion">App Version</label>
+                <input [(ngModel)]="DATA.appVersion" name="appVersion" type="text" class="form-control" placeholder="App Version">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="text-center">
+                    <button [disabled]="!configuracionValida()" type="button" (click)="SetDatosEstacion()" class="btn btn-outline-success">Guardar Configuración</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

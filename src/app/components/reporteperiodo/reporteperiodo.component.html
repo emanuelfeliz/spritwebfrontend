@@ -1,0 +1,96 @@
+<app-header titulo="Reporte de Periodo" menu="Reportes"></app-header>
+
+<div class="container-fluid">
+  <div class="form-inline">
+    <label for="fechaDesde">Fecha-Inicial</label>
+    <owl-date-time *ngIf="tipoFiltro=='fecha'" [showSecondsTimer]="true" [min]="fechaLimitada" dataType="string" [locale]="es"
+      dateFormat="YYYYMMDD HHmmss" [(ngModel)]="fechaDesde" name="fechaDesde"></owl-date-time>
+    <input readonly *ngIf="tipoFiltro=='turno'" type="text" class="form-control" name="fechaDesdeTurno" [(ngModel)]="fechaDesdeTurno"
+    />
+    <label for="fechaHasta">Fecha-Final</label>
+    <owl-date-time *ngIf="tipoFiltro=='fecha'" [showSecondsTimer]="true" dataType="string" [locale]="es" dateFormat="YYYYMMDD HHmmss"
+      [(ngModel)]="fechaHasta" name="fechaHasta"></owl-date-time>
+    <input readonly *ngIf="tipoFiltro=='turno'" type="text" class="form-control" name="fechaHastaTurno" [(ngModel)]="fechaHastaTurno"
+    />
+    <label for="tipoFiltro">Reportar por:</label>
+    <select (change)="cambioFiltro()" [(ngModel)]="tipoFiltro" name="tipoFiltro" class="form-control">
+      <option value="fecha">Fecha</option>
+      <option value="turno">Turno</option>
+    </select>
+  </div>
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" (click)="ReporteperiodoBasado()" class="btn btn-outline-dark">
+      <i class="fa fa-refresh" aria-hidden="true"></i> Reporte Periodo Basado</button>
+    <button type="button" (click)="ReporteperiodoCalculado()" class="btn btn-outline-dark">
+      <i class="fa fa-refresh" aria-hidden="true"></i> Reporte Periodo Calculado</button>    
+    <button type="button" (click)="AgengarReportePeriodo()" class="btn btn-outline-warning">
+      <i class="fa fa-refresh" aria-hidden="true"></i> Agendar Reporte Periodo</button>
+  </div>
+  <div class="text-center" *ngIf="loading">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
+  </div>
+  <div class="row row-flex row-flex-wrap">
+    <div class="col-md-6">
+      <div class="table-responsive">
+        <table width="100%" class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Turno</th>
+              <th class="text-center">Fecha-Inicial</th>
+              <th class="text-center">Fecha-Final</th>
+              <th class="text-center">Opciones</th>
+            </tr>
+          </thead>
+          <tbody style="height: 100px;overflow-y: auto; overflow-x: hidden;">
+            <tr class="MI FI-{{turno.CloseId}}" *ngFor="let turno of turnosIniciales | paginate: {itemsPerPage: 10, currentPage: p_inicial, id: 'first',totalItems:total }">
+              <td class="text-center">{{turno.CloseId}}</td>
+              <td class="text-center">{{turno.FechaInicial}} {{turno.HoraInicial}}</td>
+              <td class="text-center">{{turno.FechaFinal}} {{turno.HoraFinal}}</td>
+              <td class="text-center">
+                <button *ngIf="!turno.calculated_report_ready" class="btn btn-warning">Calculo no Disponible</button>
+                <button *ngIf="!turno.based_report_ready" class="btn btn-warning">Basado no Disponible</button>
+                <button *ngIf="turno.calculated_report_ready || turno.based_report_ready" [disabled]="tipoFiltro=='fecha'" (click)="seleccionarTurno(turno,'Inicial')"
+                  type="button" class="btn btn-md btn-outline-success">Seleccionar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="getTurnosIniciales($event)" id="first" previousLabel="Anterior" nextLabel="Siguiente"
+          screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="table-responsive">
+        <table width="100%" class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Turno</th>
+              <th class="text-center">Fecha-Inicial</th>
+              <th class="text-center">Fecha-Final</th>
+              <th class="text-center">Opciones</th>
+            </tr>
+          </thead>
+          <tbody style="height: 100px;overflow-y: auto; overflow-x: hidden;">
+            <tr class="MF FF-{{turno.CloseId}}" *ngFor="let turno of turnosFinales | paginate: { itemsPerPage: 10, currentPage: p_final, id: 'second',totalItems:total }">
+              <td class="text-center">{{turno.CloseId}}</td>
+              <td class="text-center">{{turno.FechaInicial}} {{turno.HoraInicial}}</td>
+              <td class="text-center">{{turno.FechaFinal}} {{turno.HoraFinal}}</td>
+              <td class="text-center">
+                <button *ngIf="!turno.calculated_report_ready" class="btn btn-warning">Calculo no Disponible</button>
+                <button *ngIf="!turno.based_report_ready" class="btn btn-warning">Basado no Disponible</button>
+                <button *ngIf="turno.calculated_report_ready || turno.based_report_ready" [disabled]="tipoFiltro=='fecha'" (click)="seleccionarTurno(turno,'Final')"
+                  type="button" class="btn btn-md btn-outline-success">Seleccionar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="getTurnosFinales($event)" id="second" previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Paginación"
+          screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page Footer-->
+<app-footer></app-footer>

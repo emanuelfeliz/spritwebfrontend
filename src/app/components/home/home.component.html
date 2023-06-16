@@ -1,0 +1,411 @@
+<header class="page-header">
+  <div class="container-fluid">
+    <h2 class="no-margin-bottom">Dashboard</h2>
+  </div>
+</header>
+
+
+<div class="container-fluid mb-3 pb-3">
+  <div class="row" *ngIf="dashboardFeature">
+    <div class="col-md-12">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded my-3">
+          <a class="navbar-brand brand" href="#">Productos</a>
+          <button
+            class="navbar-toggler collapsed button-co"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="d-md-flex d-block w-100">
+            <div>
+              <select
+                #period_time
+                class="form-control"
+                id="exampleFormControlSelect1"
+                (change)="onChangePeriod($event.target.value)"
+              >
+                <option value="DIA" selected>DIA</option>
+                <option value="SEMANA">SEMANA</option>
+                <option value="30 DIAS">30 DIAS</option>
+              </select>
+            </div>
+            <div
+              class="navbar-collapse collapse mx-auto w-auto justify-content-center"
+              id="navbarSupportedContent"
+            >
+              <div class="navbar-nav">
+                <a
+                  [ngClass]="
+                    product_selected === 'TODOS'
+                      ? 'nav-item nav-link active active-nav-item'
+                      : 'nav-item nav-link'
+                  "
+                  (click)="onChangeProduct('TODOS')"
+                  >TODOS <span class="sr-only">(current)</span></a
+                >
+                <a
+                  *ngFor="let product_fuel of products_fuel"
+                  [ngClass]="
+                    product_selected === product_fuel.name
+                      ? 'nav-item nav-link active active-nav-item'
+                      : 'nav-item nav-link'
+                  "
+                  (click)="onChangeProduct(product_fuel.name)"
+                  >{{ product_fuel.name }}</a
+                >
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div  class="row bg-light has-shadow" >
+          <!-- Item -->
+          <div class="col-xl-3 col-sm-6">
+            <div class="callout callout-info bg-light">
+              <span class="count_top font-weight-light text-muted"
+                ><i class="fas fa-coins"></i> <small> Ventas</small></span
+              >
+              <div class="count">
+                {{ dashboardInfo.salesInfo.totalSales | number: "1.0-2" }}
+              </div>
+              <small
+                ><span class="count_bottom font-weight-light text-muted">
+                  <i
+                    [ngClass]="{
+                       'fa fa-sort-asc green':dashboardInfo.salesInfo.betterRate,
+                        'fa fa-sort-desc red':!dashboardInfo.salesInfo.betterRate}"
+                  ></i>
+                  {{ dashboardInfo.salesInfo.percentage | number: "1.0-2" }}%
+                  {{ period_selected }} anterior
+                </span></small
+              >
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-sm-6">
+            <div class="callout callout-primary bg-light">
+              <span class="count_top font-weight-light text-muted"
+                ><i class="fa fa-dollar-sign"></i>
+                <small> Total Monto vendido</small></span
+              >
+              <div class="count">
+                {{ dashboardInfo.moneyInfo.moneyTotal | number: "1.0-2" }}
+              </div>
+              <small
+                ><span class="count_bottom font-weight-light text-muted">
+                  <i [ngClass]="{
+                    'fa fa-sort-asc green':dashboardInfo.moneyInfo.betterRate,
+                     'fa fa-sort-desc red':!dashboardInfo.moneyInfo.betterRate}"
+                  ></i>
+                  {{ dashboardInfo.moneyInfo.percentage | number: "1.0-2" }}%
+                  {{ period_selected }} anterior
+                </span></small
+              >
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-sm-6">
+            <div class="callout callout-warning bg-light">
+              <span class="count_top font-weight-light text-muted"
+                ><i class="fas fa-gas-pump"></i>
+                <small> Total Galones vendidos</small></span
+              >
+              <div class="count">
+                {{ dashboardInfo.volumeInfo.volumeTotal | number: "1.0-2" }}
+              </div>
+              <small
+                ><span class="count_bottom font-weight-light text-muted">
+                  <i
+                    [ngClass]="{
+                    'fa fa-sort-asc green':dashboardInfo.volumeInfo.betterRate,
+                     'fa fa-sort-desc red':!dashboardInfo.volumeInfo.betterRate}"
+                  ></i>
+                  {{ dashboardInfo.volumeInfo.percentage | number: "1.0-2" }}%
+                  {{ period_selected }} anterior
+                </span></small
+              >
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-sm-6">
+            <div class="callout callout-danger bg-light">
+              <span class="count_top font-weight-light text-muted"
+                ><i class="fas fa-chart-line"></i>
+                <small> Total Promedio galones/ventas</small></span
+              >
+              <div class="count">
+                {{
+                  dashboardInfo.volumeInfo.todayVolumeTotal | number: "1.0-2"
+                }} | {{
+                  dashboardInfo.volumeInfo.yesterdayVolumeTotal
+                    | number: "1.0-2"
+                }}
+              </div>
+              <small
+                ><span class="count_bottom font-weight-light text-muted">
+                  <i
+                    [ngClass]="{
+                    'fa fa-sort-asc green':dashboardInfo.volumeInfo.betterRate,
+                     'fa fa-sort-desc red':!dashboardInfo.volumeInfo.betterRate}"
+                  ></i>
+                  {{ dashboardInfo.volumeInfo.percentage | number: "1.0-2" }}%
+                  {{ period_selected }} anterior
+                </span></small
+              >
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="!dashboardFeature">
+      <div class="col" >
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded my-3">
+          <a class="navbar-brand brand" href="#">Productos</a>
+          <button
+            class="navbar-toggler collapsed button-co"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="d-md-flex d-block w-100">
+            <div>
+              <select
+                #period_time
+                class="form-control"
+                id="exampleFormControlSelect1"
+                (change)="onChangePeriod($event.target.value)"
+              >
+                <option value="DIA" selected>DIA</option>
+                <option value="SEMANA">SEMANA</option>
+                <option value="30 DIAS">30 DIAS</option>
+              </select>
+            </div>
+            <div
+              class="navbar-collapse collapse mx-auto w-auto justify-content-center"
+              id="navbarSupportedContent"
+            >
+              <div class="navbar-nav">
+                <a
+                  [ngClass]="
+                    product_selected === 'TODOS'
+                      ? 'nav-item nav-link active active-nav-item'
+                      : 'nav-item nav-link'
+                  "
+                  (click)="getDashboardInfo(undefined, period_time.value)"
+                  >TODOS <span class="sr-only">(current)</span></a
+                >
+                <a
+                  *ngFor="let product_fuel of products_fuel"
+                  [ngClass]="
+                    product_selected === product_fuel.name
+                      ? 'nav-item nav-link active active-nav-item'
+                      : 'nav-item nav-link'
+                  "
+                  (click)="getDashboardInfo(product_fuel, period_time.value)"
+                  >{{ product_fuel.name }}</a
+                >
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div class="row bg-light has-shadow"
+          [ngStyle]="{ padding: '0px', 'margin-top': '15px' }"
+        >
+          <!-- Item -->
+          <div class="col-xl-3 col-sm-6">
+            <div class="callout callout-info bg-light">
+              <span class="count_top font-weight-light text-muted"
+                ><i class="fas fa-coins"></i> <small> Ventas</small></span
+              >
+              <div class="count">
+                {{ dashboardInfo.SalesInfo.TotalSales | number: "1.0-2" }}
+              </div>
+              <small
+                ><span class="count_bottom font-weight-light text-muted">
+                  <i
+                    [ngClass]="
+                      dashboardInfo.SalesInfo.BetterRate
+                        ? 'fa fa-sort-asc green'
+                        : 'fa fa-sort-desc red'
+                    "
+                  ></i>
+                  {{ dashboardInfo.SalesInfo.Percentage | number: "1.0-2" }}%
+                  {{ period_selected }} anterior
+                </span></small
+              >
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-sm-6">
+            <div class="callout callout-primary bg-light">
+              <span class="count_top font-weight-light text-muted"
+                ><i class="fa fa-dollar-sign"></i>
+                <small> Total Monto vendido</small></span
+              >
+              <div class="count">
+                {{ dashboardInfo.MoneyInfo.MoneyTotal | number: "1.0-2" }}
+              </div>
+              <small
+                ><span class="count_bottom font-weight-light text-muted">
+                  <i
+                    [ngClass]="
+                      dashboardInfo.MoneyInfo.BetterRate
+                        ? 'fa fa-sort-asc green'
+                        : 'fa fa-sort-desc red'
+                    "
+                  ></i>
+                  {{ dashboardInfo.MoneyInfo.Percentage | number: "1.0-2" }}%
+                  {{ period_selected }} anterior
+                </span></small
+              >
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-sm-6">
+            <div class="callout callout-warning bg-light">
+              <span class="count_top font-weight-light text-muted"
+                ><i class="fas fa-gas-pump"></i>
+                <small> Total Galones vendidos</small></span
+              >
+              <div class="count">
+                {{ dashboardInfo.VolumeInfo.VolumeTotal | number: "1.0-2" }}
+              </div>
+              <small
+                ><span class="count_bottom font-weight-light text-muted">
+                  <i
+                    [ngClass]="
+                      dashboardInfo.VolumeInfo.BetterRate
+                        ? 'fa fa-sort-asc green'
+                        : 'fa fa-sort-desc red'
+                    "
+                  ></i>
+                  {{ dashboardInfo.VolumeInfo.Percentage | number: "1.0-2" }}%
+                  {{ period_selected }} anterior
+                </span></small
+              >
+            </div>
+          </div>
+
+          <div class="col-xl-3 col-sm-6">
+            <div class="callout callout-danger bg-light">
+              <span class="count_top font-weight-light text-muted"
+                ><i class="fas fa-chart-line"></i>
+                <small> Total Promedio galones/ventas</small></span
+              >
+              <div class="count">
+                {{
+                  dashboardInfo.VolumeInfo.TodayVolumeTotal | number: "1.0-2"
+                }}/{{
+                  dashboardInfo.VolumeInfo.YesterdayVolumeTotal
+                    | number: "1.0-2"
+                }}
+              </div>
+              <small
+                ><span class="count_bottom font-weight-light text-muted">
+                  <i
+                    [ngClass]="
+                      dashboardInfo.VolumeInfo.BetterRate
+                        ? 'fa fa-sort-asc green'
+                        : 'fa fa-sort-desc red'
+                    "
+                  ></i>
+                  {{ dashboardInfo.VolumeInfo.Percentage | number: "1.0-2" }}%
+                  {{ period_selected }} anterior
+                </span></small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <trinity-tank-status [EstadoTanques]="EstadoTanques"></trinity-tank-status>
+
+  <div class="row " *ngIf="dashboardFeature && barchartData && lineChartData">
+    <div class="mt-3 col-lg-12 col-md-12 col-sm-12 pt-1">
+      <div class="chart-wrapper bg-light has-shadow">
+        <canvas *ngIf="barchartData.barChartData.length > 0 " baseChart [datasets]="barchartData.barChartData"
+          [labels]="barchartData.barChartLabels" [options]="barchartData.barChartOptions"
+          [plugins]="barchartData.barChartPlugins" [legend]="barchartData.barChartLegend"
+          [chartType]="barchartData.barChartType">
+        </canvas>
+      </div>
+    </div>
+    <div class="mt-3 col-lg-12 col-md-12 col-sm-12 pt-1">
+      <div class="chart-wrapper bg-light has-shadow" >
+        <canvas *ngIf="lineChartData" baseChart [datasets]="lineChartData.lineChartData" [labels]="lineChartData.lineChartLabels" [options]="lineChartData.lineChartOptions"
+          [legend]="lineChartData.lineChartLegend" [chartType]="lineChartData.lineChartType">
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+
+
+  
+
+</div>
+
+
+
+  <!-- 
+        <div class="col-md-12  mt-3 pt-3">
+      <div class="chart-wrapper bg-light has-shadow row text-center">
+        <div *ngFor="let tanque of EstadoTanques; let i = index" class="mt-3 col-sm-12 col-md-6 col-lg-3">
+          <svg id="{{ tanque.tanque3D.id }}" width="105%" height="200"></svg>
+          <p>Producto: {{ tanque.producto }}</p>
+          <p>Volumen Venta: {{ tanque.actualVolume | number: "1.0-2" }}</p>
+          <p>Volumen Consola: {{ tanque.consoleVolume | number: "1.0-2" }}</p>
+          <p>
+            Diferencia volumen:
+            {{ tanque.actualVolume - tanque.consoleVolume | number: "1.0-2" }}
+          </p>
+        </div>
+      </div>
+    </div> 
+    
+    
+    
+    <div class="row mt-3 pt-3">
+    <div class="col-md-6">
+      <div class="chart-wrapper bg-light has-shadow">
+        <canvas
+          baseChart
+          [data]="doughnutChartData"
+          [options]="doughnutChartOptions"
+          [labels]="doughnutChartLabels"
+          [chartType]="doughnutChartType"
+        >
+        </canvas>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="chart-wrapper bg-light has-shadow">
+        <canvas
+          baseChart
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div> -->
+
+
+<!-- Page Footer-->
+<app-footer></app-footer>

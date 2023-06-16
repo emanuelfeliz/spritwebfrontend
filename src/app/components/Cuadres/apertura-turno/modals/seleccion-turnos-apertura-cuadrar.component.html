@@ -1,0 +1,17 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Seleccione el turno </h4>
+    </div>
+    <div class="modal-body">
+      <div class="text-center">
+        <div class="btn-group-vertical">
+          <button (click)="seleccionarTurno(turno)" class="btn btn-outline-warning" *ngFor="let turno of turnos_en_fecha;let i=index">Seleccionar turno {{turno}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <button (click)="cerrar()" class="btn btn-primary">Cerrar</button>
+    </div>
+  </div>
+</div>

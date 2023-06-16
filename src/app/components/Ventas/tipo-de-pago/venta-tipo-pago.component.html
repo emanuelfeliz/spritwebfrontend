@@ -1,0 +1,147 @@
+<app-header titulo="Ventas por tipo de pago" menu="Reportes"></app-header>
+<div class="container-fluid">
+    <div class="form-inline">
+        <label for="tipoFiltro">Consultar por:</label>
+        <select [(ngModel)]="tipoFiltro" name="tipoFiltro" (change)="cambioTipo()" class="form-control">
+            <option value="fecha">Fecha</option>
+            <option value="turno">Turno</option>
+        </select>
+
+        <label *ngIf="tipoFiltro=='fecha'" for="fechaDesde">Fecha-Inicial</label>
+        <owl-date-time *ngIf="tipoFiltro=='fecha'" [showSecondsTimer]="true" dataType="string" [locale]="es" dateFormat="YYYYMMDD HHmmss"
+            [(ngModel)]="fechaDesde" name="fechaDesde"></owl-date-time>
+        <label *ngIf="tipoFiltro=='fecha'" for="fechaHasta">Fecha-Final</label>
+        <owl-date-time *ngIf="tipoFiltro=='fecha'" [showSecondsTimer]="true" dataType="string" [locale]="es" dateFormat="YYYYMMDD HHmmss"
+            [(ngModel)]="fechaHasta" name="fechaHasta"></owl-date-time>
+
+        <label *ngIf="tipoFiltro=='turno'" for="turnoInicial">Turno-Inicial</label>
+        <select class="form-control" *ngIf="tipoFiltro=='turno'" name="turnoInicial" [(ngModel)]="turnoInicial">
+            <option value="0">Seleccione un turno</option>
+            <option *ngFor="let t of turnos" value="{{t.turno}}">Turno {{t.turno}}</option>
+        </select>
+        <label *ngIf="tipoFiltro=='turno'" for="turnoFinal">Turno-Final</label>
+        <select class="form-control" *ngIf="tipoFiltro=='turno'" name="turnoFinal" [(ngModel)]="turnoFinal">
+            <option value="0">Seleccione un turno</option>
+            <option *ngFor="let t of turnos" value="{{t.turno}}">Turno {{t.turno}}</option>
+        </select>
+        <label for="BomberosSelected">Bomberos</label>
+        <ng-select [items]="Bomberos" bindLabel="name" bindValue="id" [multiple]="true" placeholder="Seleccione los bomberos" [(ngModel)]="BomberosSelected">
+        </ng-select>
+    </div>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" (click)="Limpiar()" class="btn btn-warning">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Limpiar</button>
+        <button type="button" (click)="ConsultarCuadres()" class="btn btn-success">
+            <i class="fa fa-table" aria-hidden="true"></i> Consultar</button>
+        <button type="button" (click)="imprimirCuadres()" class="btn btn-dark">
+            <i class="fa fa-table" aria-hidden="true"></i> Imprimir Listado</button>
+        <button type="button" (click)="exportCuadresToExcel()" class="btn btn-info"> Exportar a Excel</button>
+    </div>
+
+
+    <div class="text-center" *ngIf="loadingData">
+        <div class="hidden">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table width="100%" class="table display responsive table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Bombero</th>
+                    <th>Turno</th>
+                    <th>Venta-Combustible</th>
+                    <th>Volumen-Combustible</th>
+                    <th>Total Vendido</th>
+                    <th>Total Efectivo</th>
+                    <th>Total Tarjeta</th>
+                    <th>Total Otros</th>
+                    <th>Total Efectivo Registrado</th>
+                    <th>Venta-Facturación</th>
+                    <th>Diferencia</th>
+                    <th>Opciones</th>
+                    <th>Fecha</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cuadre of Cuadres | paginate: {id:'serverConsulting', itemsPerPage: 5, currentPage: p, totalItems:total }">
+                    <td>{{cuadre.bombero}}</td>
+                    <td>{{cuadre.turno}}</td>
+                    <td>{{cuadre.venta_combustible | number:'1.0-2'}}</td>
+                    <td>{{cuadre.volumen_combustible | number:'1.0-2'}}</td>
+                    <td>{{cuadre.total_vendido | number:'1.0-2'}}</td>
+                    <td>{{cuadre.total_efectivo | number:'1.0-2'}}</td>
+                    <td>{{cuadre.total_tarjeta | number:'1.0-2'}}</td>
+                    <td>{{cuadre.total_otros | number:'1.0-2'}}</td>
+                    <td>{{cuadre.total_efectivo_registrado | number:'1.0-2'}}</td>
+                    <td>{{cuadre.venta_facturacion | number:'1.0-2'}}</td>
+                    <td>{{cuadre.diferencia | number:'1.0-2' }}</td>
+                    <td>{{cuadre.fecha}}</td>
+
+
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Detalles
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <button class="dropdown-item btn btn-outline-dark" (click)="verPagos(cuadre.pagos)">Pagos</button>
+                                    <button class="dropdown-item btn btn-outline-warning" (click)="verVentas(cuadre.ventas)">Ventas</button>
+                                    <button class="dropdown-item btn btn-outline-primary" (click)="imprimir(cuadre)">Imprimir</button>
+                                    <button class="dropdown-item btn btn-outline-success" (click)="verCuadre(cuadre)">Ver cuadre</button>
+                                    <button class="dropdown-item btn btn-outline-danger" (click)="anular_cuadre(cuadre)">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <strong>{{ResumenCuadres.VentaCombustible | number:'1.0-2'}}</strong>
+                    </td>
+                    <td>
+                        <strong>{{ResumenCuadres.VolumenCombustible | number:'1.0-2'}}</strong>
+                    </td>
+                    <td>
+                        <strong>{{ResumenCuadres.TotalVendido | number:'1.0-2'}}</strong>
+                    </td>
+                    <td>
+                        <strong>{{ResumenCuadres.TotalEfectivo | number:'1.0-2'}}</strong>
+                    </td>
+                    <td>
+                        <strong>{{ResumenCuadres.TotalTarjeta | number:'1.0-2'}}</strong>
+                    </td>
+                    <td>
+                        <strong>{{ResumenCuadres.TotalOtros | number:'1.0-2'}}</strong>
+                    </td>
+                    <td>
+                        <strong>{{ResumenCuadres.TotalEfectivoRegistrado | number:'1.0-2'}}</strong>
+                    </td>
+
+                    <td>
+                        <strong>{{ResumenCuadres.VentaFacturacion | number:'1.0-2'}}</strong>
+                    </td>
+                    <td>
+                        <strong>{{ResumenCuadres.Diferencia | number:'1.0-2' }}</strong>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <pagination-controls (pageChange)="ConsultarCuadres($event)" id="serverConsulting" previousLabel="Anterior" nextLabel="Siguiente"
+                screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+        </div>
+    </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

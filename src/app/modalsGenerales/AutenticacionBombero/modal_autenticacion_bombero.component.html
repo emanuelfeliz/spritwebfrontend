@@ -1,0 +1,20 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Autenticación de Bombero</h4>
+    </div>
+    <div class="modal-body">
+      <div class="text-center">
+        <div class="form-group">
+          <label>Código</label>
+          <input (focus)="toggleKeyboardInput(false)" (focusout)="toggleKeyboardInput(true)" id="txtCodigoBombero" name="codigo" [(ngModel)]="codigo"
+            type="password" (keyup.enter)="Autenticar();" class="form-control" placeholder="Código" />
+        </div>
+        <div class="btn-group-vertical">
+          <button [disabled]="codigo==''" (click)="Autenticar()" class="btn btn-success btn-lg">Autenticar</button>
+          <button (click)="cerrar()" class="btn btn-danger btn-lg">(-)Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

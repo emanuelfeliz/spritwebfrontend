@@ -1,0 +1,92 @@
+<app-header titulo="Reporte de Periodos Agendados" menu="Reportes"></app-header>
+
+<div class="container-fluid">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" (click)="getScheduledReports()" id="agendados-tab" data-toggle="tab" href="#agendados" role="tab" aria-controls="agendados" aria-expanded="true">Periodos Agendados</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="getProccessedReports()" id="procesados-tab" data-toggle="tab" href="#procesados" role="tab" aria-controls="procesados">Periodos Procesados</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="agendados" role="tabpanel" aria-labelledby="agendados-tab">
+      <div class="text-center" *ngIf="ReportsScheduled.showLoading">
+        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Fecha-Inicial</th>
+              <th>Fecha-Final</th>
+              <th>Turno-Inicial</th>
+              <th>Turno-Final</th>
+              <th>Referencia-Turno</th>
+              <th>Fecha-Registro</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let agendado of ReportsScheduled.list | paginate: {id:'agendadosConsulting', itemsPerPage: 10, currentPage: p_scheduled, totalItems:ReportsScheduled.total }">
+              <td>{{agendado.id}}</td>
+              <td>{{agendado.start_date}}</td>
+              <td>{{agendado.end_date}}</td>
+              <td>{{agendado.initial_shift}}</td>
+              <td>{{agendado.final_shift}}</td>
+              <td>{{agendado.reference_shift}}</td>
+              <td>{{agendado.register_date}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center">
+          <pagination-controls (pageChange)="getScheduledReports($event)" id="agendadosConsulting" previousLabel="Anterior" nextLabel="Siguiente"
+            screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="procesados" role="tabpanel" aria-labelledby="procesados-tab">
+      <div class="text-center" *ngIf="ReportsProccessed.showLoading">
+        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Fecha-Inicial</th>
+              <th>Fecha-Final</th>
+              <th>Turno-Inicial</th>
+              <th>Turno-Final</th>
+              <th>Referencia-Turno</th>
+              <th>Fecha-Procesado</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let procesado of ReportsProccessed.list | paginate: {id:'procesadosConsulting', itemsPerPage: 10, currentPage: p_proccessed, totalItems:ReportsProccessed.total }">
+              <td>{{procesado.id}}</td>
+              <td>{{procesado.start_date}}</td>
+              <td>{{procesado.end_date}}</td>
+              <td>{{procesado.initial_shift}}</td>
+              <td>{{procesado.final_shift}}</td>
+              <td>{{procesado.reference_shift}}</td>
+              <td>{{procesado.proccessed_date}}</td>
+              <td>
+                <button (click)="visualizar(procesado)" class="btn btn-outline-dark">Visualizar Reporte</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center">
+          <pagination-controls (pageChange)="getProccessedReports($event)" id="procesadosConsulting" previousLabel="Anterior" nextLabel="Siguiente"
+            screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

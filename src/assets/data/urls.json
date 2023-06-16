@@ -1,0 +1,7 @@
+{
+    "baseurl": "http://estacionrandy.dyndns.org:9000/",
+    "hubUrl" : "http://localhost:7000/",
+    "smartApiUrl" :"https://localhost:44389/",
+    "paymentGatewayApi" :"https://localhost:5001/api/",
+    "MicroDashboardApi":"https://localhost:44369/"
+}

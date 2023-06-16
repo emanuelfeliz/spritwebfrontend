@@ -1,0 +1,9 @@
+<div class="alert">
+  <h4 class="text-center">Venta {{i}}</h4>
+  <span class="badge badge-pill badge-warning">Lado {{venta.Pump}} | Manguera {{venta.Nozzle}}</span>
+  <span class="badge badge-pill badge-success">Producto {{venta.ProductName}}</span>
+  <span class="badge badge-pill">{{venta.Volume | number:'1.0-2'}} Galones</span>
+  <span class="badge badge-pill">RD$ {{venta.Money | number:'1.0-2'}}</span>
+  <span class="badge badge-pill">{{venta.EndDate}} {{venta.EndTime}}</span>
+  <button *ngIf="showSelectSaleButton" (click)="SelectSale()" class="btn btn-outline-dark btn-lg">Seleccionar</button>
+</div>

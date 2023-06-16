@@ -1,0 +1,155 @@
+<app-header titulo="Estado de Tanques" menu="Tanques"></app-header>
+
+<div class="container-fluid">
+  <div class="form-inline" *ngIf="!updateTanksTimer">
+    <button type="button" name="button" class="btn btn-outline-primary" (click)="getTanques()">Actualizar</button>
+  </div>
+    <div class="row row-flex row-flex-wrap" *ngIf="!showBigTanks">
+      <div class="form-group text-center col-md-6 col-xs-12" *ngFor="let tanque of EstadoTanques;let i=index">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th class="text-center">Combustible</th>
+              <td class="text-center">{{tanque.producto}}</td>
+            </tr>
+            <tr>
+              <th class="text-center">{{tanque.capacity}}</th>
+              <td class="text-center">Lleno: {{tanque.lleno}}%</td>
+            </tr>
+            <tr>
+              <th class="text-center">Volumen Actual</th>
+              <td class="text-center">{{tanque.actualVolume | number:'1.0-2'}}</td>
+            </tr>
+            <tr *ngIf="tanque.ProbeInformation.canShowConsoleVolume">
+              <th class="text-center">Volumen Consola</th>
+              <td class="text-center">{{tanque.consoleVolume | number:'1.0-2'}}</td>
+            </tr>
+            <tr>
+              <th class="">
+                Tanque
+                <input min="1" #volumenEditable type="number" class="form-control">
+              </th>
+              <td class="text-center">
+                <button (click)="updateVolume(tanque,volumenEditable.value,true)"
+                  class="btn btn-success">Ingresar</button>
+                <button (click)="updateVolume(tanque,volumenEditable.value,false)"
+                  class="btn btn-danger">Egresar</button>
+                <button (click)="registrarMedida(tanque)" class="btn btn-primary">Medida</button>
+                <button (click)="verVenta(tanque.last_sale_id)" class="btn btn-warning">Última Venta</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <svg id="{{tanque.tanque3D.id}}" width="25%" height="200"></svg>
+      </div>
+
+    </div>
+    <div *ngIf="showBigTanks">
+      <div class="row row-flex row-flex-wrap" *ngFor="let tanque of EstadoTanques;let i=index">
+        <div class="form-group text-center col-lg-5 col-md-6 col-xs-12">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th class="text-center">Combustible</th>
+                <td class="text-center">{{tanque.producto}}</td>
+              </tr>
+              <tr>
+                <th class="text-center">{{tanque.capacity}}</th>
+                <td class="text-center">Lleno: {{tanque.lleno}}%</td>
+              </tr>
+              <tr>
+                <th class="text-center">Volumen Venta</th>
+                <td class="text-center">{{tanque.actualVolume | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.canShowConsoleVolume">
+                <th class="text-center">Volumen Consola</th>
+                <td class="text-center">{{tanque.consoleVolume | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showFuelInch">
+                <th class="text-center">Pulgadas Combustible</th>
+                <td class="text-center">{{tanque.Probe.FuelInch | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showCalculatedFuelInch">
+                <th class="text-center">Pulgadas combustible calculado</th>
+                <td class="text-center">{{tanque.Probe.CalculatedFuelInch | number:'1.0-2'}}</td>
+                <!-- </tr>
+              <tr *ngIf="tanque.ProbeInformation.showProductHeight">
+                <th class="text-center">Altura del producto</th>
+                <td class="text-center">{{tanque.Probe.ProductHeight | number:'1.0-2'}}</td>
+              </tr> -->
+              </tr>
+              <tr>
+                <th class="text-center">Diferencia volumen</th>
+                <td class="text-center">{{tanque.actualVolume - tanque.consoleVolume | number:'1.0-2'}}</td>
+  
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showWaterVolume">
+                <th class="text-center">Volumen del agua</th>
+                <td class="text-center">{{tanque.Probe.WaterVolume | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showWaterInch">
+                <th class="text-center">Pulgadas de agua</th>
+                <td class="text-center">{{tanque.Probe.WaterInch | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showCalculatedWaterInch">
+                <th class="text-center">Pulgadas de agua calculadas</th>
+                <td class="text-center">{{tanque.Probe.CalculatedWaterInch | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showWaterHeight">
+                <th class="text-center">Altura del agua</th>
+                <td class="text-center">{{tanque.Probe.WaterHeight | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showProductDensity">
+                <th class="text-center">Densidad del producto</th>
+                <td class="text-center">{{tanque.Probe.ProductDensity | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showProductMass">
+                <th class="text-center">Masa del producto</th>
+                <td class="text-center">{{tanque.Probe.ProductMass | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showProductTCVolume">
+                <th class="text-center">Volumen de Producto TC</th>
+                <td class="text-center">{{tanque.Probe.ProductTCVolume | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showProductUllage">
+                <th class="text-center">Producto por llenar</th>
+                <td class="text-center">{{tanque.Probe.ProductUllage | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showCalculatedProductVolume">
+                <th class="text-center">Volumen del producto calculado</th>
+                <td class="text-center">{{tanque.Probe.CalculatedProductVolume | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showCalculatedWaterVolume">
+                <th class="text-center">Volumen de agua calculadas</th>
+                <td class="text-center">{{tanque.Probe.CalculatedWaterVolume | number:'1.0-2'}}</td>
+              </tr>
+              <tr *ngIf="tanque.ProbeInformation.showPercentageProbes">
+                <th class="text-center">Porcentages de las probetas</th>
+                <td class="text-center">{{tanque.Probe.PercentageProbes | number:'1.0-2'}}</td>
+              </tr>
+  
+              <tr>
+                <th class="">
+                  Tanque
+                  <input min="1" #volumenEditable type="number" class="form-control">
+                </th>
+                <td class="text-center">
+                  <button (click)="updateVolume(tanque,volumenEditable.value,true)"
+                    class="btn btn-success">Ingresar</button>
+                  <button (click)="updateVolume(tanque,volumenEditable.value,false)"
+                    class="btn btn-danger">Egresar</button>
+                  <button (click)="registrarMedida(tanque)" class="btn btn-primary">Medida</button>
+                  <button (click)="verVenta(tanque.last_sale_id)" class="btn btn-warning">Última Venta</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="form-group text-center col-lg-7 col-md-6 col-xs-12">
+          <svg id="{{tanque.tanque3D.id}}" width="115%" height="400"></svg>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

@@ -1,0 +1,89 @@
+<app-header titulo="Bomberos" menu="Accesos"></app-header>
+<div class="container-fluid" style="display: block;">
+  <button (click)="botones();" class="btn btn-outline-primary" type="button" name="button">
+    {{textoBoton}}
+  </button>
+  <form *ngIf="creando || editando" #formBombero="ngForm" (ngSubmit)="onSubmit();">
+    <div class="row row-flex row-flex-wrap">
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':name.value=='' && name.touched}">
+        <label class="form-control-feedback" for="name">Nombre</label>
+        <input type="text" class="form-control" #name="ngModel" [(ngModel)]="bombero.name" required placeholder="Nombre" name="name">
+        <div class="form-control-feedback" *ngIf="name.touched && name.value==''">
+          El nombre del bombero es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':codigo.value=='' && codigo.touched}">
+        <label class="form-control-feedback" for="codigo">Código</label>
+        <input type="text" class="form-control" #codigo="ngModel" [(ngModel)]="bombero.codigo" required placeholder="Código" name="codigo">
+        <div class="form-control-feedback" *ngIf="codigo.touched && codigo.value==''">
+          El código del bombero es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="is_master" name="is_master" type="checkbox" [checked]="bombero.is_master" (change)="bombero.is_master=!bombero.is_master"
+            value="" checked="" class="checkbox-template">
+          <label for="is_master">Es Master?</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6-xs-12">
+        <input class="checkbox-template" type="checkbox" name="activo" id="" [(ngModel)]="bombero.activo">
+        <label>Activo?</label>
+      </div>
+      <div class="form-group col-md-12 col-xs-12">
+        <h3 class="text-center">Seleccione los Lados</h3>
+        <div class="row row-flex row-flex-wrap">
+          <div class="form-control col-md-3" *ngFor="let l of lados;let i=index">
+            <div class="i-checks">
+              <input id="checkboxCustom{{l.Lado}}" name="Selected" [checked]="lados[i].Selected" (change)="lados[i].Selected=!lados[i].Selected"
+                type="checkbox" value="" class="checkbox-template">
+              <label for="checkboxCustom{{l.Lado}}">Lado {{l.Lado}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button [disabled]="!validateModel(bombero)" class="btn btn-success" type="submit">{{creando? "Guardar":"Guardar cambios"}}</button>
+  </form>
+
+  <hr>
+  <div class="text-center" *ngIf="loading">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Cargando...</span>
+  </div>
+  <div class="table-responsive">
+    <table width="100%" class="table table-striped table-hove">
+      <thead>
+        <tr>
+          <th class="text-center">Id</th>
+          <th class="text-center">Nombre</th>
+          <th class="text-center">Código</th>
+          <th class="text-center">Maestro?</th>
+          <th class="text-center">Lados asignados</th>
+          <th class="text-center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bombero of bomberos">
+          <td class="text-center">{{bombero.id}}</td>
+          <td class="text-center">{{bombero.name}}</td>
+          <td class="text-center">{{bombero.codigo}}</td>
+          <td class="text-center">
+            <button *ngIf="bombero.is_master" class="btn btn-success">Si</button>
+            <button *ngIf="!bombero.is_master" class="btn btn-danger">No</button>
+          </td>
+          <td class="text-center">
+            {{!bombero.is_master ? 'N/A' : bombero.lados}}
+          </td>
+
+          <td class="text-center">
+            <button (click)="editarBombero(bombero)" type="button" class="btn btn-md btn-outline-warning">Modificar</button>
+            <button (click)="confirmarBorrarBombero(bombero)" type="button" class="btn btn-md btn-outline-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

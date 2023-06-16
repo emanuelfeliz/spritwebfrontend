@@ -1,0 +1,56 @@
+<app-header titulo="Consulta de Cuadres Bomberos" menu="Cuadres"></app-header>
+<div class="container-fluid">
+
+    <div class="text-center" *ngIf="loadingData">
+        <div class="hidden">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table width="100%" class="table display responsive table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Bombero</th>
+                    <th>Turno</th>
+                    <th>Fecha</th>
+                    <th>Opciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let cuadre of Cuadres | paginate: {id:'serverConsulting', itemsPerPage: 5, currentPage: p, totalItems:total }">
+                    <td>{{cuadre.bombero}}</td>
+                    <td>{{cuadre.turno}}</td>
+                    <td>{{cuadre.fecha}}</td>
+
+
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Detalles
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <button class="dropdown-item btn btn-outline-primary"
+                                        (click)="imprimir(cuadre)">Imprimir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <div class="text-center">
+            <pagination-controls (pageChange)="ConsultarCuadres($event)" id="serverConsulting" previousLabel="Anterior"
+                nextLabel="Siguiente" screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página"
+                screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+        </div>
+    </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

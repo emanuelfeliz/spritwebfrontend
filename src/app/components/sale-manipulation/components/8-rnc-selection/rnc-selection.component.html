@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="form-inline">
+    <button type="button" name="button" class="btn btn-outline-primary btn-lg" (click)="GoBack()">(*) Volver</button>
+  </div>
+  <app-sale *ngIf="venta" [venta]="venta" [i]="indice"></app-sale>
+  <h3 class="text-center">Introduzca RNC</h3>
+  <div class="text-center">
+    <div>
+      <div class="form-group">
+        <label for="name">Cliente</label>
+        <input class="form-control" disabled type="text" name="name" [(ngModel)]="name" id="">
+      </div>
+      <div class="text-center" *ngIf="loadingData">
+        <div class="hidden">
+          <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <input class="form-control" (keyup.enter)="keyboard && getClientData()" name="rncCliente" [(ngModel)]="rncCliente" type="text"
+        id="">
+    </div>
+    <div class="btn-group-vertical" role="group" aria-label="Basic example">
+      <button [disabled]="!clientInfoReady" (click)="continuar()" type="button" class="btn btn-success btn-lg">(1) Continuar</button>
+    </div>
+  </div>
+</div>

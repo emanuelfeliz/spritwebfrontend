@@ -1,0 +1,36 @@
+<app-header titulo="Consola de Servicio" menu="Configuración"></app-header>
+
+<div class="container-fluid" style="display: block;">
+  <div class="text-center">
+    <h2>Estado del Servicio</h2>
+    <img *ngIf="!serviceStatus" src="assets/images/power-button-off.png" alt="">
+    <img *ngIf="serviceStatus" src="assets/images/power-button-on.png" alt="">
+  </div> 
+  <div>
+      <button (click)="isRunning()" class="btn btn-outline-dark">Refrescar</button>
+      <button (click)="Iniciar()" class="btn btn-outline-success">Iniciar Servicio</button>
+      <button (click)="Detener()" class="btn btn-outline-danger">Detener Servicio</button>
+  </div>
+
+  <h2 class="text-center">Procesos</h2>
+  <div class="row row-flex row-flex-wrap">
+    <div class="card" *ngFor="let module of modules">
+      <img width="100px" *ngIf="module.status==='ACTIVATED_PROCESSES'" src="assets/images/power-button-on.png" >
+      <img width="100px" *ngIf="module.status==='DEACTIVATED_PROCESSES'" src="assets/images/power-button-off.png" >
+      <img width="100px" *ngIf="module.status==='PARTIALLY_PROCESSES'" src="assets/images/power-button-warning.png" >
+      <img width="100px" *ngIf="module.status==='WITHOUT_PROCESSES'" src="assets/images/power-button-gray.png" >
+      <div class="card-body">
+        <h5 class="card-title">{{module.Name}}</h5>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let process of module.Procceses">
+            <span>{{process.Name}} | {{process.Interval}}</span>
+            <img (click)="activeProcess(module,process)" style="cursor: pointer;" width="20px;" *ngIf="!process.Activated" src="assets/images/power-button-off.png" alt="">
+            <img (click)="deactiveProcess(module,process)" style="cursor: pointer;" width="20px;" *ngIf="process.Activated" src="assets/images/power-button-on.png" alt="">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

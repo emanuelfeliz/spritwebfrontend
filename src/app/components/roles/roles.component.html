@@ -1,0 +1,833 @@
+<app-header titulo="Roles" menu="Accesos"></app-header>
+<div class="container-fluid" style="display: block;">
+  <button (click)="botones();" class="btn btn-outline-primary" type="button" name="button">
+    {{textoBoton}}
+  </button>
+  <form *ngIf="creando || editando" #formRol="ngForm" (ngSubmit)="onSubmit();">
+    <div class="row row-flex row-flex-wrap">
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':nombre.value=='' && nombre.touched}">
+        <label class="form-control-feedback" for="description">Rol</label>
+        <input type="text" class="form-control" #nombre="ngModel" [(ngModel)]="rol.nombre" required placeholder="Rol" name="nombre">
+        <div class="form-control-feedback" *ngIf="nombre.touched && nombre.value==''">
+          El nombre del rol es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="listado_ventas" name="listado_ventas" type="checkbox" [checked]="rol.listado_ventas" (change)="rol.listado_ventas=!rol.listado_ventas"
+            value="" checked="" class="checkbox-template">
+          <label for="listado_ventas">Listado de Ventas</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="listado_ventas_limitado">Listado de Ventas Limitado(0 Sin Límite)</label>
+        <input type="number" class="form-control" #listado_ventas_limitado="ngModel" [(ngModel)]="rol.listado_ventas_limitado" required
+          placeholder="Listado de Ventas Limitado" name="listado_ventas_limitado">
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="numberoftimecanedittally">Cantidad de veces que puede editar el cuadre</label>
+        <input type="number" class="form-control" [(ngModel)]="rol.numberoftimecanedittally" required
+          placeholder="Cantidad de veces que puede editar el cuadre" name="numberoftimecanedittally">
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="estado_tanques" name="estado_tanques" type="checkbox" [checked]="rol.estado_tanques" (change)="rol.estado_tanques=!rol.estado_tanques"
+            value="" checked="" class="checkbox-template">
+          <label for="estado_tanques">Estado de Tanques</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="pumptablet" name="pumptablet" type="checkbox" [checked]="rol.pumptablet" (change)="rol.pumptablet=!rol.pumptablet"
+            value="" checked="" class="checkbox-template">
+          <label for="pumptablet">PumpTablet</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="reporte_turno_cerrados" name="reporte_turno_cerrados" type="checkbox" [checked]="rol.reporte_turno_cerrados" (change)="rol.reporte_turno_cerrados=!rol.reporte_turno_cerrados"
+            value="" checked="" class="checkbox-template">
+          <label for="reporte_turno_cerrados">Reporte de Turnos Cerrados</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="reporte_turno_curso" name="reporte_turno_curso" type="checkbox" [checked]="rol.reporte_turno_curso" (change)="rol.reporte_turno_curso=!rol.reporte_turno_curso"
+            value="" checked="" class="checkbox-template">
+          <label for="reporte_turno_curso">Reporte de Turnos en Curso</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="reporte_turno_periodo" name="reporte_turno_periodo" type="checkbox" [checked]="rol.reporte_turno_periodo" (change)="rol.reporte_turno_periodo=!rol.reporte_turno_periodo"
+            value="" checked="" class="checkbox-template">
+          <label for="reporte_turno_periodo">Reporte de Turnos por Periodo</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="configuracion_sistema" name="configuracion_sistema" type="checkbox" [checked]="rol.configuracion_sistema" (change)="rol.configuracion_sistema=!rol.configuracion_sistema"
+            value="" checked="" class="checkbox-template">
+          <label for="configuracion_sistema">Configuración del Sistema</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="consulta_ventas" name="consulta_ventas" type="checkbox" [checked]="rol.consulta_ventas" (change)="rol.consulta_ventas=!rol.consulta_ventas"
+            value="" checked="" class="checkbox-template">
+          <label for="consulta_ventas">Consulta de Ventas</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="consulta_ventas_limitado">Consulta de Ventas Limitado(0 Sin Límite)</label>
+        <input type="number" class="form-control" #consulta_ventas_limitado="ngModel" [(ngModel)]="rol.consulta_ventas_limitado"
+          required placeholder="Consulta de Ventas Limitado" name="consulta_ventas_limitado">
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="consulta_comprobantes" name="consulta_comprobantes" type="checkbox" [checked]="rol.consulta_comprobantes" (change)="rol.consulta_comprobantes=!rol.consulta_comprobantes"
+            value="" checked="" class="checkbox-template">
+          <label for="consulta_comprobantes">Consulta de Comprobantes</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="configuracion_comprobantes" name="configuracion_comprobantes" type="checkbox" [checked]="rol.configuracion_comprobantes"
+            (change)="rol.configuracion_comprobantes=!rol.configuracion_comprobantes" value="" checked="" class="checkbox-template">
+          <label for="configuracion_comprobantes">Configuración de Comprobantes</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="categorias" name="categorias" type="checkbox" [checked]="rol.categorias" (change)="rol.categorias=!rol.categorias"
+            value="" checked="" class="checkbox-template">
+          <label for="categorias">Categorías</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="productos" name="productos" type="checkbox" [checked]="rol.productos" (change)="rol.productos=!rol.productos"
+            value="" checked="" class="checkbox-template">
+          <label for="productos">Productos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="inventario" name="inventario" type="checkbox" [checked]="rol.inventario" (change)="rol.inventario=!rol.inventario"
+            value="" checked="" class="checkbox-template">
+          <label for="inventario">Inventario</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="ingresos" name="ingresos" type="checkbox" [checked]="rol.ingresos" (change)="rol.ingresos=!rol.ingresos" value=""
+            checked="" class="checkbox-template">
+          <label for="ingresos">Ingresos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="roles" name="roles" type="checkbox" [checked]="rol.roles" (change)="rol.roles=!rol.roles" value="" checked=""
+            class="checkbox-template">
+          <label for="roles">Roles</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="usuarios" name="usuarios" type="checkbox" [checked]="rol.usuarios" (change)="rol.usuarios=!rol.usuarios" value=""
+            checked="" class="checkbox-template">
+          <label for="usuarios">Usuarios</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="sales" name="sales" type="checkbox" [checked]="rol.sales" (change)="rol.sales=!rol.sales" value="" checked=""
+            class="checkbox-template">
+          <label for="sales">Facturación</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="aperturar_turno" name="aperturar_turno" type="checkbox" [checked]="rol.aperturar_turno" (change)="rol.aperturar_turno=!rol.aperturar_turno"
+            value="" checked="" class="checkbox-template">
+          <label for="aperturar_turno">Aperturar Turno</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="insertar_cuadre" name="insertar_cuadre" type="checkbox" [checked]="rol.insertar_cuadre" (change)="rol.insertar_cuadre=!rol.insertar_cuadre"
+            value="" checked="" class="checkbox-template">
+          <label for="insertar_cuadre">Insertar cuadre</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="bomberos" name="bomberos" type="checkbox" [checked]="rol.bomberos" (change)="rol.bomberos=!rol.bomberos" value=""
+            checked="" class="checkbox-template">
+          <label for="bomberos">Bomberos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="configuraciontanques" name="configuraciontanques" type="checkbox" [checked]="rol.configuraciontanques" (change)="rol.configuraciontanques=!rol.configuraciontanques"
+            value="" checked="" class="checkbox-template">
+          <label for="configuraciontanques">Configuración de Tanques</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="expiracion_sesion">Expiración de Sesión en Minutos(0 Sin Expirar)</label>
+        <input type="number" class="form-control" #expiracion_sesion="ngModel" [(ngModel)]="rol.expiracion_sesion" required placeholder="Expiración sesión minutos"
+          name="expiracion_sesion">
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="historial_tanques" name="historial_tanques" type="checkbox" [checked]="rol.historial_tanques" (change)="rol.historial_tanques=!rol.historial_tanques"
+            value="" checked="" class="checkbox-template">
+          <label for="historial_tanques">Historial de Tanques</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="consultar_cuadres" name="consultar_cuadres" type="checkbox" [checked]="rol.consultar_cuadres" (change)="rol.consultar_cuadres=!rol.consultar_cuadres"
+            value="" checked="" class="checkbox-template">
+          <label for="consultar_cuadres">Consultar Cuadres</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="ingresar_combustible" name="ingresar_combustible" type="checkbox" [checked]="rol.ingresar_combustible" (change)="rol.ingresar_combustible=!rol.ingresar_combustible"
+            value="" checked="" class="checkbox-template">
+          <label for="ingresar_combustible">Ingresar Combustible</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="egresar_combustible" name="egresar_combustible" type="checkbox" [checked]="rol.egresar_combustible" (change)="rol.egresar_combustible=!rol.egresar_combustible"
+            value="" checked="" class="checkbox-template">
+          <label for="egresar_combustible">Egresar Combustible</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="movimientos_tanques" name="movimientos_tanques" type="checkbox" [checked]="rol.movimientos_tanques" (change)="rol.movimientos_tanques=!rol.movimientos_tanques"
+            value="" checked="" class="checkbox-template">
+          <label for="movimientos_tanques">Movimientos de Tanques</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="configuracion_horario_turnos" name="configuracion_horario_turnos" type="checkbox" [checked]="rol.configuracion_horario_turnos"
+            (change)="rol.configuracion_horario_turnos=!rol.configuracion_horario_turnos" value="" checked="" class="checkbox-template">
+          <label for="configuracion_horario_turnos">Configuración Horario Turnos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="cerrar_dia" name="cerrar_dia" type="checkbox" [checked]="rol.cerrar_dia" (change)="rol.cerrar_dia=!rol.cerrar_dia"
+            value="" checked="" class="checkbox-template">
+          <label for="cerrar_dia">Cerrar Dia</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="validar_cuadre" name="validar_cuadre" type="checkbox" [checked]="rol.validar_cuadre" (change)="rol.validar_cuadre=!rol.validar_cuadre"
+            value="" checked="" class="checkbox-template">
+          <label for="validar_cuadre">Validar Cuadre</label>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="tpo_prepago" name="tpo_prepago" type="checkbox" [checked]="rol.tpo_prepago" (change)="rol.tpo_prepago=!rol.tpo_prepago"
+            value="" checked="" class="checkbox-template">
+          <label for="tpo_prepago">TPO Prepago</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="tpo_cheques" name="tpo_cheques" type="checkbox" [checked]="rol.tpo_cheques" (change)="rol.tpo_cheques=!rol.tpo_cheques"
+            value="" checked="" class="checkbox-template">
+          <label for="tpo_cheques">TPO Cheques</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="tpo_vale_credito" name="tpo_vale_credito" type="checkbox" [checked]="rol.tpo_vale_credito" (change)="rol.tpo_vale_credito=!rol.tpo_vale_credito"
+            value="" checked="" class="checkbox-template">
+          <label for="tpo_vale_credito">TPO Vales Crédito</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="tpo_vale_planta" name="tpo_vale_planta" type="checkbox" [checked]="rol.tpo_vale_planta" (change)="rol.tpo_vale_planta=!rol.tpo_vale_planta"
+            value="" checked="" class="checkbox-template">
+          <label for="tpo_vale_planta">TPO Vales Planta</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="tpo_vale_mensajeria" name="tpo_vale_mensajeria" type="checkbox" [checked]="rol.tpo_vale_mensajeria" (change)="rol.tpo_vale_mensajeria=!rol.tpo_vale_mensajeria"
+            value="" checked="" class="checkbox-template">
+          <label for="tpo_vale_mensajeria">TPO Vales Mensajeria</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="tpo_vale_consumo" name="tpo_vale_consumo" type="checkbox" [checked]="rol.tpo_vale_consumo" (change)="rol.tpo_vale_consumo=!rol.tpo_vale_consumo"
+            value="" checked="" class="checkbox-template">
+          <label for="tpo_vale_consumo">TPO Vales Consumo</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="tpo_calibracion_mezcla" name="tpo_calibracion_mezcla" type="checkbox" [checked]="rol.tpo_calibracion_mezcla" (change)="rol.tpo_calibracion_mezcla=!rol.tpo_calibracion_mezcla"
+            value="" checked="" class="checkbox-template">
+          <label for="tpo_calibracion_mezcla">TPO Calibración Mezcla</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="tpo_calibracion_mantenimiento" name="tpo_calibracion_mantenimiento" type="checkbox" [checked]="rol.tpo_calibracion_mantenimiento"
+            (change)="rol.tpo_calibracion_mantenimiento=!rol.tpo_calibracion_mantenimiento" value="" checked="" class="checkbox-template">
+          <label for="tpo_calibracion_mantenimiento">TPO Calibración Mantenimiento</label>
+        </div>
+      </div>
+        <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="tpo_pago_contado" name="tpo_pago_contado" type="checkbox" [checked]="rol.tpo_pago_contado"
+            (change)="rol.tpo_pago_contado=!rol.tpo_pago_contado" value="" checked="" class="checkbox-template">
+          <label for="tpo_pago_contado">Pago al contado</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="tpo_pago_contado_desc" name="tpo_pago_contado_desc" type="checkbox" [checked]="rol.tpo_pago_contado_desc"
+            (change)="rol.tpo_pago_contado_desc=!rol.tpo_pago_contado_desc" value="" checked="" class="checkbox-template">
+          <label for="tpo_pago_contado_desc">Pago contado desc. Instante</label>
+        </div>
+      </div>
+
+
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="ver_galones_combustible_cuadre" name="ver_galones_combustible_cuadre" type="checkbox" [checked]="rol.ver_galones_combustible_cuadre"
+            (change)="rol.ver_galones_combustible_cuadre=!rol.ver_galones_combustible_cuadre" value="" checked="" class="checkbox-template">
+          <label for="ver_galones_combustible_cuadre">Ver Galones Comb. Cuadre</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="ver_ventas_combustible_cuadre" name="ver_ventas_combustible_cuadre" type="checkbox" [checked]="rol.ver_ventas_combustible_cuadre"
+            (change)="rol.ver_ventas_combustible_cuadre=!rol.ver_ventas_combustible_cuadre" value="" checked="" class="checkbox-template">
+          <label for="ver_ventas_combustible_cuadre">Ver Ventas Comb. Cuadre</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="ver_ventas_facturacion_cuadre" name="ver_ventas_facturacion_cuadre" type="checkbox" [checked]="rol.ver_ventas_facturacion_cuadre"
+            (change)="rol.ver_ventas_facturacion_cuadre=!rol.ver_ventas_facturacion_cuadre" value="" checked="" class="checkbox-template">
+          <label for="ver_ventas_facturacion_cuadre">Ver Ventas Fact. Cuadre</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="ver_total_vendido_cuadre" name="ver_total_vendido_cuadre" type="checkbox" [checked]="rol.ver_total_vendido_cuadre"
+            (change)="rol.ver_total_vendido_cuadre=!rol.ver_total_vendido_cuadre" value="" checked="" class="checkbox-template">
+          <label for="ver_total_vendido_cuadre">Ver Total Vend. Cuadre</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="ver_total_tarjeta_cuadre" name="ver_total_tarjeta_cuadre" type="checkbox" [checked]="rol.ver_total_tarjeta_cuadre"
+            (change)="rol.ver_total_tarjeta_cuadre=!rol.ver_total_tarjeta_cuadre" value="" checked="" class="checkbox-template">
+          <label for="ver_total_tarjeta_cuadre">Ver Total Tarj. Cuadre</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="ver_total_otros_cuadre" name="ver_total_otros_cuadre" type="checkbox" [checked]="rol.ver_total_otros_cuadre" (change)="rol.ver_total_otros_cuadre=!rol.ver_total_otros_cuadre"
+            value="" checked="" class="checkbox-template">
+          <label for="ver_total_otros_cuadre">Ver Total Otros. Cuadre</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="ver_total_efectivo_cuadre" name="ver_total_efectivo_cuadre" type="checkbox" [checked]="rol.ver_total_efectivo_cuadre"
+            (change)="rol.ver_total_efectivo_cuadre=!rol.ver_total_efectivo_cuadre" value="" checked="" class="checkbox-template">
+          <label for="ver_total_efectivo_cuadre">Ver Total Efec. Cuadre</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="anular_pago" name="anular_pago" type="checkbox" [checked]="rol.anular_pago" (change)="rol.anular_pago=!rol.anular_pago"
+            value="" checked="" class="checkbox-template">
+          <label for="anular_pago">Anular Pago</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="anular_cuadre" name="anular_cuadre" type="checkbox" [checked]="rol.anular_cuadre" (change)="rol.anular_cuadre=!rol.anular_cuadre"
+            value="" checked="" class="checkbox-template">
+          <label for="anular_cuadre">Anular Cuadre</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="eliminar_apertura" name="eliminar_apertura" type="checkbox" [checked]="rol.eliminar_apertura" (change)="rol.eliminar_apertura=!rol.eliminar_apertura"
+            value="" checked="" class="checkbox-template">
+          <label for="eliminar_apertura">Eliminar Apertura</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="depositos" name="depositos" type="checkbox" [checked]="rol.depositos" (change)="rol.depositos=!rol.depositos"
+            value="" checked="" class="checkbox-template">
+          <label for="depositos">Depósitos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="pagos" name="pagos" type="checkbox" [checked]="rol.pagos" (change)="rol.pagos=!rol.pagos" value="" checked=""
+            class="checkbox-template">
+          <label for="pagos">Pagos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="permiso_firmante" name="permiso_firmante" type="checkbox" [checked]="rol.permiso_firmante" (change)="rol.permiso_firmante=!rol.permiso_firmante"
+            value="" checked="" class="checkbox-template">
+          <label for="permiso_firmante">Permiso Firmante</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="cerrar_por_lado" name="cerrar_por_lado" type="checkbox" [checked]="rol.cerrar_por_lado" (change)="rol.cerrar_por_lado=!rol.cerrar_por_lado"
+            value="" checked="" class="checkbox-template">
+          <label for="cerrar_por_lado">Cerrar Por Lado</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="cerrar_por_dispensador" name="cerrar_por_dispensador" type="checkbox" [checked]="rol.cerrar_por_dispensador" (change)="rol.cerrar_por_dispensador=!rol.cerrar_por_dispensador"
+            value="" checked="" class="checkbox-template">
+          <label for="cerrar_por_dispensador">Cerrar Por Dispensador</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="aperturar_por_lado" name="aperturar_por_lado" type="checkbox" [checked]="rol.aperturar_por_lado" (change)="rol.aperturar_por_lado=!rol.aperturar_por_lado"
+            value="" checked="" class="checkbox-template">
+          <label for="aperturar_por_lado">Aperturar por Lado</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="aperturar_por_dispensador" name="aperturar_por_dispensador" type="checkbox" [checked]="rol.aperturar_por_dispensador"
+            (change)="rol.aperturar_por_dispensador=!rol.aperturar_por_dispensador" value="" checked="" class="checkbox-template">
+          <label for="aperturar_por_dispensador">Aperturar por Dispensador</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="aperturar_por_dispensador_sin_importar_turno" name="aperturar_por_dispensador_sin_importar_turno" type="checkbox"
+            [checked]="rol.aperturar_por_dispensador_sin_importar_turno" (change)="rol.aperturar_por_dispensador_sin_importar_turno=!rol.aperturar_por_dispensador_sin_importar_turno"
+            value="" checked="" class="checkbox-template">
+          <label for="aperturar_por_dispensador_sin_importar_turno">Aperturar por Dispensador Sin importar Turno?</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="func_abrir_cerrar_seleccionados" name="func_abrir_cerrar_seleccionados" type="checkbox" [checked]="rol.func_abrir_cerrar_seleccionados"
+            (change)="rol.func_abrir_cerrar_seleccionados=!rol.func_abrir_cerrar_seleccionados" value="" checked="" class="checkbox-template">
+          <label for="func_abrir_cerrar_seleccionados">Func. Abrir y cerrar lados Seleccionados?</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="agregar_pagos_cuadre" name="agregar_pagos_cuadre" type="checkbox" [checked]="rol.agregar_pagos_cuadre" (change)="rol.agregar_pagos_cuadre=!rol.agregar_pagos_cuadre"
+            value="" checked="" class="checkbox-template">
+          <label for="agregar_pagos_cuadre">Agregar pagos en cuadre?</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="agregar_campos_dinamicos_cuadre" name="agregar_campos_dinamicos_cuadre" type="checkbox" [checked]="rol.agregar_campos_dinamicos_cuadre"
+            (change)="rol.agregar_campos_dinamicos_cuadre=!rol.agregar_campos_dinamicos_cuadre" value="" checked="" class="checkbox-template">
+          <label for="agregar_campos_dinamicos_cuadre">Agregar campos dinámicos en cuadre?</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="agregar_depositos_cuadre" name="agregar_depositos_cuadre" type="checkbox" [checked]="rol.agregar_depositos_cuadre"
+            (change)="rol.agregar_depositos_cuadre=!rol.agregar_depositos_cuadre" value="" checked="" class="checkbox-template">
+          <label for="agregar_depositos_cuadre">Agregar depósitos en cuadre?</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="acciones_servicio" name="acciones_servicio" type="checkbox" [checked]="rol.acciones_servicio" (change)="rol.acciones_servicio=!rol.acciones_servicio"
+            value="" checked="" class="checkbox-template">
+          <label for="acciones_servicio">Acciones Servicio?</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="cierres_automaticos" name="cierres_automaticos" type="checkbox" [checked]="rol.cierres_automaticos" (change)="rol.cierres_automaticos=!rol.cierres_automaticos"
+            value="" checked="" class="checkbox-template">
+          <label for="cierres_automaticos">Cierres Autómaticos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="eliminar_deposito" name="eliminar_deposito" type="checkbox" [checked]="rol.eliminar_deposito" (change)="rol.eliminar_deposito=!rol.eliminar_deposito"
+            value="" checked="" class="checkbox-template">
+          <label for="eliminar_deposito">Eliminar Depósitos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="editar_apertura_cerrada" name="editar_apertura_cerrada" type="checkbox" [checked]="rol.editar_apertura_cerrada"
+            (change)="rol.editar_apertura_cerrada=!rol.editar_apertura_cerrada" value="" checked="" class="checkbox-template">
+          <label for="editar_apertura_cerrada">Editar Apertura Cerrada</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="prices_changes" name="prices_changes" type="checkbox" [checked]="rol.prices_changes" (change)="rol.prices_changes=!rol.prices_changes"
+            value="" checked="" class="checkbox-template">
+          <label for="prices_changes">Cambio de Precios</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="clientes_fidelizados" name="clientes_fidelizados" type="checkbox" [checked]="rol.clientes_fidelizados" (change)="rol.clientes_fidelizados=!rol.clientes_fidelizados"
+            value="" checked="" class="checkbox-template">
+          <label for="clientes_fidelizados">Clientes Fidelizados</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="suppress_voucher" name="suppress_voucher" type="checkbox" [checked]="rol.suppress_voucher" (change)="rol.suppress_voucher=!rol.suppress_voucher"
+            value="" checked="" class="checkbox-template">
+          <label for="suppress_voucher">Anular Comprobantes</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="exportar_listados" name="exportar_listados" type="checkbox" [checked]="rol.exportar_listados" (change)="rol.exportar_listados=!rol.exportar_listados"
+            value="" checked="" class="checkbox-template">
+          <label for="exportar_listados">Exportar Listados</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="is_bombero" name="is_bombero" type="checkbox" [checked]="rol.is_bombero" (change)="rol.is_bombero=!rol.is_bombero"
+            value="" checked="" class="checkbox-template">
+          <label for="is_bombero">Es un bombero</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="modify_voucher" name="modify_voucher" type="checkbox" [checked]="rol.modify_voucher" (change)="rol.modify_voucher=!rol.modify_voucher"
+            value="" checked="" class="checkbox-template">
+          <label for="modify_voucher">Modificar Comprobantes</label>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="add_rnc" name="add_rnc" type="checkbox" [checked]="rol.add_rnc" (change)="rol.add_rnc=!rol.add_rnc" value="" checked=""
+            class="checkbox-template">
+          <label for="add_rnc">Agregar RNC</label>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="configuracion_puntajes_fidelidad" name="configuracion_puntajes_fidelidad" type="checkbox" [checked]="rol.configuracion_puntajes_fidelidad"
+            (change)="rol.configuracion_puntajes_fidelidad=!rol.configuracion_puntajes_fidelidad" value="" checked="" class="checkbox-template">
+          <label for="configuracion_puntajes_fidelidad">Configurar puntajes de fidelidad</label>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="bombero_open_more_than_one_turn" name="bombero_open_more_than_one_turn" type="checkbox" [checked]="rol.bombero_open_more_than_one_turn"
+            (change)="rol.bombero_open_more_than_one_turn=!rol.bombero_open_more_than_one_turn" value="" checked="" class="checkbox-template">
+          <label for="bombero_open_more_than_one_turn">Bombero puede abrir mas de un lado en un mismo turno</label>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="add_hour_after_a_pump_can_be_close" name="add_hour_after_a_pump_can_be_close" type="checkbox" [checked]="rol.add_hour_after_a_pump_can_be_close"
+            (change)="rol.add_hour_after_a_pump_can_be_close=!rol.add_hour_after_a_pump_can_be_close" value="" checked="" class="checkbox-template">
+          <label for="add_hour_after_a_pump_can_be_close">Agregar hora despues de la que se puede cerra un lado</label>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="incentivos" name="incentivos" type="checkbox" [checked]="rol.incentivos" (change)="rol.incentivos=!rol.incentivos"
+            value="" checked="" class="checkbox-template">
+          <label for="incentivos">Incentivos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="reimprimir_codigo_cliente_fidelizado" name="reimprimir_codigo_cliente_fidelizado" type="checkbox" [checked]="rol.reimprimir_codigo_cliente_fidelizado" (change)="rol.reimprimir_codigo_cliente_fidelizado=!rol.reimprimir_codigo_cliente_fidelizado"
+            value="" checked="" class="checkbox-template">
+          <label for="reimprimir_codigo_cliente_fidelizado">Reimprimir codigo de cliente fidelizado</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="empleados" name="empleados" type="checkbox" [checked]="rol.empleados" (change)="rol.empleados=!rol.empleados"
+            value="" checked="" class="checkbox-template">
+          <label for="empleados">Empleados</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="flotillas" name="flotillas" type="checkbox" [checked]="rol.flotillas" (change)="rol.flotillas=!rol.flotillas"
+            value="" checked="" class="checkbox-template">
+          <label for="flotillas">Flotillas</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="autenticar_cierre_turno" name="autenticar_cierre_turno" type="checkbox" [checked]="rol.autenticar_cierre_turno" (change)="rol.autenticar_cierre_turno=!rol.autenticar_cierre_turno"
+            value="" checked="" class="checkbox-template">
+          <label for="autenticar_cierre_turno">Pedir autenticacion cerrar turnos?</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="debe_cerrar_todos_lados" name="debe_cerrar_todos_lados" type="checkbox" [checked]="rol.debe_cerrar_todos_lados" (change)="rol.debe_cerrar_todos_lados=!rol.debe_cerrar_todos_lados"
+            value="" checked="" class="checkbox-template">
+          <label for="debe_cerrar_todos_lados">Debe cerrar todos los lados</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="manipulacion_ventas" name="manipulacion_ventas" type="checkbox" [checked]="rol.manipulacion_ventas" (change)="rol.manipulacion_ventas=!rol.manipulacion_ventas"
+            value="" checked="" class="checkbox-template">
+          <label for="manipulacion_ventas">Manipulacion de ventas</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="creditos" name="creditos" type="checkbox" [checked]="rol.creditos" (change)="rol.creditos=!rol.creditos"
+            value="" checked="" class="checkbox-template">
+          <label for="creditos">Creditos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="cliente_creditos" name="cliente_creditos" type="checkbox" [checked]="rol.cliente_creditos" (change)="rol.cliente_creditos=!rol.cliente_creditos"
+            value="" checked="" class="checkbox-template">
+          <label for="cliente_creditos">Cliente Creditos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="pagos_creditos" name="pagos_creditos" type="checkbox" [checked]="rol.pagos_creditos" (change)="rol.pagos_creditos=!rol.pagos_creditos"
+            value="" checked="" class="checkbox-template">
+          <label for="pagos_creditos">Pagos Creditos</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="pagos_contados" name="pagos_contados" type="checkbox" [checked]="rol.pagos_contados" (change)="rol.pagos_contados=!rol.pagos_contados"
+            value="" checked="" class="checkbox-template">
+          <label for="pagos_contados">Pagos Contados</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="categoria_descuento" name="categoria_descuento" type="checkbox" [checked]="rol.categoria_descuento" (change)="rol.categoria_descuento=!rol.categoria_descuento"
+            value="" checked="" class="checkbox-template">
+          <label for="categoria_descuento">Categoria Descuento</label>
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+          <div class="i-checks">
+            <input id="multiple_tarjets" name="multiple_tarjets" type="checkbox" [checked]="rol.multiple_tarjets" (change)="rol.multiple_tarjets=!rol.multiple_tarjets"
+              value="" checked="" class="checkbox-template">
+            <label for="multiple_tarjets">Multiple Tarjetas</label>
+          </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+          <div class="i-checks">
+            <input id="dashboard" name="dashboard" type="checkbox" [checked]="rol.dashboard" (change)="rol.dashboard=!rol.dashboard"
+              value="" checked="" class="checkbox-template">
+            <label for="dashboard">Mostrar Dashboard</label>
+          </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="verifone_type" name="verifone_type" type="checkbox" [checked]="rol.verifone_type" (change)="rol.verifone_type=!rol.verifone_type"
+            value="" checked="" class="checkbox-template">
+          <label for="verifone_type">Usar verifone</label>
+        </div>
+    </div>
+    <div class="form-group col-md-6 col-xs-12">
+        <div class="i-checks">
+          <input id="close_any_pump" name="close_any_pump" type="checkbox" [checked]="rol.close_any_pump" (change)="rol.close_any_pump=!rol.close_any_pump"
+            value="" checked="" class="checkbox-template">
+          <label for="close_any_pump">Cerrar cualquier lado</label>
+        </div>
+    </div>
+    <div class="form-group col-md-6 col-xs-12">
+      <div class="i-checks">
+        <input id="re_print_ticket_closed_pump" name="re_print_ticket_closed_pump" type="checkbox" [checked]="rol.re_print_ticket_closed_pump" (change)="rol.re_print_ticket_closed_pump=!rol.re_print_ticket_closed_pump"
+          value="" checked="" class="checkbox-template">
+        <label for="re_print_ticket_closed_pump">Re-Imprimir ticket de pump tablet</label>
+      </div>
+  </div>
+  <div class="form-group col-md-6 col-xs-12">
+    <div class="i-checks">
+      <input id="open_close_pump" name="open_close_pump" type="checkbox" [checked]="rol.open_close_pump" (change)="rol.open_close_pump=!rol.open_close_pump"
+        value="" checked="" class="checkbox-template">
+      <label for="open_close_pump">Abrir/Cerrar lados</label>
+    </div>
+</div>
+<div class="form-group col-md-6 col-xs-12">
+  <div class="i-checks">
+    <input id="auth_deauth_pump" name="auth_deauth_pump" type="checkbox" [checked]="rol.auth_deauth_pump" (change)="rol.auth_deauth_pump=!rol.auth_deauth_pump"
+      value="" checked="" class="checkbox-template">
+    <label for="auth_deauth_pump">Autorizar/DesAutorizar lados</label>
+  </div>
+</div>
+<div class="form-group col-md-6 col-xs-12">
+  <div class="i-checks">
+    <input id="multiple_bills" name="multiple_bills" type="checkbox" [checked]="rol.multiple_bills" (change)="rol.multiple_bills=!rol.multiple_bills"
+      value="" checked="" class="checkbox-template">
+    <label for="multiple_bills">Factura multiple</label>
+  </div>
+</div>
+<div class="form-group col-md-6 col-xs-12">
+  <div class="i-checks">
+    <input id="allow_user_insert_volume_and_price_in_multiple_bills" name="allow_user_insert_volume_and_price_in_multiple_bills" type="checkbox" [checked]="rol.allow_user_insert_volume_and_price_in_multiple_bills" (change)="rol.allow_user_insert_volume_and_price_in_multiple_bills=!rol.allow_user_insert_volume_and_price_in_multiple_bills"
+      value="" checked="" class="checkbox-template">
+    <label for="allow_user_insert_volume_and_price_in_multiple_bills">Permitir al usuario insertar el volumen y el precio in factura multiple</label>
+  </div>
+</div>
+<div class="form-group col-md-6 col-xs-12">
+  <div class="i-checks">
+    <input id="allow_create_deposit_without_manual_code" name="allow_create_deposit_without_manual_code" type="checkbox" [checked]="rol.allow_create_deposit_without_manual_code" (change)="rol.allow_create_deposit_without_manual_code=!rol.allow_create_deposit_without_manual_code"
+      value="" checked="" class="checkbox-template">
+    <label for="allow_create_deposit_without_manual_code">Permitir crear deposito sin codigo manual</label>
+  </div>
+</div>
+<div class="form-group col-md-6 col-xs-12">
+  <div class="i-checks">
+    <input id="allow_see_discount_client" name="allow_see_discount_client" type="checkbox" [checked]="rol.allow_see_discount_client" (change)="rol.allow_see_discount_client=!rol.allow_see_discount_client"
+      value="" checked="" class="checkbox-template">
+    <label for="allow_see_discount_client">Permitir ver clientes con descuentos</label>
+  </div>
+</div>
+<div class="form-group col-md-6 col-xs-12">
+  <div class="i-checks">
+    <input id="allow_see_discount_product_client" name="allow_see_discount_product_client" type="checkbox" [checked]="rol.allow_see_discount_product_client" (change)="rol.allow_see_discount_product_client=!rol.allow_see_discount_product_client"
+      value="" checked="" class="checkbox-template">
+    <label for="allow_see_discount_product_client">Permitir ver descuentos de productos por clientes</label>
+  </div>
+</div>
+<div class="form-group col-md-6 col-xs-12">
+  <div class="i-checks">
+    <input id="allow_see_discount_tkt_plu" name="allow_see_discount_tkt_plu" type="checkbox" [checked]="rol.allow_see_discount_tkt_plu" (change)="rol.allow_see_discount_tkt_plu=!rol.allow_see_discount_tkt_plu"
+      value="" checked="" class="checkbox-template">
+    <label for="allow_see_discount_tkt_plu">Permitir ver descuentos de combustibles por clientes</label>
+  </div>
+</div>
+<div class="form-group col-md-6 col-xs-12">
+  <div class="i-checks">
+    <input id="allow_close_dispenser_pumptable" name="allow_close_dispenser_pumptable" type="checkbox" [checked]="rol.allow_close_dispenser_pumptable" (change)="rol.allow_close_dispenser_pumptable=!rol.allow_close_dispenser_pumptable"
+      value="" checked="" class="checkbox-template">
+    <label for="allow_close_dispenser_pumptable">Permitir cerrar dispensador en pump tablet</label>
+  </div>
+</div>
+<div class="form-group col-md-6 col-xs-12">
+  <div class="i-checks">
+    <input id="allow_close_day_pumptable" name="allow_close_day_pumptable" type="checkbox" [checked]="rol.allow_close_day_pumptable" (change)="rol.allow_close_day_pumptable=!rol.allow_close_day_pumptable"
+      value="" checked="" class="checkbox-template">
+    <label for="allow_close_day_pumptable">Permitir cerrar dia en pump tablet</label>
+  </div>
+</div>
+
+<div class="form-group col-md-6 col-xs-12">
+  <div class="i-checks">
+    <input id="can_see_new_pump_table" name="can_see_new_pump_table" type="checkbox" [checked]="rol.can_see_new_pump_table" (change)="rol.can_see_new_pump_table=!rol.can_see_new_pump_table"
+      value="" checked="" class="checkbox-template">
+    <label for="can_see_new_pump_table">Puede ver new-pump-tablet</label>
+  </div>
+</div>
+
+    </div>
+    <button [disabled]="!validateModel(rol)" class="btn btn-success" type="submit">{{creando? "Guardar":"Guardar cambios"}}</button>
+  </form>
+
+
+  <hr>
+  <div class="text-center" *ngIf="loading">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Cargando...</span>
+  </div>
+  <div class="table-responsive">
+    <div class="collapse" id="moduloPermitidos">
+      <h4 class="text-center">Concedidos</h4>
+      <div class="card card-body">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let p of mP">
+            {{p}}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="collapse" id="moduloDenegados">
+      <h4 class="text-center">Denegados</h4>
+      <div class="card card-body">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let p of mD">
+            {{p}}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">Id</th>
+          <th class="text-center">Rol</th>
+          <th class="text-center">Permisos</th>
+          <th class="text-center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rol of roles">
+          <td class="text-center">{{rol.id}}</td>
+          <td class="text-center">{{rol.nombre}}</td>
+          <td class="text-center">
+            <p>
+              <a class="btn btn-success" (click)="modulosPermitidos(rol)" data-toggle="collapse" href="#moduloPermitidos" aria-expanded="false">
+                Permisos Concedidos
+              </a>
+            </p>
+            <p>
+              <a class="btn btn-danger" (click)="modulosDenegados(rol)" data-toggle="collapse" href="#moduloDenegados" aria-expanded="false">
+                Permisos Denegados
+              </a>
+            </p>
+          </td>
+          <td class="text-center">
+            <button (click)="editarRol(rol)" type="button" class="btn btn-md btn-outline-warning">Modificar</button>
+            <button (click)="confirmarBorrarRol(rol)" type="button" class="btn btn-md btn-outline-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

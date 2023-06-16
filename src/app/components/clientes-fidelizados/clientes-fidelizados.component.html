@@ -1,0 +1,126 @@
+<app-header titulo="Clientes Fidelizados" menu="Ofertas"></app-header>
+<div class="container-fluid">
+    <button type="button" class="btn btn-outline-danger" (click)="initEntidad(); crear = false;" *ngIf="crear">Cancelar</button>
+    <button type="button" class="btn btn-outline-info" (click)="crear = true;" *ngIf="!crear">Crear cliente fidelizado</button>
+    <div class="clearfix">
+        <form #formCliente="ngForm" (ngSubmit)="guardar()" *ngIf="crear" class="mt-5">
+            <div class="row row-flex row-flex-wrap">
+                <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':nombres.value=='' && nombres.touched}">
+                    <label class="form-control-feedback" for="nombres">Nombres</label>
+                    <input type="text" class="form-control" #nombres="ngModel" [(ngModel)]="clienteFidelizado.nombres"
+                        required placeholder="Nombres" name="nombres">
+                    <div class="form-control-feedback" *ngIf="nombres.touched && nombres.value==''">
+                        El nombre del cliente es obligatorio
+                    </div>
+                </div>
+                <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':apellidos.value=='' && apellidos.touched}">
+                    <label class="form-control-feedback" for="apellidos">Apellidos</label>
+                    <input type="text" class="form-control" #apellidos="ngModel" [(ngModel)]="clienteFidelizado.apellidos"
+                        required placeholder="Apellidos" name="apellidos">
+                    <div class="form-control-feedback" *ngIf="apellidos.touched && apellidos.value==''">
+                        Los apellidos del cliente son obligatorios
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':pasaporte.value=='' && pasaporte.touched}">
+                    <label class="form-control-feedback" for="pasaporte">Pasaporte</label>
+                    <input type="text" class="form-control" #pasaporte="ngModel" [(ngModel)]="clienteFidelizado.pasaporte"
+                        placeholder="Pasaporte" name="pasaporte">
+                    <div class="form-control-feedback" *ngIf="pasaporte.touched && pasaporte.value=='' && cedula.value==''">
+                        Debe introducir cédula o pasaporte del cliente
+                    </div>
+                </div>
+                <div class="form-group col-md-6 col-xs-12">
+                    <label for="tipo">Tipo de cliente</label>
+                    <select name="tipo" class="form-control" [(ngModel)]="clienteFidelizado.tipo_cliente">
+                        <option value="">Seleccione el tipo de cliente</option>
+                        <option *ngFor= "let tipoCliente of tiposCliente"  [value]="tipoCliente.Id+'/'+tipoCliente.Tipo_cliente">{{tipoCliente.Tipo_cliente}}</option>
+                        <!-- <option [value]="TiposClienteEnum.clienteNormal">{{TiposClienteEnum.clienteNormal}}</option> -->
+                    </select>
+                </div>
+                <div class="form-group col-lg-12 col-md-12 col-xs-12" [ngClass]="{'has-danger':cedula.value=='' && cedula.touched}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Campos cedula</div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="form-control-feedback" for="cedula">Cédula</label>
+                                <input type="text" class="form-control" #cedula="ngModel" [(ngModel)]="clienteFidelizado.cedula"
+                                    placeholder="Cédula" name="cedula" (keydown)=validateCedulaInput($event)>
+                                <div class="form-control-feedback" *ngIf="cedula.touched && cedula.value=='' && pasaporte.value ==''">
+                                    Debe introducir cédula o pasaporte del cliente
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="barcode">Codigo de barra</label>
+                                <input type="text" class="form-control" name="barcode" [(ngModel)]="clienteFidelizado.barcode"
+                                    placeholder="Codigo de barra">
+                            </div>
+                            <div class="form-group">
+                                <label for="qrcode">Codigo QR</label>
+                                <input type="text" class="form-control" name="qrcode" [(ngModel)]="clienteFidelizado.qrcode"
+                                    placeholder="Codigo QR">
+                            </div>
+                            <div class="form-group">
+                                <label for="countrycode">Codigo Ciudad(Country)</label>
+                                <input type="text" class="form-control" name="countrycode" [(ngModel)]="clienteFidelizado.countrycode"
+                                    placeholder="Codigo ciudad">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Guardar" class="btn btn-success">
+        </form>
+        <form class="form-inline float-right">
+            <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" #searchInput
+                (keyup.enter)="searchClients(searchInput.value)">
+            <button class="btn btn-info my-2 my-sm-0" type="button" (click)="searchClients(searchInput.value)">Buscar</button>
+        </form>
+    </div>
+    <div class="table-responsive mt-5">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">Código</th>
+                    <th class="text-center">Nombres</th>
+                    <th class="text-center">Apellidos</th>
+                    <th class="text-center">Cédula</th>
+                    <th class="text-center">Codigo de barra</th>
+                    <th class="text-center">Codigo QR</th>
+                    <th class="text-center">Codigo Ciudad(Country)</th>
+                    <th class="text-center">Pasaporte</th>
+                    <th class="text-center">Tipo de cliente</th>
+                    <th class="text-center">Fecha fidelización</th>
+                    <th class="text-center">Puntos de fidelización</th>
+                    <th class="text-center">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cliente of clientesFidelizados | paginate: {itemsPerPage: 10, currentPage: pagina, totalItems: clientesFidelizados.length }">
+                    <td class="text-center">{{cliente.codigo}}</td>
+                    <td class="text-center">{{cliente.nombres}}</td>
+                    <td class="text-center">{{cliente.apellidos}}</td>
+                    <td class="text-center">{{cliente.cedula}}</td>
+                    <td class="text-center">{{cliente.barcode }}</td>
+                    <td class="text-center">{{cliente.qrcode }}</td>
+                    <td class="text-center">{{cliente.countrycode }}</td>
+                    <td class="text-center">{{cliente.pasaporte}}</td>
+                    <td class="text-center">{{cliente.tipo_cliente}}</td>
+                    <td class="text-center">{{cliente.fecha_fidelizacion}}</td>
+                    <td class="text-center">{{cliente.puntosFidelizacion}}</td>
+                    <td class="text-center">
+                        <button (click)="modificar(cliente)" type="button" class="btn btn-md btn-outline-warning">Modificar</button>
+                        <button (click)="confirmar(cliente)" type="button" class="btn btn-md btn-outline-danger">Eliminar</button>
+                        <button (click)="verificarImpresion(cliente)" type="button" class="btn btn-md btn-outline-info">Imprimir</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <pagination-controls (pageChange)="cargar($event)" previousLabel="Anterior" nextLabel="Siguiente"
+                screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+        </div>
+    </div>
+    <iframe frameborder="0" style="display: none;" #iframe></iframe>
+</div>
+<app-footer></app-footer>

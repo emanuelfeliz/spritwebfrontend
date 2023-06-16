@@ -1,0 +1,237 @@
+ul.volume-list{
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove mar*/
+}
+section .air{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(https://1.bp.blogspot.com/-xQUc-TovqDk/XdxogmMqIRI/AAAAAAAACvI/AizpnE509UMGBcTiLJ58BC6iViPYGYQfQCLcBGAsYHQ/s1600/wave.png);
+    background-size: 1000px 100px;
+    border-bottom-left-radius:10px; 
+    border-bottom-right-radius:10px; 
+  } 
+  .card-backgroud {
+    border-radius: 10px; 
+    box-shadow: 0 5px 5px 5px rgba(0, 0, 0, 0.2);
+    /* background-image: url("./../../../../assets/templates/img/bg.jpg"); */
+
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+   
+  .material-symbols-outlined {
+    vertical-align: middle;
+  }
+  
+  
+  ul.tank-status-list {
+    columns: 3;
+    -webkit-columns: 3;
+    -moz-columns: 3;
+    list-style: none;
+  }
+  
+  ul.tank-status-list-item {
+    list-style: none;
+    color: black;
+  }
+  
+  .tank-status-list-item-title{
+    color: black;
+    font-weight: bolder;
+  }
+  
+  
+  .product-title{
+    color: black;
+    font-weight: bolder;
+  }
+  
+  .glass-div{ 
+    max-width: 400px;
+  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(9.5px);
+  -webkit-backdrop-filter: blur(9.5px); */
+  z-index: 10001;
+  /* border-radius: 16px; */
+  }
+  .percentaje{
+    z-index: 10001;
+  }
+  
+  .glass-red{
+    background: rgba(255, 0, 0, 0.5);
+    border: 1px solid rgba(255, 0, 0, 1);
+  }
+  
+  .glass-blue{
+    background: rgba(8, 0, 255, 0.5);
+    border: 1px solid rgba(8, 0, 255, 1);
+  }
+  
+  .glass-green{
+    background:rgba(0, 255, 22, 0.5);
+    border: 1px solid rgba(0, 255, 22, 1);
+  }
+  
+  .glass-yellow{
+    background: rgba(211, 255, 0,0.5);
+    border: 1px solid rgba(211, 255, 0, 1);
+  }
+  
+  .glass-grey{
+    background: rgba(104, 104, 104, 0.5);
+    border: 1px solid rgba(104, 104, 104, 1);
+  }
+  .glass-white{
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 1);
+  }
+  
+  section .air.air10{
+    animation: wave 10s linear infinite;
+    z-index: 1000;
+    animation-delay: 0s;
+    bottom: 0px;
+  }
+  
+  section .air.air15{
+    animation: wave 10s linear infinite;
+    z-index: 1000;
+    animation-delay: 0s;
+    bottom: 20px;
+  }
+  
+  section .air.air20{
+    animation: wave 10s linear infinite;
+    z-index: 1000;
+    animation-delay: 0s;
+    bottom: 35px;
+  }
+  
+  section .air.air25{
+    animation: wave 10s linear infinite;
+    z-index: 1000;
+    animation-delay: 0s;
+    bottom: 55px;
+  }
+  section .air.air30{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 70px;
+  }
+  
+  section .air.air35{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 90px;
+  }
+  section .air.air40{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 105px;
+  }
+  section .air.air45{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 125px;
+  }
+  section .air.air50{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 140px;
+  }
+  section .air.air55{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 160px;
+  }
+  section .air.air60{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 175px;
+  }
+  section .air.air65{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 195px;
+  }
+  section .air.air70{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 210px;
+  }
+  section .air.air75{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 245px;
+  }
+  section .air.air80{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 230px;
+  }
+  section .air.air85{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 265px;
+  }
+  section .air.air90{
+    animation: wave 10s linear infinite;
+    z-index: 999;
+    animation-delay: 0s;
+    bottom: 280px;
+  }
+  section .air.air95{
+    animation: wave 10s linear infinite;
+    z-index: 997;
+    animation-delay: 0s;
+    bottom: 300px;
+  }
+  section .air.air100{
+    animation: wave 10s linear infinite;
+    z-index: 997;
+    animation-delay: 0s;
+    bottom: 315px;
+  }
+  
+    
+  @keyframes wave{
+    0%{
+      background-position-x: 0px; 
+    }
+    100%{
+      background-position-x: 1000px; 
+    }
+  }
+  @keyframes wave2{
+    0%{
+      background-position-x: 0px; 
+    }
+    100%{
+      background-position-x: -1000px; 
+    }
+  }
+  
+  
+  
+  
+  
+  
+  

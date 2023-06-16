@@ -1,0 +1,35 @@
+<app-header titulo="Tipos de Monedas" menu="Configuraciones"></app-header>
+<div class="container-fluid">
+    <button type="button" class="btn btn-outline-danger" (click)="initEntidad(); crear = false;" *ngIf="crear">Cancelar</button>
+    <form #formIncentivo="ngForm" (ngSubmit)="guardar()" *ngIf="crear" class="mt-5">
+        <div class="form-group">
+            <label for="nombre">Nombre Moneda</label>
+            <input type="text" class="form-control" name="nombre" [(ngModel)]="coinrate.CoinName" placeholder="Nombre" disabled="false">
+            <label for="rate">Valor</label>
+            <input type="number" class="form-control" name="rate" [(ngModel)]="coinrate.Rate" placeholder="Valor">
+        </div>
+        <input type="submit" value="Guardar" class="btn btn-success">
+    </form>
+    <div class="table-responsive mt-5">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">Nombre Moneda</th>
+                    <th class="text-center">Valor</th>
+                    <th class="text-center">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let coinRate of coinRates">
+                    <td class="text-center">{{coinRate.CoinName}}</td>
+                    <td class="text-center">{{coinRate.Rate}}</td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-outline-warning" (click)="editCoinRate(coinRate)">Modificar</button>
+                        <button type="button" class="btn btn-outline-danger" (click)="confirmar(coinRate)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<app-footer></app-footer>

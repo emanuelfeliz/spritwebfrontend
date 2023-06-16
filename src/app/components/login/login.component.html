@@ -1,0 +1,46 @@
+<div class="page login-page">
+    <div class="container d-flex align-items-center">
+      <div class="form-holder has-shadow">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="info d-flex align-items-center">
+              <div class="content">
+                &nbsp;
+                <p></p>
+                &nbsp;
+                <p></p>
+                &nbsp;
+                <p></p>
+                &nbsp;
+                <p></p>
+                &nbsp;
+                <p></p>
+                &nbsp;
+                <p></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 bg-white">
+            <div class="form d-flex align-items-center">
+              <div class="content">
+                <form id="login-form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+                  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+                    <input id="login-username" type="text" name="username" [(ngModel)]="model.username" #username="ngModel" required class="input-material" placeholder="Usuario">
+                    <!-- <label for="login-username" class="label-material">Usuario</label> -->
+                  </div>
+                  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                    <input id="login-password" type="password" name="password" [(ngModel)]="model.password" #password="ngModel" required class="input-material" placeholder="Contraseña">
+                    <!-- <label for="login-password" class="label-material">Clave</label> -->
+                  </div>
+                  <button class="btn btn-primary">Accesar</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="copyrights text-center">
+      <p>Design by <a href="https://www.overlogy.net/" class="external">Overlogy SRL</a></p>
+    </div>
+  </div>

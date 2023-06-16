@@ -1,0 +1,68 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Depósitos del bombero</h4>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="!readOnly_recibido">
+        <form>
+          <div class="row row-flex row-flex-wrap">
+            <div class="form-group text-center col-md-6 col-xs-12">
+              <label for="codigo_deposito">Código-Depósito</label>
+              <input [(ngModel)]="Deposito.codigo_deposito" id="codigo_deposito" name="codigo_deposito" type="text"
+                class="form-control" placeholder="Ejemplo: 1234" required minlength="4" maxlength="4" (keypress)="onlyNumberKey($event)"
+                #codigo_deposito="ngModel" />
+              <div *ngIf="codigo_deposito.invalid && (codigo_deposito.dirty || codigo_deposito.touched)" class="alert">
+
+                <div *ngIf="codigo_deposito.errors?.required">
+                  Codigo Depósito es requerido
+                </div>
+                <div *ngIf="codigo_deposito.errors?.minlength">
+                  Codigo Depósito debe tener almenos 4 digitos.
+                </div>
+
+              </div>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+              <label for="monto">Monto</label>
+              <input [(ngModel)]="Deposito.monto" name="monto" type="number" class="form-control" placeholder="Monto" />
+            </div>
+            <div class="text-center">
+              <button type="button" [disabled]="!validate()" (click)="agregar()"
+                class="btn btn-outline-primary">Agregar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="text-center">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Fecha</th>
+              <th class="text-center">Código-Depósito</th>
+              <th class="text-center">Total</th>
+              <th class="text-center">Opción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let deposito of depositos | paginate: { itemsPerPage: 3, currentPage: p}">
+              <td class="text-center">{{deposito.fecha}}</td>
+              <td class="text-center">{{deposito.codigo_deposito}}</td>
+              <td class="text-center">{{deposito.monto}}</td>
+              <td class="text-center">
+                <button [disabled]="readOnly_recibido" class="btn btn-outline-danger"
+                  (click)="remover(deposito)">Remover</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+          screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página"
+          screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+      </div>
+    </div>
+    <div class="text-center">
+      <button (click)="cerrar()" class="btn btn-primary">Cerrar</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="container">
+  <h2 class="text-center">Seleccione un lado</h2>
+  <div class="row row-flex row-flex-wrap">
+    <pump-pump-tablet 
+      class="form-group text-center col-md-6 col-xs-12" 
+      *ngFor="let resumenLado of lados" 
+      [habilitarBoton]=true
+      (seleccionarPump) = "selectPump($event)"
+      [ResumenLado]="resumenLado">
+    </pump-pump-tablet>
+  </div>
+
+</div>

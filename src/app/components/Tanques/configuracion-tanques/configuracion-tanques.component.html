@@ -1,0 +1,113 @@
+<app-header titulo="Configuración de Tanques" menu="Tanques"></app-header>
+<div class="container-fluid">
+  <div class="row row-flex row-flex-wrap">
+    <span *ngFor="let tanque of tanquesExitosos" class="col-md-4">
+      <svg id="{{tanque.id}}" width="40%" height="400" (click)="NewValue(tanque.gauge);"></svg>
+      <span>{{tanque.id}}</span>
+    </span>
+  </div>
+  <hr>
+  <div class="container-fluid" style="display: block;">
+    <button (click)="botones();" class="btn btn-outline-primary" type="button" name="button">
+      {{textoBoton}}
+    </button>
+    <form *ngIf="creando || editando" #formTankDesign="ngForm" (ngSubmit)="onSubmit();">
+      <div class="row row-flex row-flex-wrap">
+        <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':id_plu.value=='' && id_plu.touched}">
+          <label class="form-control-feedback" for="id_plu">Tanque</label>
+          <select #id_plu="ngModel" name="id_plu" [(ngModel)]="tankDesign.id_plu" class="form-control">
+            <option *ngFor="let t of tanques" value="{{t.id_plu}}">{{t.producto}}</option>
+          </select>
+          <div class="form-control-feedback" *ngIf="id_plu.touched && id_plu.value==''">
+            Debe seleccionar el tanque
+          </div>
+        </div>
+        <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':silhouette.value=='' && silhouette.touched}">
+          <label class="form-control-feedback" for="id">Animación</label>
+          <select #silhouette="ngModel" name="silhouette" [(ngModel)]="tankDesign.silhouette" class="form-control">
+            <option value="1">Animación 1</option>
+            <option value="2">Animación 2</option>
+            <option value="3">Animación 3</option>
+            <option value="4">Animación 4</option>
+            <option value="5">Animación 5</option>
+          </select>
+          <div class="form-control-feedback" *ngIf="silhouette.touched && silhouette.value==''">
+            Debe seleccionar una Animación
+          </div>
+        </div>
+        
+        <div class="form-group col-md-3 col-xs-12">
+          <label class="form-control-feedback" for="circleColor">Color-Círculo</label>
+          <input [value]="tankDesign.circleColor" [cpOutputFormat]="'hex'" [cpPosition]="'bottom'" type="text" [(colorPicker)]="tankDesign.circleColor"
+            [style.background]="tankDesign.circleColor" class="form-control" #circleColor="ngModel" [(ngModel)]="tankDesign.circleColor"
+            required placeholder="Color-Circulo" name="circleColor">
+        </div>
+        <div class="form-group col-md-3 col-xs-12">
+          <label class="form-control-feedback" for="textColor">Color-Texto</label>
+          <input [value]="tankDesign.textColor" [cpOutputFormat]="'hex'" [cpPosition]="'bottom'" type="text" [(colorPicker)]="tankDesign.textColor"
+            [style.background]="tankDesign.textColor" class="form-control" #textColor="ngModel" [(ngModel)]="tankDesign.textColor"
+            required placeholder="Color-Texto" name="textColor">
+        </div>
+        <div class="form-group col-md-3 col-xs-12">
+          <label class="form-control-feedback" for="waveColor">Color-Onda</label>
+          <input [value]="tankDesign.waveColor" [cpOutputFormat]="'hex'" [cpPosition]="'bottom'" type="text" [(colorPicker)]="tankDesign.waveColor"
+            [style.background]="tankDesign.waveColor" class="form-control" #waveColor="ngModel" [(ngModel)]="tankDesign.waveColor"
+            required placeholder="Color-Onda" name="waveColor">
+        </div>
+        <div class="form-group col-md-3 col-xs-12">
+          <label class="form-control-feedback" for="waveTextColor">Color-Texto Onda</label>
+          <input [value]="tankDesign.waveTextColor" [cpOutputFormat]="'hex'" [cpPosition]="'bottom'" type="text" [(colorPicker)]="tankDesign.waveTextColor"
+            [style.background]="tankDesign.waveTextColor" class="form-control" #waveTextColor="ngModel" [(ngModel)]="tankDesign.waveTextColor"
+            required placeholder="Color-Texto Onda" name="waveTextColor">
+        </div>
+      </div>
+      <button [disabled]="!validateModel(tankDesign)" class="btn btn-success" type="submit">{{creando? "Guardar":"Guardar cambios"}}</button>
+    </form>
+  </div>
+  <hr>
+  <div class="text-center" *ngIf="loading">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Cargando...</span>
+  </div>
+  <div class="table-responsive">
+    <table width="100%" class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">Id</th>
+          <th class="text-center">Tanque</th>
+          <th class="text-center">Animación</th>
+          <th class="text-center">Color-Circulo</th>
+          <th class="text-center">Color-Texto</th>
+          <th class="text-center">Color-Onda</th>
+          <th class="text-center">Color-Texto Onda</th>
+          <th class="text-center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tankDesign of tanksDesigns">
+          <td class="text-center">{{tankDesign.id}}</td>
+          <td class="text-center">{{tankDesign.tanque}}</td>
+          <td class="text-center">{{tankDesign.silhouette}}</td>
+          <td class="text-center">
+            <button class="btn" [style.background]="tankDesign.circleColor">Color</button>
+          </td>
+          <td class="text-center">
+            <button class="btn" [style.background]="tankDesign.textColor">Color</button>
+          </td>
+          <td class="text-center">
+            <button class="btn" [style.background]="tankDesign.waveColor">Color</button>
+          </td>
+          <td class="text-center">
+            <button class="btn" [style.background]="tankDesign.waveTextColor">Color</button>
+          </td>
+          <td class="text-center">
+            <button (click)="editarTankDesign(tankDesign)" type="button" class="btn btn-md btn-outline-warning">Modificar</button>
+            <button (click)="confirmarBorrarTankDesign(tankDesign)" type="button" class="btn btn-md btn-outline-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

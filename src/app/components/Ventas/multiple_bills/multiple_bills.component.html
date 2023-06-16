@@ -1,0 +1,165 @@
+<app-header titulo="Factura Multiple" menu="Ventas"></app-header>
+<div class="container pt-3">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="Product_to_bill" class="form-text">Producto a facturar</label>
+                        <select (change)="changeProductsType()" class="form-control" [(ngModel)]="productSelected" name="Product_to_bill">
+                            <option selected="selected" value="Combustible">Combustible</option>
+                            <option value="Products_of_warehouse">Productos del almacen</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="tipo_otro" class="control-label">Tipo de pago</label>
+                        <select name="tipo_otro" id="tipo_otro" [(ngModel)]="newBill.Payment_method" class="form-control">
+                            <option selected="selected" value="Efectivo">Efectivo</option>
+                            <option value="Tarjeta">Tarjeta</option>
+                            <option value="Prepagos">Prepagos</option>
+                            <option value="Cheques">Cheques</option>
+                            <option value="Credito">Vales de Credito</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12" *ngIf="newBill.Payment_method == 'Tarjeta'">
+                    <div class="form-group">
+                        <label for="tarjeta">Tarjeta</label>
+                        <input name="tarjeta" type="text" maxlength="4" [(ngModel)]="newBill.Card" class="form-control" placeholder="Tarjeta"/>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="productSelected">Producto</label>
+                        <select id="productSelected" name="productSelected" [(ngModel)]="newBill.Product" (change)="changeProduct()" class="form-control">
+                            <option>Seleccionar</option>
+                            <option value="{{ product.name }}" *ngFor="let product of products">
+                                {{ product.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12" *ngIf="productSelected == 'Combustible'">
+                    <div class="form-group">
+                        <label for="monto">Monto</label>
+                        <input [disabled]="!productIsSelected" name="monto" type="number" (keyup)="changePrice(1)" [(ngModel)]="newBill.Amount" class="form-control" placeholder="Monto"/>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="volumen">Cantidad</label>
+                            </div>
+                            <div class="col-md-6 text-right" *ngIf="productSelected == 'Combustible' && this.responseAuth.Response.allow_user_insert_volume_and_price_in_multiple_bills">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="alterVolume" [(ngModel)]="alterVolume">
+                                    <label class="form-check-label" for="alterVolume">Alterar</label>
+                                  </div>
+                            </div>
+                        </div>
+                        
+                        <input (keyup)="changePrice(2)" [attr.disabled]="activeQuantityField()" name="quantity" type="number" [(ngModel)]="newBill.Quantity" class="form-control" placeholder="Cantidad" [disabled]="!productIsSelected"/>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="volumen">ITBIS</label>
+                        <input disabled="disabled" name="itbis" type="number" [(ngModel)]="newBill.Itbis" class="form-control" placeholder="ITBIST"/>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group ">
+                        <label>RNC</label>
+                        <input [attr.disabled]="clientName !== '' ? true : null" name="rnc" (change)="findRnc()" [(ngModel)]="rnc" (keyup.enter)="findRnc()" class="form-control" placeholder="RNC"/>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group ">
+                        <label>Nombre del cliente</label>
+                        <input id="clienteInput" class="form-control" disabled="disabled" name="cliente" [(ngModel)]="clientName"/>
+                    </div>
+                    <div class="hidden loading" *ngIf="loadingRnc">
+                        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="TIPO_COMPROBANTE">Tipo de Comprobante</label>
+                        <select class="form-control" name="TIPO_COMPROBANTE" [(ngModel)]="newBill.Voucher_type">
+                            <option value="{{ TIPO_COMPROBANTE.codigo }}" *ngFor="let TIPO_COMPROBANTE of TIPOS_COMPROBANTES">
+                                {{ TIPO_COMPROBANTE.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <button type="button" [disabled]="!validate()" (click)="checkBill()" style="width: 100%;" class="btn btn-primary btn-lg ">Agregar</button>
+                </div>
+                <div class="col-sm-4">
+                    <button [disabled]="!anyElements()" (click)="invoice()" type="button" style="width: 100%;" class="btn btn-success btn-lg ">Facturar</button>
+                </div>
+                <div class="col-sm-4">
+                    <button (click)="cleanBill()" type="button" style="width: 100%;" class="btn btn-warning btn-lg ">Limpiar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Tipo de pago</th>
+                                <th class="text-center">RNC</th>
+                                <th class="text-center">Tarjeta</th>
+                                <th class="text-center">Producto</th>
+                                <th class="text-center">Monto</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-center">Itbis</th>
+                                <th class="text-center">Tipo de Comprobante</th>
+                                <th class="text-center">Opcion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let bill of bills">
+                                <td class="text-center">{{ bill.Payment_method }}</td>
+                                <td class="text-center">{{ bill.RNC }}</td>
+                                <td class="text-center">{{ bill.Card }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-success">{{ bill.Product }}</button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-warning">{{ bill.Amount }}</button>
+                                </td>
+                                <td class="text-center">{{ bill.Quantity }}</td>
+                                <td class="text-center">{{ bill.Itbis }}</td>
+                                <td class="text-center">{{ bill.Voucher_type }}</td>
+                                <td class="text-center">
+                                    <button [disabled]="readOnly_recibido" class="btn btn-outline-danger" (click)="remover(bill)">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Page Footer-->
+<app-footer></app-footer>

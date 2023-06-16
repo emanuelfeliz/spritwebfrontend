@@ -1,0 +1,76 @@
+<app-header titulo="Configuración Tanque" menu="Configuración"></app-header>
+<div class="container-fluid" style="display: block;">
+  <button (click)="botones();" class="btn btn-outline-primary" type="button" name="button">
+    {{textoBoton}}
+  </button>
+  <form *ngIf="creando || editando" #formConfiguracion="ngForm" (ngSubmit)="onSubmit();">
+    <div class="row row-flex row-flex-wrap">
+      <div class="form-group col-md-6 col-xs-12" >
+        <label class="form-control-feedback" for="LlenarEnCero">Llenar En Cero</label>
+        <input type="checkbox" class="form-control" [checked]="configuracion.LlenarEnCero" (change)="configuracion.LlenarEnCero=!configuracion.LlenarEnCero"
+          name="LlenarEnCero">
+      </div>
+      <div class="form-group col-md-6 col-xs-12" >
+        <label class="form-control-feedback" for="PortName">Port Name</label>
+        <input type="text" class="form-control" #portname="ngModel" [(ngModel)]="configuracion.PortName" required placeholder="Port Name"
+          name="PortName">
+        <div class="form-control-feedback" *ngIf=" portname.value==''">
+          El nombre del puerto es obligatoria
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="TanksQuantity">Tanks Quantity</label>
+        <input type="number" class="form-control" #tanksquantity="ngModel" [(ngModel)]="configuracion.TanksQuantity" placeholder="Tanks Quantity"
+          name="TanksQuantity">
+        <div class="form-control-feedback" *ngIf="tanksquantity.value == 0">
+          La cantidad de tanques no puede ser 0
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="DataBits">Data Bits</label>
+        <input type="number" class="form-control" #databits="ngModel" [(ngModel)]="configuracion.DataBits" placeholder="Data Bits"
+          name="DataBits">
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="Parity">Parity</label>
+        <input type="number" class="form-control" #parity="ngModel" [(ngModel)]="configuracion.Parity" placeholder="Parity"
+          name="Parity">
+      </div>
+    </div>
+    <button [disabled]="!validateModel(configuracion)" class="btn btn-success" type="submit">{{creando? "Guardar":"Guardar cambios"}}</button>
+  </form>
+
+  <hr>
+  <div class="text-center" *ngIf="loading">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Cargando...</span>
+  </div>
+  <div class="table-responsive">
+    <table width="100%" class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">Llenar En cero</th>
+          <th class="text-center">Port Name</th>
+          <th class="text-center">Tanks Quantity</th>
+          <th class="text-center">Data Bits</th>
+          <th class="text-center">Parity</th>
+          <th class="text-center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let conf of configuraciones">
+          <td class="text-center">{{conf.LlenarEnCero ? 'SI' : 'NO'}}</td>
+          <td class="text-center">{{conf.PortName}}</td>
+          <td class="text-center">{{conf.TanksQuantity}}</td>
+          <td class="text-center">{{conf.DataBits}}</td>
+          <td class="text-center">{{conf.Parity}}</td>
+          <td class="text-center">
+            <button (click)="editarConfiguracionTanque(conf)" type="button" class="btn btn-md btn-outline-warning">Modificar</button>
+            <button (click)="confirmarBorrarConfiguracionTanque(conf)" type="button" class="btn btn-md btn-outline-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<app-footer></app-footer>

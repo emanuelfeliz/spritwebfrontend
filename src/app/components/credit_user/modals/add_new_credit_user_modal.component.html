@@ -1,0 +1,68 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button (click)="cerrar()" class="btn btn-primary">Cerrar</button>
+      <h4 class="modal-title">Nuevo usuario de credito / contado </h4>
+    </div>
+    <form>
+      <div class="container">
+        <div class="row">
+          <div class="form-group text-center col-md-6 col-xs-12">
+            <label class="label-control" for="companyName">Nombre de la empresa</label>
+            <input type="text" class="form-control" name="companyName" id="companyName"
+              [(ngModel)]="new_credit_user.CompanyName" />
+          </div>
+          <div class="form-group text-center col-md-6 col-xs-12">
+            <label class="label-control" for="qrCode">Codigo QR</label>
+            <input type="text" class="form-control" name="qrCode" id="qrCode" [(ngModel)]="new_credit_user.QrCode" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group text-center col-md-6 col-xs-12">
+            <label class="label-control" for="barCode">Codigo de barra</label>
+            <input type="text" class="form-control" name="barCode" id="barCode" [(ngModel)]="new_credit_user.BarCode" />
+          </div>
+
+          <div class="form-group text-center col-md-6 col-xs-12">
+            <label class="label-control" for="countryIdCode">Cedula</label>
+            <input type="text" class="form-control" name="countryIdCode" id="countryIdCode"
+              [(ngModel)]="new_credit_user.CountryIdCode" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group text-center col-md-6 col-xs-12">
+            <label class="label-control" for="RNC">RNC</label>
+            <input type="text" class="form-control" name="RNC" id="RNC" [(ngModel)]="new_credit_user.RNC" />
+          </div>
+
+          <div class="form-group text-center col-md-6 col-xs-12">
+            <label class="label-control" for="customerType">Tipo Cliente</label>
+            <select name="customerType" [(ngModel)]="new_credit_user.customerType" class="form-control" (change)="setCategory()">
+              <option value="0">Seleccione un tipo de cliente</option>
+              <option value="Credito">Credito</option>
+              <option value="Descuento">Descuento</option>
+            </select>
+          </div>
+
+          <div class="form-group text-center col-md-6 col-xs-12">
+            <label class="label-control" for="discountCategory">Categoria descuento</label>
+            <select name="bomberoSelected" [(ngModel)]="discountCategorySelected" class="form-control" (click)="assingCategory()">
+              <option value=" / ">Seleccione una categoria</option>
+              <option *ngFor="let dicountCategory of categoriesDiscount" value="{{dicountCategory.id+'/'+dicountCategory.discountpergalon}}">
+                {{dicountCategory.categoryname + ' RD$ ' + dicountCategory.discountpergalon}}
+              </option>
+            </select>
+          </div>
+
+
+        </div>
+        <div class="row">
+          <div class="text-center form-group col-md-2 col-lg-2 col-xs-4">
+            <button (click)="addNewCreditUser()" class="btn btn-outline-primary">Agregar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,164 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button (click)="cerrar()" class="btn btn-primary">Cerrar</button>
+      <h4 class="modal-title">Pagos del bombero {{bombero}}</h4>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="!readOnly_recibido">
+        <form>
+          <div class="row row-flex row-flex-wrap">
+            <div class="form-group text-center col-md-4 col-xs-12">
+              <label class="control-label" for="metodo_pago">Método de Pago</label>
+              <select id="metodo_pago" name="metodo_pago" [(ngModel)]="metodo_pago" class="form-control">
+                <option value="Tarjeta">Tarjeta</option>
+                <option value="Otros">Otros</option>
+              </select>
+            </div>
+            <div class="form-group text-center col-md-4 col-xs-12">
+              <label for="tipo_otro" class="control-label">Tipo-Otro</label>
+              <select name="tipo_otro" id="tipo_otro" [(ngModel)]="tipo_otro" class="form-control"
+                (change)="tipoOtroChange(tipo_otro)">
+                <option value="Ninguno" selected>Ninguno</option>
+                <option value="Pago Contado Instantaneo">Pago Contado Instantaneo</option>
+              </select>
+            </div>
+            <div *ngIf="metodo_pago=='Otros'" class="form-group text-center col-md-4 col-xs-12">
+              <label for="tipo_otro" class="control-label">Tipo-Otro</label>
+              <select name="tipo_otro" id="tipo_otro" [(ngModel)]="tipo_otro" class="form-control"
+                (change)="tipoOtroChange(tipo_otro)">
+                <option value="Prepagos">Prepagos</option>
+                <option value="Cheques">Cheques</option>
+                <option value="Bono gas">Bono gas</option>
+                <option value="Vales de Credito">Vales de Credito</option>
+                <option value="Vales de estacion Planta">Vales de estacion Planta</option>
+                <option value="Vales de estacion Mensajeria">Vales de estacion Mensajeria</option>
+                <option value="Vales de estacion Consumo">Vales de estacion Consumo</option>
+                <option value="Calibracion Mezcla">Calibracion Mezcla</option>
+                <option value="Calibracion Mantenimiento">Calibracion Mantenimiento</option>
+              </select>
+            </div>
+            <div *ngIf="metodo_pago=='Otros'" class="form-group text-center col-md-4 col-xs-12">
+              <label for="dato_otro">Dato-Otro</label>
+              <input name="dato_otro" type="text" [(ngModel)]="dato_otro" class="form-control"
+                placeholder="Dato-Otro" />
+            </div>
+            <div *ngIf="tipo_otro === 'Pago Contado Instantaneo' || tipo_otro === 'Vales de Credito'"
+              class="form-group text-center col-md-4 col-xs-12">
+              <label class="control-label">RNC</label>
+              <input id="rnc_clientInput" #rnc name="rnc" (keyup.enter)="searchCreditUser(rnc.value)"
+                class="form-control" placeholder="RNC" />
+            </div>
+            <div *ngIf="tipo_otro == 'Pago Contado Instantaneo' || tipo_otro == 'Vales de Credito'"
+              class="form-group text-center col-md-4 col-xs-12">
+              <label class="control-label">Nombre</label>
+              <input id="rnc_client_nameInput" class="form-control" [(ngModel)]="client_rnc" disabled
+                name="client_name" />
+            </div>
+            <div *ngIf="metodo_pago=='Tarjeta'" class="form-group text-center col-md-4 col-xs-12">
+              <label for="tarjeta">Tarjeta</label>
+              <input name="tarjeta" type="text" maxlength="4" [(ngModel)]="tarjeta" class="form-control"
+                placeholder="Tarjeta" />
+            </div>
+            <div *ngIf="metodo_pago=='Tarjeta'" class="form-group text-center col-md-4 col-xs-12">
+              <label class="control-label" for="verifone_selected">Verifone</label>
+              <select id="verifone_selected" name="verifone_selected" [(ngModel)]="verifone_selected"
+                class="form-control">
+                <option value="{{verifone.VerifoneType}}" *ngFor="let verifone of verifones_list">
+                  {{verifone.VerifoneType}}</option>
+              </select>
+            </div>
+            <div class="form-group text-center col-md-4 col-xs-12">
+              <label for="monto">Monto</label>
+              <input name="monto" type="number" (change)="changePrice()" [(ngModel)]="monto" class="form-control"
+                placeholder="Monto" />
+            </div>
+            <div class="form-group text-center col-md-4 col-xs-12">
+              <label class="control-label" for="productSelected">Combustible</label>
+              <select id="productSelected" name="productSelected" [(ngModel)]="productSelected"
+                (change)="changeProduct()" class="form-control">
+                <option value="{{producto.name}}" *ngFor="let producto of Productos">{{producto.name}}</option>
+              </select>
+            </div>
+            <div class="form-group text-center col-md-4 col-xs-12">
+              <label for="monto">Precio</label>
+              <input name="price" type="number" [(ngModel)]="price" class="form-control"
+                placeholder="Precio del combustible" />
+            </div>
+
+            <div class="form-group text-center col-lg-4 col-md-12 col-xs-12">
+              <label for="volumen">Galones</label>
+              <input disabled name="volumen" type="number" [(ngModel)]="volumen" class="form-control"
+                placeholder="Galones" />
+
+            </div>
+            <div class=" col-lg-12 col-md-12 col-xs-12">
+              <button [disabled]="!validate()" (click)="agregar()" class="btn btn-outline-primary">Agregar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="text-center">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Fecha</th>
+              <th class="text-center">Tipo-Pago</th>
+              <th class="text-center">Combustible</th>
+              <th class="text-center">Placa</th>
+              <th class="text-center">Volumen</th>
+              <th class="text-center">Total</th>
+              <th class="text-center">Opcion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pago of pagos | paginate: { itemsPerPage: 3, currentPage: p}">
+              <td class="text-center">{{pago.fecha_pago}}</td>
+              <td class="text-center">{{pago.metodo_pago}}</td>
+              <td class="text-center">
+                <button *ngIf="pago.venta_sistema!=null"
+                  class="btn btn-success">{{pago.venta_sistema.ProductName}}</button>
+                <button *ngIf="pago.venta_fabricada!=null"
+                  class="btn btn-warning">{{pago.venta_fabricada.ProductName}}</button>
+              </td>
+              <td class="text-center">{{pago.placa}}</td>
+              <td class="text-center">
+                <button *ngIf="pago.venta_sistema!=null" class="btn btn-success">{{pago.venta_sistema.Volume |
+                  number:'1.0-2'}}</button>
+                <button *ngIf="pago.venta_fabricada!=null" class="btn btn-warning">{{pago.venta_fabricada.Volume |
+                  number:'1.0-2'}}</button>
+              </td>
+              <td class="text-center">{{pago.venta!=null ? pago.venta.Money : pago.money | number:'1.0-2'}}</td>
+              <td class="text-center">
+                <button [disabled]="readOnly_recibido" class="btn btn-outline-danger"
+                  (click)="remover(pago)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente"
+          screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página"
+          screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+      </div>
+    </div>
+    <div class="text-center">
+      <button (click)="cerrar()" class="btn btn-primary">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  .modal{
+    display: block !important; /* I added this to see the modal, you don't need this */
+}
+
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 80vh;
+    overflow-y: auto;
+}     
+</style>

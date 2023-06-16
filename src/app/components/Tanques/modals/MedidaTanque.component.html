@@ -1,0 +1,45 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Medida de Tanque</h4>
+        </div>
+        <div class="modal-body">
+            <div tabindex='1' class="alert alert-success" role="alert">
+                <form>
+                    <h3 class="text-center">Complete el formulario</h3>
+                    <div class="form-group">
+                        <label>Bombero Autenticado</label>
+                        <input type="text" name="bombero" [(ngModel)]="medida.bombero" class="form-control" disabled />
+                    </div>
+                    <div class="form-group row">
+                        <label>Volumen Manual</label>
+                        <div class="col-sm-3">
+                            <input type="number" name="volumen_manual_int" [(ngModel)]="volumen_manual_int" class="form-control"
+                                placeholder="Volumen" />
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="number" name="volumen_manual_eighths" [(ngModel)]="volumen_manual_eighths"
+                                class="form-control" placeholder="Volumen" />
+                        </div>
+                        <div class="col-xs-1">
+                            <label style="font-size:25px; margin-left:-10px; padding-top:3.5px">/8</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <select class="form-control" name="turno" [(ngModel)]="turno">
+                                <option value="0">Seleccione un turno</option>
+                                <option *ngFor="let t of turnos" value="{{t.turno}}">Turno {{t.turno}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button (click)="save()" class="btn btn-outline-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="text-center">
+            <button (click)="cerrar()" class="btn btn-danger">Cerrar</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="form-inline">
+    <button type="button" name="button" class="btn btn-outline-primary btn-lg" (click)="GoBack()">(*) Volver</button>
+  </div>
+  <app-sale *ngIf="venta" [venta]="venta" [i]="indice"></app-sale>
+  <div class="row row-flex row-flex-wrap">
+    <div class="form-group col-md-12 col-xs-12">
+      <label for="modalidad">Modalidad configuración puntajes de fidelidad</label>
+      <select name="modalidad" class="form-control" [(ngModel)]="modalidad">
+        <option value="">Seleccione la modalidad</option>
+        <option value="galones">Por galones</option>
+        <option value="precio">Por monto</option>
+      </select>
+    </div>
+  </div>
+  <h3 class="text-center">Introduzca código de fidelización</h3>
+  <div class="text-center">
+    <div>
+      <div class="form-group">
+        <label for="nombres">Cliente</label>
+        <input class="form-control" disabled type="text" name="nombres" [(ngModel)]="clienteFidelizado.nombres" id="">
+      </div>
+      <div class="text-center" *ngIf="loadingData">
+        <div class="hidden">
+          <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div class="input-group mb-3">
+      <input class="form-control" [disabled] = "isCustomerValidated" 
+      (focus)="toggleKeyboardInput(false)" (focusout)="toggleKeyboardInput(true)"
+      (keyup.enter)="keyboard && getClientData()" name="codigoCliente" [(ngModel)]="clienteFidelizado.codigo"
+        type="text" id=""/>
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button" style="line-height: 1.5 !important" (click)="getClientData()">Buscar</button>
+          <button class="btn btn-danger" type="button" style="line-height: 1.5 !important" (click)="cleanData()">Limpiar</button>   
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input class="form-control" [disabled] = "isCustomerValidated" 
+          (focus)="toggleKeyboardInput(false)" (focusout)="toggleKeyboardInput(true)"
+          (keyup.enter)="keyboard && validateSecretCodeAndCustomerCode()" name="validationCode" [(ngModel)]="validationCode"
+            type="text" id=""/>
+            <div class="input-group-append">
+              <button class="btn btn-info" type="button" style="line-height: 1.5 !important" (click)="validateSecretCodeAndCustomerCode()">Validar</button>  
+              </div>
+            </div> 
+    </div>
+    <div class="btn-group-vertical" role="group" aria-label="Basic example">
+      <button [disabled]="!clientInfoReady || !isCustomerValidated " (click)="continuar()" type="button" class="btn btn-success btn-lg">(1) Continuar</button>
+    </div>
+  </div>
+</div>

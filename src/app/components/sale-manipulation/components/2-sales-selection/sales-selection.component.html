@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="form-inline">
+    <div>
+      <label for="ultimas">Límite</label>
+      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+        <select (change)="LastSalesChanged()" [(ngModel)]="ultimas" name="ultimas" class="form-control">
+          <option value="5">5</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+    </div>
+    <button type="button" name="button" class="btn btn-outline-primary btn-lg" (click)="GoBack()">(*) Volver</button>
+  </div>
+  <div class="row row-flex row-flex-wrap">
+    <app-sale class="col-md-3" *ngFor="let venta of ventas; let i=index" 
+    [venta]="venta" [i]="i" 
+    [showSelectSaleButton]=true
+    (seleccionarVenta)="SelectSale($event)"></app-sale>
+  </div>
+</div>

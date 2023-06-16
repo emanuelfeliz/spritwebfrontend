@@ -1,0 +1,74 @@
+<app-header titulo="Empleados" menu="Ofertas"></app-header>
+<div class="container-fluid">
+    <button type="button" class="btn btn-outline-danger" (click)="initEntidad(); crear = false;" *ngIf="crear">Cancelar</button>
+    <button type="button" class="btn btn-outline-info" (click)="crear = true;" *ngIf="!crear">Crear empleado</button>
+    <form #formIncentivo="ngForm" (ngSubmit)="guardar()" *ngIf="crear" class="mt-5">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" name="nombre" [(ngModel)]="empleado.nombre" placeholder="Nombre">
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Campos cedula</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="cedula">Numero Cédula</label>
+                    <input type="text" class="form-control" name="cedula" [(ngModel)]="empleado.cedula" placeholder="Cédula" (keydown)="validateCedulaInput($event)">
+                </div>
+                <div class="form-group">
+                    <label for="cedula">Codigo de barra</label>
+                    <input type="text" class="form-control" name="cedula" [(ngModel)]="empleado.barcode" placeholder="Codigo de barra">
+                </div>
+                <div class="form-group">
+                    <label for="cedula">Codigo QR</label>
+                    <input type="text" class="form-control" name="cedula" [(ngModel)]="empleado.qrcode" placeholder="Codigo QR" >
+                </div>
+                <div class="form-group">
+                    <label for="cedula">Codigo Ciudad(Country)</label>
+                    <input type="text" class="form-control" name="cedula" [(ngModel)]="empleado.countrycode" placeholder="Codigo ciudad" >
+                </div>
+            </div>
+          </div>
+
+        <div class="form-group">
+            <label for="departamento">Departamento</label>
+            <input type="text" class="form-control" name="departamento" placeholder="Departamento" [(ngModel)]="empleado.departamento">
+        </div>
+        <input type="submit" value="Guardar" class="btn btn-success">
+    </form>
+    <div class="table-responsive mt-5">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">Código</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Cédula</th>
+                    <th class="text-center">Codigo de barra</th>
+                    <th class="text-center">Codigo QR</th>
+                    <th class="text-center">Codigo Ciudad(Country)</th>
+                    <th class="text-center">Departamento</th>
+                    <th class="text-center">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let empleado of empleados | paginate: {itemsPerPage: 10, currentPage: pagina, totalItems: empleados.length }">
+                    <td class="text-center">{{ empleado.codigo }}</td>
+                    <td class="text-center">{{ empleado.nombre }}</td>
+                    <td class="text-center">{{ empleado.cedula }}</td>
+                    <td class="text-center">{{ empleado.barcode }}</td>
+                    <td class="text-center">{{ empleado.qrcode }}</td>
+                    <td class="text-center">{{ empleado.countrycode }}</td>
+                    <td class="text-center">{{ empleado.departamento }}</td>         
+                    <td class="text-center">
+                        <button type="button" class="btn btn-outline-warning" (click)="modificar(empleado)">Modificar</button>
+                        <button type="button" class="btn btn-outline-danger" (click)="confirmar(empleado)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <pagination-controls (pageChange)="cargar($event)" previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Paginación"
+                screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

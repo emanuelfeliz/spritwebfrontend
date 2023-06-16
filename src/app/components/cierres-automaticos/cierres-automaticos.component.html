@@ -1,0 +1,141 @@
+<app-header titulo="Cierres Autómaticos" menu="Configuración"></app-header>
+
+<div class="container-fluid">
+  <div class="text-center">
+    <img width="100px;" src="assets/images/calendar.png" alt="">
+  </div>
+  <button (click)="botones();" class="btn btn-outline-primary" type="button" name="button">
+    {{textoBoton}}
+  </button>
+  <div *ngIf="creando || editando" class="row row-flex row-flex-wrap">
+    <div class="form-group col-md-3">
+      <label class="form-control-feedback" for="mes">Mes</label>
+      <select [(ngModel)]="mes" name="mes" class="form-control">
+        <option value="Todos">Todos</option>
+        <option value="Enero">Enero</option>
+        <option value="Febrero">Febrero</option>
+        <option value="Marzo">Marzo</option>
+        <option value="Abril">Abril</option>
+        <option value="Mayo">Mayo</option>
+        <option value="Junio">Junio</option>
+        <option value="Julio">Julio</option>
+        <option value="Agosto">Agosto</option>
+        <option value="Septiembre">Septiembre</option>
+        <option value="Octubre">Octubre</option>
+        <option value="Noviembre">Noviembre</option>
+        <option value="Diciembre">Diciembre</option>
+      </select>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="cerrar_pasado_fecha">Cerrar Pasada la fecha?</label>
+      <div class="i-checks">
+        <input type="checkbox" (change)="cierreAutomatico.cerrar_pasado_fecha=!cierreAutomatico.cerrar_pasado_fecha" 
+        [checked]="cierreAutomatico.cerrar_pasado_fecha" value="" class="checkbox-template">
+      </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="form-control-feedback" for="tipo_evento">Tipo Evento</label>
+      <select (change)="tipoEventoChanged()" [(ngModel)]="tipo_evento" name="tipo_evento" class="form-control">
+        <option value="Dia">Día</option>
+        <option value="Diario">Diario</option>
+        <option value="Unico">Unico</option>
+      </select>
+    </div>
+    <button (click)="reset()" class="btn btn-outline-danger">Cancelar</button>
+    <button (click)="saveCierreConfig()" class="btn btn-outline-success">Guardar</button>
+  </div>
+  <div *ngIf="creando || editando">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li [ngClass]="{'disabled': tipo_evento!=='Dia'}" class="nav-item">
+        <a class="nav-link active" id="lunes-tab" data-toggle="tab" href="#lunes" role="tab" aria-controls="lunes" aria-expanded="true">Lunes</a>
+      </li>
+      <li [ngClass]="{'disabled': tipo_evento!=='Dia'}" class="nav-item">
+        <a class="nav-link" id="martes-tab" data-toggle="tab" href="#martes" role="tab" aria-controls="martes">Martes</a>
+      </li>
+      <li [ngClass]="{'disabled': tipo_evento!=='Dia'}" class="nav-item">
+        <a class="nav-link" id="miercoles-tab" data-toggle="tab" href="#miercoles" role="tab" aria-controls="miercoles">Miercoles</a>
+      </li>
+      <li [ngClass]="{'disabled': tipo_evento!=='Dia'}" class="nav-item">
+        <a class="nav-link" id="jueves-tab" data-toggle="tab" href="#jueves" role="tab" aria-controls="jueves">Jueves</a>
+      </li>
+      <li [ngClass]="{'disabled': tipo_evento!=='Dia'}" class="nav-item">
+        <a class="nav-link" id="viernes-tab" data-toggle="tab" href="#viernes" role="tab" aria-controls="viernes">Viernes</a>
+      </li>
+      <li [ngClass]="{'disabled': tipo_evento!=='Dia'}" class="nav-item">
+        <a class="nav-link" id="sabado-tab" data-toggle="tab" href="#sabado" role="tab" aria-controls="sabado">Sabado</a>
+      </li>
+      <li [ngClass]="{'disabled': tipo_evento!=='Dia'}" class="nav-item">
+        <a class="nav-link" id="domingo-tab" data-toggle="tab" href="#domingo" role="tab" aria-controls="domingo">Domingo</a>
+      </li>
+      <li [ngClass]="{'disabled': tipo_evento!=='Diario'}" class="nav-item">
+        <a class="nav-link" id="todos-los-dias-tab" data-toggle="tab" href="#todos-los-dias" role="tab" aria-controls="todos-los-dias">Todos los Días</a>
+      </li>
+      <li [ngClass]="{'disabled': tipo_evento!=='Unico'}" class="nav-item">
+        <a class="nav-link" id="evento-unico-tab" data-toggle="tab" href="#evento-unico" role="tab" aria-controls="evento-unico">Evento Unico</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="lunes" role="tabpanel" aria-labelledby="lunes-tab">
+        <app-configure-pump [type]="'lunes'"></app-configure-pump>
+      </div>
+      <div class="tab-pane fade" id="martes" role="tabpanel" aria-labelledby="martes-tab">
+        <app-configure-pump [type]="'martes'"></app-configure-pump>
+      </div>
+      <div class="tab-pane fade" id="miercoles" role="tabpanel" aria-labelledby="miercoles-tab">
+        <app-configure-pump [type]="'miercoles'"></app-configure-pump>
+      </div>
+      <div class="tab-pane fade" id="jueves" role="tabpanel" aria-labelledby="jueves-tab">
+        <app-configure-pump [type]="'jueves'"></app-configure-pump>
+      </div>
+      <div class="tab-pane fade" id="viernes" role="tabpanel" aria-labelledby="viernes-tab">
+        <app-configure-pump [type]="'viernes'"></app-configure-pump>
+      </div>
+      <div class="tab-pane fade" id="sabado" role="tabpanel" aria-labelledby="sabado-tab">
+        <app-configure-pump [type]="'sabado'"></app-configure-pump>
+      </div>
+      <div class="tab-pane fade" id="domingo" role="tabpanel" aria-labelledby="domingo-tab">
+        <app-configure-pump [type]="'domingo'"></app-configure-pump>
+      </div>
+      <div class="tab-pane fade" id="todos-los-dias" role="tabpanel" aria-labelledby="todos-los-dias-tab">
+        <app-configure-pump [type]="'todos-los-dias'"></app-configure-pump>
+      </div>
+      <div class="tab-pane fade" id="evento-unico" role="tabpanel" aria-labelledby="evento-unico-tab">
+        <app-configure-pump [type]="'evento-unico'"></app-configure-pump>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="text-center" *ngIf="loading">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Cargando...</span>
+  </div>
+  <div class="table-responsive">
+    <table width="100%" class="table table-striped table-hove">
+      <thead>
+        <tr>
+          <th class="text-center">Id</th>
+          <th class="text-center">Tipo-Cierre</th>
+          <th class="text-center">Mes</th>
+          <th class="text-center">CPF</th>
+          <th class="text-center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cierre of cierres">
+          <td class="text-center">{{cierre.id_registro}}</td>
+          <td class="text-center">{{cierre.tipo_cierre}}</td>
+          <td class="text-center">{{cierre.mes}}</td>
+          <td class="text-center">
+            <button *ngIf="cierre.cerrar_pasado_fecha" class="btn btn-success">SI</button>
+            <button *ngIf="!cierre.cerrar_pasado_fecha" class="btn btn-danger">NO</button>
+          </td>
+          <td class="text-center">
+            <button (click)="editarCierre(cierre)" type="button" class="btn btn-md btn-outline-warning">Modificar</button>
+            <button (click)="confirmarBorrarCierre(cierre)" type="button" class="btn btn-md btn-outline-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="form-inline">
+    <button type="button" name="button" class="btn btn-outline-primary btn-lg" (click)="GoBack()">(*) Volver</button>
+  </div>
+  <app-sale *ngIf="venta" [venta]="venta" [i]="indice"></app-sale>
+  <div class="text-center" *ngIf="loadingData">
+    <div class="hidden">
+      <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="row row-flex row-flex-wrap">
+    <div class="form-group col-md-12 col-xs-12">
+      <label for="modalidad">Modalidad configuración puntajes de fidelidad</label>
+      <select name="modalidad" class="form-control" [(ngModel)]="modalidad">
+        <option value="">Seleccione la modalidad</option>
+        <option value="galones">Por galones</option>
+        <option value="precio">Por monto</option>
+      </select>
+    </div>
+  </div>
+  <div class="text-center">
+    <h3 class="text-center">Introduzca código de incentivo</h3>
+    <div>
+      <div class="form-group">
+        <label for="nombre">Incentivo</label>
+        <input class="form-control" disabled type="text" name="nombre" [(ngModel)]="incentivo.nombre" id="">
+      </div>
+      <input class="form-control" 
+      (focus)="toggleKeyboardInput(false)" (focusout)="toggleKeyboardInput(true)"
+      (keyup.enter)="keyboard && cargar(false, incentivosService.cargarUno, incentivo)" name="codigoIncentivo" [(ngModel)]="incentivo.codigo"
+        type="text">
+    </div>
+    <div *ngIf="!incentivo.canjeado">
+      <div *ngIf="incentivo.tipo === TiposIncentivoEnum.cliente">
+        <hr>
+        <h3 class="text-center">Introduzca código de cliente fidelizado</h3>
+        <div class="form-group">
+          <label for="nombreCliente">Cliente</label>
+          <input class="form-control" disabled type="text" name="nombreCliente" [(ngModel)]="cliente.nombres" id="">
+        </div>
+        <input class="form-control" 
+        (focus)="toggleKeyboardInput(false)" (focusout)="toggleKeyboardInput(true)"
+        (keyup.enter)="keyboard && cargar(true, clientesService.getDataClient, cliente)" name="codigoCliente" [(ngModel)]="cliente.codigo"
+          type="text">
+      </div>
+
+      <div *ngIf="incentivo.tipo === TiposIncentivoEnum.empleado">
+        <hr>
+        <h3 class="text-center">Introduzca código de empleado</h3>
+        <div class="form-group">
+          <label for="nombreEmpleado">Empleado</label>
+          <input class="form-control" disabled type="text" name="nombreEmpleado" [(ngModel)]="empleado.nombre" id="">
+        </div>
+        <input class="form-control" 
+        (focus)="toggleKeyboardInput(false)" (focusout)="toggleKeyboardInput(true)"
+        (keyup.enter)="keyboard && cargar(true, empleadosService.cargarUno, empleado)" name="codigoEmpleado" [(ngModel)]="empleado.codigo"
+          type="text">
+      </div>
+
+      <div *ngIf="incentivo.tipo === TiposIncentivoEnum.flotilla">
+        <hr>
+        <h3 class="text-center">Introduzca código de flotilla</h3>
+        <div class="form-group">
+          <label for="nombreFlotilla">Flotilla</label>
+          <input class="form-control" disabled type="text" name="nombreFlotilla" [(ngModel)]="flotilla.nombre" id="">
+        </div>
+        <input class="form-control" 
+        (focus)="toggleKeyboardInput(false)" (focusout)="toggleKeyboardInput(true)"
+        (keyup.enter)="keyboard && cargar(true, flotillasService.cargarUno, flotilla)" name="codigoFlotilla" [(ngModel)]="flotilla.codigo"
+          type="text">
+      </div>
+    </div>
+    <div class="btn-group-vertical" role="group" aria-label="Basic example">
+      <button [disabled]="!incentivoInfoReady" (click)="continuar()" type="button" class="btn btn-success btn-lg">(1) Continuar</button>
+    </div>
+  </div>
+</div>

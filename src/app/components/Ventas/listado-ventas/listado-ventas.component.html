@@ -1,0 +1,126 @@
+<app-header titulo="Listado de Ventas" menu="Ventas"></app-header>
+<div class="container-fluid">
+  <section class="bg-light rounded mb-2 pt-2">
+    <div class="row m-auto">
+      <div class="col-md-3 col-sm-12">
+        <div class="form-group">
+          <label for="PumpSelected">Lado:</label>
+          <input
+            (focus)="toggleKeyboardInput(false)"
+            (focusout)="toggleKeyboardInput(true)"
+            [(ngModel)]="PumpSelected"
+            type="number"
+            class="form-control search"
+            min="0"
+            name="PumpSelected"
+          />
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-12">
+        <div class="form-group">
+          <label for="NozzleSelected">Manguera:</label>
+          <input
+            (focus)="toggleKeyboardInput(false)"
+            (focusout)="toggleKeyboardInput(true)"
+            [(ngModel)]="NozzleSelected"
+            type="number"
+            class="form-control search"
+            min="0"
+            name="NozzleSelected"
+          />
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-12">
+        <div class="form-group">
+          <label for="LimitSelected">Cantidad de ventas: </label>
+          <input
+            [disabled]="ventasLimitadas"
+            (focus)="toggleKeyboardInput(false)"
+            (focusout)="toggleKeyboardInput(true)"
+            [(ngModel)]="LimitSelected"
+            type="number"
+            class="form-control search"
+            min="0"
+            name="LimitSelected"
+          />
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-12 m-auto">
+        <button (click)="getVentas()" type="button" class="btn btn-success">
+          <span class="fa fa-refresh"></span> Cargar Datos
+        </button>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table id="tableListadoVentas" width="100%" class="table table-hover">
+        <thead>
+          <tr>
+            <th class="text-center">Id</th>
+            <th class="text-center">Lado</th>
+            <th class="text-center">Manguera</th>
+            <th class="text-center">Producto</th>
+            <th class="text-center">Volumen</th>
+            <th class="text-center">Monto</th>
+            <th class="text-center">Precio</th>
+            <th class="text-center">Fecha Final</th>
+            <th class="text-center">Hora Final</th>
+            <th class="text-center">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let venta of ventas
+                | paginate: { itemsPerPage: 10, currentPage: p }
+            "
+          >
+            <td class="text-center">{{ venta.NumeroVenta }}</td>
+            <td class="text-center">
+              <span class="badge-secondary badge-pill badge-sm"
+                >Lado: {{ venta.Pump }}</span
+              >
+            </td>
+            <td class="text-center">
+              <span class="badge-secondary badge-pill"
+                >Manguera: {{ venta.Nozzle }}</span
+              >
+            </td>
+            <td class="text-center">{{ venta.ProductName }}</td>
+            <td class="text-center">{{ venta.Volume | number: "1.0-2" }}</td>
+            <td class="text-center">{{ venta.Money | number: "1.0-2" }}</td>
+            <td class="text-center">{{ venta.Precio | number: "1.0-2" }}</td>
+            <td class="text-center">{{ venta.EndDate }}</td>
+            <td class="text-center">{{ venta.EndTime }}</td>
+            <td class="text-center">
+              <button
+                id="BotonDetalle{{ venta.NumeroVenta }}"
+                (click)="detalleVenta(venta)"
+                type="button"
+                class="btn btn-md btn-outline-warning"
+              >
+                Ver Detalle
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-center">
+        <div *ngIf="loading">
+          <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+          <span class="sr-only">Loading...</span>
+        </div>
+        <pagination-controls
+          (pageChange)="p = $event"
+          previousLabel="Anterior"
+          nextLabel="Siguiente"
+          screenReaderPaginationLabel="Paginación"
+          screenReaderPageLabel="Página"
+          screenReaderCurrentLabel="Se encuentra en la página"
+        >
+        </pagination-controls>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

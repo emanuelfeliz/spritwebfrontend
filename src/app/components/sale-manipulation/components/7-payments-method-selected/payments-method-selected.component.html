@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="form-inline">
+    <button type="button" name="button" class="btn btn-outline-primary btn-lg" (click)="GoBack()">(*) Volver</button>
+  </div>
+  <app-sale *ngIf="venta" [venta]="venta" [i]="indice"></app-sale>
+  <div class="text-center">
+    <span class="badge badge-success">{{paymentType}}</span>
+  </div>
+  <div class="text-center">
+    <div *ngIf="paymentType==='Otros'">
+      <div class="form-group">
+        <label for="tipo_otro_selected">Tipo-Otro</label>
+        <select name="tipo_otro_selected" [(ngModel)]="tipo_otro_selected" class="form-control">
+          <option value="0">Seleccione Tipo Otro</option>
+          <option *ngFor="let to of tipos_otros" value="{{to}}">{{to}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="dato_otro">Dato-Otro</label>
+        <input type="text" name="dato_otro" [(ngModel)]="dato_otro" class="form-control">
+      </div>
+    </div>
+    <div *ngIf="paymentType==='Tarjeta'">
+      <div class="form-group">
+        <label for="tarjeta">Tarjeta</label>
+        <input type="text" maxlength="4" name="tarjeta" [(ngModel)]="tarjeta" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="placa_selected">Placa</label>
+        <select name="placa_selected" [(ngModel)]="placa_selected" class="form-control">
+          <option value="0">Seleccione Tipo Placa</option>
+          <option *ngFor="let p of placas_disponibles" value="{{p}}">{{p}}</option>
+        </select>
+        <input class="form-control" type="text" name="placa" maxlength="6" [(ngModel)]="placa">
+      </div>
+    </div>
+    <div class="btn-group-vertical" role="group" aria-label="Basic example">
+      <button (click)="continue()" type="button" class="btn btn-success btn-lg">(1) Continuar</button>
+    </div>
+  </div>
+</div>

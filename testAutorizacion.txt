@@ -1,0 +1,28 @@
+var lado=2;
+window.location.href = "http://localhost/Configuration/SSFGenericConfig.php?s_module=ServiceModes&s_label=&p_parameter=authorization&p_library=ServiceModes&p_data_type=combo&p_subgroup=device%3Apump&p_device="+lado;
+
+
+var tdLogin=document.getElementsByClassName('td_gral_login');
+
+tdLogin[0].children[0].value='ADMIN';
+tdLogin[1].children[0].value='';
+
+tdLogin[3].children[0].click();
+
+
+
+//Si se quiere activar
+var activar=false;
+var trSelect=document.getElementsByClassName('Controls');
+trSelect[5].children[1].children[0].value=activar? 'FULL_SERVICE' : 'SELF_SERVICE';
+document.getElementsByClassName('Bottom')[1].children[0].children[1].click();
+
+
+
+//Luego mandar datos a spirit
+
+window.location.href="http://localhost/Configuration/SSFPaymentType.php";
+
+
+
+document.getElementsByTagName('p')[4].children[0].click();

@@ -1,0 +1,69 @@
+<app-header titulo="Agregar RNC" menu="Comprobantes"></app-header>
+<div class="container-fluid">
+  <form #formRnc="ngForm" (ngSubmit)="onSubmit();">
+    <div class="row row-flex row-flex-wrap">
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':rnc.value=='' && rnc.touched}">
+        <label class="form-control-feedback" for="rnc">RNC</label>
+        <input type="text" class="form-control" #rnc="ngModel" [(ngModel)]="rncModel.rnc" required placeholder="RNC" name="rnc">
+        <div class="form-control-feedback" *ngIf="rnc.touched && rnc.value==''">
+          El rnc es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':nombre_comercial.value=='' && nombre_comercial.touched}">
+        <label class="form-control-feedback" for="nombre_comercial">Nombre Comercial</label>
+        <input type="text" class="form-control" #nombre_comercial="ngModel" [(ngModel)]="rncModel.nombre_comercial" required placeholder="Nombre Comercial"
+          name="nombre_comercial">
+        <div class="form-control-feedback" *ngIf="nombre_comercial.touched && nombre_comercial.value==''">
+          El Nombre Comercial es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':nombre_razon_social.value=='' && nombre_razon_social.touched}">
+        <label class="form-control-feedback" for="nombre_razon_social">Nombre Razon Social</label>
+        <input type="text" class="form-control" #nombre_razon_social="ngModel" [(ngModel)]="rncModel.nombre_razon_social" required placeholder="Nombre Razon Social"
+          name="nombre_razon_social">
+        <div class="form-control-feedback" *ngIf="nombre_razon_social.touched && nombre_razon_social.value==''">
+          El Nombre Razon Social es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="actividad_economica">Actividad Economica</label>
+        <input type="text" class="form-control" #actividad_economica="ngModel" 
+        [(ngModel)]="rncModel.actividad_economica" placeholder="Actividad Economica"
+          name="actividad_economica">
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="direccion">Direccion</label>
+        <input type="text" class="form-control" #direccion="ngModel" 
+        [(ngModel)]="rncModel.direccion" placeholder="Direccion"
+          name="direccion">
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="numero">Numero</label>
+        <input type="text" class="form-control" #numero="ngModel" 
+        [(ngModel)]="rncModel.numero" placeholder="Numero"
+          name="numero">
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="urbanizacion">Urbanizacion</label>
+        <input type="text" class="form-control" #urbanizacion="ngModel" 
+        [(ngModel)]="rncModel.urbanizacion" placeholder="Urbanizacion"
+          name="urbanizacion">
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="telefono">Telefono</label>
+        <input type="text" class="form-control" #telefono="ngModel" 
+        [(ngModel)]="rncModel.telefono" placeholder="Telefono"
+          name="telefono">
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="fecha_constitucion">Fecha-Constitucion(dd/mm/yyyy)</label>
+        <input type="text" class="form-control" #fecha_constitucion="ngModel" 
+        [(ngModel)]="rncModel.fecha_constitucion" placeholder="Fecha-Constitucion(dd/mm/yyyy)"
+          name="fecha_constitucion">
+      </div>
+    </div>
+    <button class="btn btn-success" type="submit">Guardar</button>
+  </form>
+
+</div>
+<app-footer></app-footer>

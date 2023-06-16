@@ -1,0 +1,438 @@
+<app-header titulo="Cuadrar Turno" menu="Cuadres"></app-header>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+      <table class="table table-striped table-hover">
+        <tr>
+          <th>Fecha</th>
+          <td>{{fechaActual}}</td>
+        </tr>
+        <tr>
+          <th>Turno</th>
+          <td>
+            <input type="text" class="form-control" disabled value="{{turno}}" />
+          </td>
+        </tr>
+        <tr>
+          <th>Lado</th>
+          <td>
+            <input disabled id="l1" [(ngModel)]="cuadre.LadosByBombero[0]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l2" [(ngModel)]="cuadre.LadosByBombero[1]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l3" [(ngModel)]="cuadre.LadosByBombero[2]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l4" [(ngModel)]="cuadre.LadosByBombero[3]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l5" [(ngModel)]="cuadre.LadosByBombero[4]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l6" [(ngModel)]="cuadre.LadosByBombero[5]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l7" [(ngModel)]="cuadre.LadosByBombero[6]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l8" [(ngModel)]="cuadre.LadosByBombero[7]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l9" [(ngModel)]="cuadre.LadosByBombero[8]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l10" [(ngModel)]="cuadre.LadosByBombero[9]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l11" [(ngModel)]="cuadre.LadosByBombero[10]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l12" [(ngModel)]="cuadre.LadosByBombero[11]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l13" [(ngModel)]="cuadre.LadosByBombero[12]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+            <input disabled id="l14" [(ngModel)]="cuadre.LadosByBombero[13]" name="LadosByBombero" type="text"
+              pattern="\d*" maxlength="1" style="width: 50px;display:inline-block" class="form-control cuadroLado"
+              data-valid="true" />
+          </td>
+        </tr>
+        <tr>
+          <th>Bombero</th>
+          <td>
+            <select [disabled]=" !responseAuth.Response.validar_cuadre" (change)="onBomberoChanged()"
+              [disabled]="readOnly || !creando" name="bomberoSelected" [(ngModel)]="bomberoSelected"
+              class="form-control">
+              <option value="0">Seleccione un bombero</option>
+              <option *ngFor="let bombero of bomberos" value="{{bombero.id}}">{{bombero.name}}</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>Fecha-Inicial</th>
+          <td>
+            <input name="fecha_inicial_turno" [(ngModel)]="fecha_inicial_turno" class="form-control" type="text"
+              disabled />
+          </td>
+        </tr>
+        <tr>
+          <th>Tipo-Cálculo</th>
+          <td>
+            <select [disabled]="readOnly" name="tipoCalculoSelected" [(ngModel)]="tipoCalculoSelected"
+              class="form-control">
+              <option value="0">Seleccione tipo de cálculo</option>
+              <option value="BASED" [disabled]="basedNotAvailable">Basado</option>
+              <option value="CALCULATED" [disabled]="calculatedNotAvailable">Calculado</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+      <table class="table table-striped table-hover">
+        <tr [hidden]="!responseAuth.Response.ver_galones_combustible_cuadre">
+          <th>Galones Combustible</th>
+          <td>
+            <input name="volumen_combustible" (ngModelChange)="cuadre.volumen_combustible=$event"
+              [ngModel]="cuadre.volumen_combustible | number" class="form-control" type="text" disabled />
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_galones_combustible_cuadre">
+          <th>Galones Combustible Neto</th>
+          <td>
+            <input name="volumen_combustible_neto" (ngModelChange)="cuadre.volumen_combustible_neto=$event"
+              [ngModel]="cuadre.volumen_combustible_neto | number" class="form-control" type="text" disabled />
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_ventas_combustible_cuadre">
+          <th>Ventas Combustible</th>
+          <td>
+            <input name="venta_combustible" (ngModelChange)="cuadre.venta_combustible=$event"
+              [ngModel]="cuadre.venta_combustible | number" class="form-control" type="text" disabled />
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_ventas_facturacion_cuadre">
+          <th>Ventas Facturación</th>
+          <td>
+            <input type="venta_facturacion" (ngModelChange)="cuadre.venta_facturacion=$event"
+              [ngModel]="cuadre.venta_facturacion | number" class="form-control" type="text" disabled>
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_total_vendido_cuadre">
+          <th>Total Vendido</th>
+          <td>
+            <input name="total_vendido" (ngModelChange)="cuadre.total_vendido=$event"
+              [ngModel]="cuadre.total_vendido | number" class="form-control" type="text" disabled />
+          </td>
+        </tr>
+        <tr>
+          <th>Fecha-Final</th>
+          <td>
+            <input name="fecha_final_turno" [(ngModel)]="fecha_final_turno" class="form-control" type="text" disabled />
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <table class="table table-striped table-hover">
+        <tr *ngIf="readOnly">
+          <td>
+            <button class="btn btn-info" (click)="imprimir()">Imprimir</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button [disabled]="creando" class="btn btn-primary" (click)="vistaEdicion()">{{textoEdit}}</button>
+          </td>
+        </tr>
+        <tr *ngIf="readOnly && false">
+          <!--TODO Pendiente habilitar boton-->
+          <td>
+            <button class="btn btn-dark" (click)="validarCuadre()">Validar Cuadre</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button [disabled]="readOnly" class="btn btn-warning" (click)="RecalcularCuadre()">Recalcular</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button [disabled]="!validateModel() || readOnly" class="btn btn-success"
+              (click)="guardar('NO')">Guadar</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button [disabled]="!validateModel() || readOnly" class="btn btn-info" (click)="guardar('SI')">Guardar e
+              Imprimir</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button [disabled]="readOnly" class="btn btn-warning" (click)="limpiar()">Limpiar</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="btn btn-danger" (click)="cancelarCuadre()">Cancelar</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="text-center" *ngIf="loadingData">
+    <div class="hidden">
+      <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>CANTIDAD</th>
+            <th [ngClass]="{'text-danger':!cuadreValidado, 'text-success': cuadreValidado }" *ngIf="readOnly && false">
+              V. CANTIDAD</th>
+            <!--TODO Pendiente habilitar boton-->
+            <th>DEN. RD$</th>
+            <th>TOTAL</th>
+            <th [ngClass]="{'text-danger':!cuadreValidado, 'text-success': cuadreValidado }" *ngIf="readOnly && false">
+              V. TOTAL</th>
+            <!--TODO Pendiente habilitar boton-->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of cuadre.denominaciones;let i =index">
+            <td>
+              <input [disabled]="readOnly"
+                (keyup.enter)="focusInput('#cant'+this.cuadre.denominaciones[this.cuadre.denominaciones.indexOf(d)+1].denominacion);"
+                id="cant{{this.cuadre.denominaciones[this.cuadre.denominaciones.indexOf(d)].denominacion}}"
+                #cantidad="ngModel"
+                [(ngModel)]="this.cuadre.denominaciones[this.cuadre.denominaciones.indexOf(d)].cantidad" name="cantidad"
+                min="0" step="1" type="number" class="form-control" />
+            </td>
+            <td *ngIf="readOnly && false">
+              <!--TODO Pendiente habilitar boton-->
+              <input
+                (keyup.enter)="focusInput('#cant_admin'+this.cuadre.denominaciones_admin[this.cuadre.denominaciones.indexOf(d)+1].denominacion)"
+                id="cant_admin{{this.cuadre.denominaciones_admin[this.cuadre.denominaciones.indexOf(d)].denominacion}}"
+                #cantidad="ngModel"
+                [(ngModel)]="this.cuadre.denominaciones_admin[this.cuadre.denominaciones.indexOf(d)].cantidad"
+                name="cantidad" min="0" step="1" type="number" class="form-control" />
+            </td>
+            <td>
+              {{d.denominacion}}
+            </td>
+            <td>
+              <input type="text" class="form-control" disabled
+                (ngModelChange)="d.denominacion * this.cuadre.denominaciones[this.cuadre.denominaciones.indexOf(d)].cantidad = $event"
+                [ngModel]="d.denominacion * this.cuadre.denominaciones[this.cuadre.denominaciones.indexOf(d)].cantidad | number" />
+            </td>
+            <td *ngIf="readOnly && false">
+              <!--TODO Pendiente habilitar boton-->
+              <input type="text" class="form-control" disabled
+                (ngModelChange)="d.denominacion * this.cuadre.denominaciones_admin[this.cuadre.denominaciones.indexOf(d)].cantidad=$event"
+                [ngModel]="d.denominacion * this.cuadre.denominaciones_admin[this.cuadre.denominaciones.indexOf(d)].cantidad | number" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>CANTIDAD</th>
+            <th></th>
+            <th>CANTiDAD DOP</th>
+          </tr>
+        </thead>
+        <tbody>
+
+
+          <tr>
+            <td>
+              <input [disabled]="readOnly" [(ngModel)]="cuadre.EuroAmount" name="cantidad1" min="0" step="1" type="number" class="form-control"  (keyup)="calculateEuroDOPAmount()" />
+            </td>
+            <td *ngIf="readOnly && false">
+              <!--TODO Pendiente habilitar boton-->
+              <input name="cantidad" min="0" step="1" type="number" class="form-control" />
+            </td>
+            <td>
+              EUR
+            </td>
+            <td>
+              <input type="text" class="form-control" [disabled]="true" [ngModel]="dopAmountEuro" />
+            </td>
+            <td>
+              DOP
+            </td>
+            <td *ngIf="readOnly && false">
+              <!--TODO Pendiente habilitar boton-->
+              <input type="text" class="form-control" disabled />
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <input [disabled]="readOnly" [(ngModel)]="cuadre.DollarAmount" name="cantidad1" min="0" step="1" type="number" class="form-control"  (change)="calculateDollarDOPAmount()" />
+            </td>
+            <td *ngIf="readOnly && false">
+              <!--TODO Pendiente habilitar boton-->
+              <input name="cantidad" min="0" step="1" type="number" class="form-control" />
+            </td>
+            <td>
+              USD
+            </td>
+            <td>
+              <input type="text" class="form-control" [disabled]="true" [ngModel]="dopAmountDollar" />
+            </td>
+            <td>
+              DOP
+            </td>
+            <td *ngIf="readOnly && false">
+              <!--TODO Pendiente habilitar boton-->
+              <input type="text" class="form-control" disabled />
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <table class="table table-striped table-hover">
+        <tr>
+          <th>Extras</th>
+          <td>
+            <button [disabled]="readOnly" (click)="verVentas()" class="btn btn-outline-info m-2">Ver
+              Facturación</button>
+            <button [disabled]="readOnly" [hidden]="!responseAuth.Response.agregar_campos_dinamicos_cuadre"
+              (click)="verCamposDinamicos()" class="btn btn-outline-warning m-2">Ver Campos Dinámicos</button>
+            <button [disabled]="readOnly" [hidden]="!responseAuth.Response.agregar_pagos_cuadre" (click)="verPagos()"
+              class="btn btn-outline-dark" #viewPayments>Ver Pagos</button>
+            <button [disabled]="readOnly" [hidden]="!responseAuth.Response.agregar_depositos_cuadre"
+              (click)="verDepositos()" class="btn btn-outline-success m-2">Ver Depósitos</button>
+            <button [disabled]="readOnly" [hidden]="!responseAuth.Response.agregar_depositos_cuadre"
+              (click)="verDescuentos()" class="btn btn-outline-success m-2">Ver descuentos</button>
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_total_tarjeta_cuadre">
+          <th>Total Tarjeta</th>
+          <td>
+            <input name="total_tarjeta" (ngModelChange)="cuadre.total_tarjeta=$event"
+              [ngModel]="cuadre.total_tarjeta | number" type="text" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_total_otros_cuadre">
+          <th>Total Otros</th>
+          <td>
+            <input name="total_otros" (ngModelChange)="cuadre.total_otros=$event"
+              [ngModel]="cuadre.total_otros | number" type="text" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_total_otros_cuadre">
+          <th>Total Descuento:</th>
+          <td>
+            <input name="total_descuento" (ngModelChange)="cuadre.total_descuento=$event"
+              [ngModel]="cuadre.total_descuento | number" type="text" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_total_otros_cuadre">
+          <th>Total Depositos:</th>
+          <td>
+            <input name="total_depositos" (ngModelChange)="cuadre.total_depositos=$event"
+              [ngModel]="cuadre.total_depositos | number" type="text" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_total_efectivo_cuadre">
+          <th>Total Efectivo </th>
+          <td>
+            <input name="total_efectivo" (ngModelChange)="cuadre.total_efectivo=$event"
+              [ngModel]="cuadre.total_efectivo | number" type="text" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_total_efectivo_cuadre">
+          <th>Total Efectivo Neto</th>
+          <td>
+            <input name="total_efectivo_neto" (ngModelChange)="cuadre.total_efectivo_neto=$event"
+              [ngModel]="cuadre.total_efectivo_neto | number" type="text" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_total_efectivo_cuadre">
+          <th>Total descuentos al contado</th>
+          <td>
+            <input name="total_descuentos" (ngModelChange)="cuadre.totalDescuentos=$event"
+              [ngModel]="cuadre.totalDescuentos | number" type="text" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr>
+          <th>Volumen Dinámico</th>
+          <td>
+            <input name="volumen_dinamicos" (ngModelChange)="cuadre.volumen_dinamicos=$event"
+              [ngModel]="cuadre.volumen_dinamicos | number" type="text" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr>
+          <th>Monto Dinámico</th>
+          <td>
+            <input name="monto_dinamicos" (ngModelChange)="cuadre.monto_dinamicos=$event"
+              [ngModel]="cuadre.monto_dinamicos | number" type="text" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr>
+          <th>Monto Deposito</th>
+          <td>
+            <input name="monto_deposito" (ngModelChange)="cuadre.depositos=$event"
+              [ngModel]="totalMontoDeposito | number" type="text" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr>
+          <th>Total Efectivo Registrado</th>
+          <td>
+            <input name="total_efectivo_registrado" (ngModelChange)="cuadre.total_efectivo_registrado=$event"
+              [ngModel]="cuadre.total_efectivo_registrado | number" type="text" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr *ngIf="readOnly && false">
+          <!--TODO Pendiente habilitar boton-->
+          <th [ngClass]="{'text-danger':!cuadreValidado, 'text-success': cuadreValidado }">V.Total Efectivo Registrado
+          </th>
+          <td>
+            <input name="total_efectivo_registrado_admin" [(ngModel)]="cuadre.total_efectivo_registrado_admin"
+              type="number" class="form-control" disabled />
+          </td>
+        </tr>
+        <tr>
+          <th>Comentario</th>
+          <td>
+            <input [disabled]="readOnly" name="comentario" [(ngModel)]="cuadre.comentario" type="text"
+              class="form-control" />
+          </td>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_total_efectivo_cuadre">
+          <th>Diferencia</th>
+          <th>
+            <input name="diferencia" (ngModelChange)="cuadre.diferencia=$event" [ngModel]="cuadre.diferencia | number"
+              type="text" class="form-control" disabled />
+          </th>
+        </tr>
+        <tr [hidden]="!responseAuth.Response.ver_total_efectivo_cuadre">
+          <th>Bono gas</th>
+          <!-- <th>
+                        (ngModelChange)="cuadre.diferencia=$event" [ngModel]="cuadre.diferencia | number"
+                        <input name="bono_gas"  type="text" class="form-control" />
+                    </th>-->
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Page Footer-->
+<app-footer></app-footer>

@@ -1,0 +1,33 @@
+<app-header titulo="Inventario" menu="Almacen"></app-header>
+<div class="container-fluid">
+  <div class="row">    
+    <div class="col-md-12">      
+      <div class="text-center" *ngIf="loading">
+        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <div class="col-md-12">
+        <h2>Listado de Stocks</h2>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th class="text-center">Producto</th>
+                <th class="text-center">Stock-Actual</th>
+                <th class="text-center">Última actualización</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let i of inventarios">
+                <td class="text-center">{{i.producto}}</td>
+                <td class="text-center">{{i.stock}}</td>
+                <td class="text-center">{{i.fecha_act}}</td>                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

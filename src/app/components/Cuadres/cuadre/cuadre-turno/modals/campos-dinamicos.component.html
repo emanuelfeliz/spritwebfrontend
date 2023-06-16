@@ -1,0 +1,83 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Variables dinámicas del cuadre</h4>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="!readyOnly">
+        <h4 class="text-center">Agregar</h4>
+        <form>
+          <div class="row row-flex row-flex-wrap">
+            <div class="form-group text-center col-md-6 col-xs-12">
+              <label for="tipo_descripcion">Tipo-Descripcion</label>
+              <select name="tipo_descripcion" class="form-control" [(ngModel)]="tipo_descripcion">
+                <option value="dinamica">Dinámica</option>
+                <option value="Prepagos">Prepagos</option>
+                <option value="Cheques">Cheques</option>
+                <option value="Bono gas">Bono gas</option>
+                <option value="Vales de crédito">Vales de crédito</option>
+                <option value="Vales de estación Planta">Vales de estación Planta</option>
+                <option value="Vales de estación Mensajeria">Vales de estación Mensajeria</option>
+                <option value="Vales de estación Consumo">Vales de estación Consumo</option>
+                <option value="Calibración Mezcla">Calibración Mezcla</option>
+                <option value="Calibración Mantenimiento">Calibración Mantenimiento</option>
+              </select>
+            </div>
+            <div *ngIf="tipo_descripcion=='dinamica'" class="form-group text-center col-md-6 col-xs-12">
+              <label for="descripcion">Descripción-Dinámica</label>
+              <input name="descripcion" [(ngModel)]="descripcion" class="form-control" placeholder="Descripción" />
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+              <label for="valor">Valor</label>
+              <input name="valor" [(ngModel)]="valor" class="form-control" placeholder="Valor" />
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+              <label for="tipo_campo">Tipo-Campo</label>
+              <select class="form-control" name="tipo_campo" [(ngModel)]="tipo_campo">
+                <option value="Volumen">Volumen</option>
+                <option value="Monto">Monto</option>
+              </select>
+            </div>
+            <div class="form-group text-center col-md-6 col-xs-12">
+              <label for="Selected">Sumar?</label>
+              <input disabled class="form-control" name="Selected" [checked]="true" (change)="toggleOperation()" type="checkbox">
+            </div>
+            <div class="text-center">
+              <button [disabled]="readyOnly" (click)="addCampo()" class="btn btn-outline-success">Agregar</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+      <div class="text-center">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Valor</th>
+              <th>Desc.</th>
+              <th>T-Campo</th>
+              <th>Comport.</th>
+              <th>Opción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let campo of campos_dinamicos | paginate: { itemsPerPage: 2, currentPage: p}">
+              <td>{{campo.valor}}</td>
+              <td>{{campo.descripcion}}</td>
+              <td>{{campo.tipo_campo}}</td>
+              <td>{{campo.opcion=='Sumando' ? 'Sumar' : 'Restar'}}</td>
+              <td>
+                <button [disabled]="readyOnly" (click)="eliminar(campo)" class="btn btn-danger">Remover</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente" screenReaderPaginationLabel="Paginación"
+          screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+      </div>
+    </div>
+    <div class="text-center">
+      <button (click)="cerrar()" class="btn btn-primary">Cerrar</button>
+    </div>
+  </div>
+</div>

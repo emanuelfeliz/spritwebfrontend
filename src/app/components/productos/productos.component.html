@@ -1,0 +1,101 @@
+<app-header titulo="Productos" menu="Almacen"></app-header>
+<div class="container-fluid" style="display: block;">
+  <button (click)="botones();" class="btn btn-outline-primary" type="button" name="button">
+    {{textoBoton}}
+  </button>
+  <form *ngIf="creando || editando" #formProducto="ngForm" (ngSubmit)="onSubmit();">
+    <div class="row row-flex row-flex-wrap">
+      <div class="form-group col-md-6 col-xs-12"
+        [ngClass]="{'has-danger':description.value=='' && description.touched}">
+        <label class="form-control-feedback" for="description">Producto</label>
+        <input type="text" class="form-control" #description="ngModel" [(ngModel)]="producto.description" required
+          placeholder="Producto" name="description">
+        <div class="form-control-feedback" *ngIf="description.touched && description.value==''">
+          El nombre del producto es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':code.value=='' && code.touched}">
+        <label class="form-control-feedback" for="code">Código</label>
+        <input type="text" class="form-control" #code="ngModel" [(ngModel)]="producto.code" required
+          placeholder="Código" name="code">
+        <div class="form-control-feedback" *ngIf="code.touched && code.value==''">
+          El código del producto es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':cost.value==0 && cost.touched}">
+        <label class="form-control-feedback" for="price">Costo</label>
+        <input type="number" class="form-control" #cost="ngModel" (keyup)="costChange()" [(ngModel)]="producto.cost"
+          required placeholder="Costo" name="cost">
+        <div class="form-control-feedback" *ngIf="cost.touched && cost.value==0">
+          El costo del producto es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':price.value==0 && price.touched}">
+        <label class="form-control-feedback" for="price">Precio</label>
+        <input type="number" class="form-control" #price="ngModel" disabled [(ngModel)]="producto.price" required
+          placeholder="Precio" name="price">
+        <div class="form-control-feedback" *ngIf="price.touched && price.value==0">
+          El precio del producto es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12"
+        [ngClass]="{'has-danger':product_categoryid.value=='' && product_categoryid.touched}">
+        <label class="form-control-feedback" for="product_categoryid">Categoría</label>
+        <select #product_categoryid="ngModel" name="product_categoryid" [(ngModel)]="producto.product_categoryid"
+          class="form-control">
+          <option *ngFor="let category of categories" value="{{category.id}}">{{category.description}}</option>
+        </select>
+        <div class="form-control-feedback" *ngIf="product_categoryid.touched && product_categoryid.value==''">
+          La categoría del producto es obligatoria
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12">
+        <label class="form-control-feedback" for="itbis">Aplicar ITBIS</label>
+        <input type="checkbox" #itbis="ngModel" name="itbis" (change)="costChange()" [(ngModel)]="producto.itbis"
+          class="form-control">
+      </div>
+
+    </div>
+    <button [disabled]="!validateModel(producto)" class="btn btn-success" type="submit">{{creando? "Guardar":"Guardar
+      cambios"}}</button>
+  </form>
+
+  <hr>
+  <div class="text-center" *ngIf="loading">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Cargando...</span>
+  </div>
+  <div class="table-responsive">
+    <table id="tableProductos" width="100%" class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">Id</th>
+          <th class="text-center">Categoría</th>
+          <th class="text-center">Producto</th>
+          <th class="text-center">Costo</th>
+          <th class="text-center">Precio</th>
+          <th class="text-center">Código</th>
+          <th class="text-center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productos">
+          <td class="text-center">{{producto.id}}</td>
+          <td class="text-center">{{producto.categoria}}</td>
+          <td class="text-center">{{producto.description}}</td>
+          <td class="text-center">{{producto.cost}}</td>
+          <td class="text-center">{{producto.price}}</td>
+          <td class="text-center">{{producto.code}}</td>
+          <td class="text-center">
+            <button (click)="editarProducto(producto)" type="button"
+              class="btn btn-md btn-outline-warning">Modificar</button>
+            <button (click)="confirmarBorrarProducto(producto)" type="button"
+              class="btn btn-md btn-outline-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

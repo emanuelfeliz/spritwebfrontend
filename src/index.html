@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Trinity</title>
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <base href="/">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Last-Modified" content="0">
+  <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <!--PLANTILLA-->
+
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="assets/templates/vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Fontastic Custom icon font-->
+  <link rel="stylesheet" href="assets/templates/css/fontastic.css">
+  <!-- Font Awesome CSS-->
+  <link rel="stylesheet" href="assets/templates/vendor/font-awesome/css/font-awesome.min.css">
+  <!-- Google fonts - Poppins -->
+  <link rel="stylesheet" href="assets/css/google-fonts.css">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="assets/templates/css/style.default.css" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="assets/templates/css/custom.css">
+
+  <link rel="stylesheet" href="assets/js/sweetalert2.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/picker.min.css" />
+  <link rel="stylesheet" href="assets/alertify/alertify.min.css">
+
+</head>
+
+<body>
+  <app-root>
+    <style>
+      /* Center the loader */
+
+      @-webkit-keyframes spin {
+        0% {
+          -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Add animation to "page content" */
+      .animate-bottom {
+        position: relative;
+        -webkit-animation-name: animatebottom;
+        -webkit-animation-duration: 1s;
+        animation-name: animatebottom;
+        animation-duration: 1s
+      }
+
+      @-webkit-keyframes animatebottom {
+        from {
+          bottom: -100px;
+          opacity: 0
+        }
+
+        to {
+          bottom: 0px;
+          opacity: 1
+        }
+      }
+
+      @keyframes animatebottom {
+        from {
+          bottom: -100px;
+          opacity: 0
+        }
+
+        to {
+          bottom: 0;
+          opacity: 1
+        }
+      }
+
+
+  .glass {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+
+      #divPadre {
+        min-height:1000px;
+        width: 100%;
+        background-image: url("assets/templates/img/bg.jpg");
+        text-align: center;
+        background-position: center; 
+        background-repeat: no-repeat;
+        background-size: cover; 
+      }
+
+      #divHijo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 1;
+        background-color: red;
+      }
+      #myProgress {
+        width: 100%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3); 
+        margin-top: 100px;
+      }
+
+      #myBar {
+        width: 10%;
+        height: 30px;
+        background-color: rgb(0, 8, 255);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 16px;
+        border: 1px solid white; 
+      }
+      .card { 
+        position: absolute;
+        /* left: 40%; */
+        margin-top: 250px;
+        margin-left: 600px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3); 
+        min-height: 400px;
+        min-width: 700px;
+        padding: 50px;
+      }
+
+      div {
+        display: block;
+        }
+    </style>
+<!-- 
+  <div id="divPadre">
+    <div id="divHijo ">
+      <div id="loader">
+      </div>
+    </div>
+  </div> -->
+<div id="divPadre"> 
+  <div class="card">
+    <h1 style="color: white; -webkit-text-stroke: 2px black;">Estamos preparando todo para ti!</h1>
+    <div id="myProgress">
+      <div id="myBar"></div>
+    </div>
+    <p id="porcentaje" style="color: white; text-align: center; -webkit-text-stroke: 2px black;">0%</p>
+  </div>
+</div>
+ 
+
+  <script>
+    var i = 0;
+  move()
+
+function move() {
+  if (i == 0) {
+    i = 1;
+    var elem = document.getElementById("myBar");
+    var porcentaje = document.getElementById("porcentaje");
+    var width = 1;
+    var id = setInterval(frame, 40);
+    function frame() {
+      if (width >= 90) {
+        clearInterval(id);
+        i = 0;
+      } else {
+        width++;
+        elem.style.width = width + "%";
+        porcentaje.innerText = width + "%";
+      }
+    }
+  }
+
+}
+  </script>
+
+
+  </app-root>
+  <!--PLANTILLA-->
+  <script src="assets/js/jquery-3.2.1.min.js"></script>
+  <!--<script src="assets/js/jquery-1.6.4.min.js"></script>-->
+  <script src="assets/templates/vendor/popper.js/umd/popper.min.js"> </script>
+  <script src="assets/templates/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/templates/vendor/jquery.cookie/jquery.cookie.js"> </script>
+  <script src="assets/templates/vendor/jquery-validation/jquery.validate.min.js"></script>
+  <script src="assets/js/chart.js"></script>
+  <script src="assets/templates/js/front.js"></script>
+  <!--FIN-PLANTILLA-->
+
+  <script src="assets/highcharts/highcharts.js"></script>
+  <script src="assets/highcharts/series-label.js"></script>
+  <script src="assets/highcharts/exporting.js"></script>
+  <script src="assets/js/sweetalert2.js"></script>
+  <script src="assets/alertify/alertify.min.js"></script>
+  <script src="assets/js/d3.v3.min.js" language="JavaScript"></script>
+  <!-- <script src="assets/LiquidGaugeExitoso/LiquidGauge.js"></script> -->
+  <script src="assets/libs/liquidFillGauge.js"></script>
+  <!-- <script src="https://kit.fontawesome.com/190ea5300c.js"></script> -->
+  <script src="assets/js/jquery.signalR-2.0.3.js"></script>
+  <!-- <script src="http://localhost:8080/signalr/hubs"></script> -->
+</body>
+
+</html>

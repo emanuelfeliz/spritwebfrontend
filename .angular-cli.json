@@ -1,0 +1,77 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "spirit-web"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "i18n",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "styles.css"
+      ],
+      "scripts": [
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "estacion-randy": "environments/environment.estacion-randy.ts",
+        "eco-najacomb": "environments/environment.eco-najacomb.ts",
+        "eco-almonte": "environments/environment.eco-almonte.ts",
+        "3bn": "environments/environment.3bn.ts",
+        "bellamar-espana": "environments/environment.bellamar-espana.ts",
+        "bellamar-romana": "environments/environment.bellamar-romana.ts",
+        "bellamar-ecologica": "environments/environment.bellamar-ecologica.ts",
+        "petronan-oriental": "environments/environment.petronan-oriental.ts",
+        "petronan-oriental-ext": "environments/environment.petronan-oriental-ext.ts",
+        "petronan-play": "environments/environment.petronan-oriental.ts",
+        "petronan-play-ext": "environments/environment.petronan-oriental-ext.ts",
+        "petronan-lavega": "environments/environment.petronan-lavega.ts",
+        "bayaibe": "environments/environment.bayaibe.ts",
+        "basilica": "environments/environment.basilica.ts",
+        "launion": "environments/environment.launion.ts",
+        "basilica-ext": "environments/environment.basilica-ext.ts",
+        "ecoguasa": "environments/environment.ecoguasa.ts",
+        "ecoguasa-ext": "environments/environment.ecoguasa-ext.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  }
+}

@@ -1,0 +1,38 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Pagos al contado con descuento del bombero {{bombero}}</h4>
+    </div>
+    <div class="modal-body">
+      <div class="text-center">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Fecha</th>
+              <th class="text-center">Volumen</th>
+              <th class="text-center">Monto venta</th>
+              <th class="text-center">Descuento</th>
+              <th class="text-center">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let creditUser of crediUserDiscountList | paginate: { itemsPerPage: 5, currentPage: p}">
+              <td class="text-center">{{creditUser.date}}</td>
+              <td class="text-center">{{creditUser.volumen | number: '1.2-4'}}</td>
+              <td class="text-center">{{creditUser.saleAmount | number: '1.2-4'}}</td>
+              <td class="text-center">{{creditUser.amount | number: '1.2-4'}}</td>
+              <td class="text-center">{{(creditUser.saleAmount - creditUser.amount) | number: '1.2-4'}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event" previousLabel="Anterior" nextLabel="Siguiente" 
+        screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página">
+        </pagination-controls>
+      </div>
+    </div>
+    <div class="text-center">
+        <button (click)="cerrar()" class="btn btn-primary">Cerrar</button>
+    </div>
+  </div>
+</div>
+

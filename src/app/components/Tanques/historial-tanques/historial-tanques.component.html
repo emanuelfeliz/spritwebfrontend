@@ -1,0 +1,58 @@
+<app-header titulo="Historial de Tanques" menu="Tanques"></app-header>
+
+<div class="container-fluid">
+    <div class="form-inline">
+        <label for="fechaDesde">Fecha-Inicial</label>
+        <owl-date-time [showSecondsTimer]="true" dataType="string" [locale]="es" dateFormat="YYYYMMDD HHmmss" [(ngModel)]="fechaDesde"
+            name="fechaDesde"></owl-date-time>
+        <label for="fechaHasta">Fecha-Final</label>
+        <owl-date-time [showSecondsTimer]="true" dataType="string" [locale]="es" dateFormat="YYYYMMDD HHmmss" [(ngModel)]="fechaHasta"
+            name="fechaHasta"></owl-date-time>
+        <label for="TanksSelected">Tanques</label>
+        <ng-select [items]="Tanks"
+                   bindLabel="name"
+                   bindValue="id"
+                   [multiple]="true"
+                   placeholder="Seleccione los tanques"
+                   [(ngModel)]="TanksSelected">
+        </ng-select>
+    </div>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" (click)="Limpiar()" class="btn btn-warning">
+            <i class="fa fa-refresh" aria-hidden="true"></i> Limpiar</button>
+        <button type="button" (click)="ConsultarHistorial()" class="btn btn-success">
+            <i class="fa fa-table" aria-hidden="true"></i> Consultar</button>
+    </div>
+
+    <div class="text-center" *ngIf="loadingData">
+        <div class="hidden">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table width="100%" class="table display responsive table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Tanque</th>
+                    <th>Volumen</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tanque of HistorialTanques | paginate: {id:'serverConsulting', itemsPerPage: 10, currentPage: p, totalItems:total }">
+                    <td>{{tanque.tanque}}</td>
+                    <td>{{tanque.volumen | number:'1.0-2'}}</td>
+                    <td>{{tanque.fecha}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <pagination-controls (pageChange)="ConsultarHistorial($event)" id="serverConsulting" previousLabel="Anterior" nextLabel="Siguiente"
+                screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+        </div>
+    </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

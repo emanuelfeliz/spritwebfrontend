@@ -1,0 +1,82 @@
+.calculator {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+}
+
+.calculator-screen {
+  width: 100%;
+  height: 60px;
+  text-align: right;
+  /* padding-right: 20px;
+  padding-left: 10px; */
+  font-size: 3rem;
+}
+
+.calculator-btn {
+  height: 60px;
+  font-size: 1.5rem!important;
+}
+
+.equal-sign {
+  height: 100%;
+  grid-area: 2 / 4 / 6 / 5;
+  font-size: 3.2rem !important;
+}
+
+.calculator-keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+}
+
+
+/************************************************************************************************/
+svg {
+	fill: rgb(242, 242, 242);
+	height: 3rem;
+	width: 3.6rem;
+  margin: 0.2rem;
+  transform: translate(10px, 20px);
+}
+
+input[type="radio"] {
+	position: absolute;
+	opacity: 0;
+}
+
+input[type="radio"] + svg {
+	-webkit-transition: all 0.2s;
+	transition: all 0.2s;
+}
+
+input + svg {
+	cursor: pointer;
+}
+
+input[class="money"]:hover + svg,
+input[class="money"]:checked + svg,
+input[class="money"]:focus + svg {
+	fill: green;
+}
+
+input[class="volume"]:hover + svg,
+input[class="volume"]:checked + svg,
+input[class="volume"]:focus + svg {
+	fill: rgb(239, 42, 16);
+}
+
+.svg-image{
+  stroke: #000;
+  stroke-width: 1px;
+  stroke-linejoin: round;
+}
+
+.sale-type-position{
+  position: sticky;
+  left: 75%;
+}

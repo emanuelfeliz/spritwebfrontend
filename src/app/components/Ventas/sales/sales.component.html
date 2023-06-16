@@ -1,0 +1,273 @@
+<app-header titulo="Facturación" menu="Ventas"></app-header>
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="row">
+      <div class="col-md-6">
+        <button *ngIf="!creando && !mostrando" (click)="nuevo()" type="button" class="btn btn-primary">Nueva</button>
+      </div>
+      <div class="col-md-6"></div>
+    </div>
+
+    <div class="row" *ngIf="!creando">
+      <div class="col-md-3">
+        <label for="fechaDesde">Fecha-Inicial</label>
+        <owl-date-time [showSecondsTimer]="true" dataType="string" [locale]="es" dateFormat="YYYYMMDD HHmmss"
+          [(ngModel)]="fechaDesde" name="fechaDesde"></owl-date-time>
+      </div>
+      <div class="col-md-3">
+        <label for="fechaHasta">Fecha-Final</label>
+        <owl-date-time [showSecondsTimer]="true" dataType="string" [locale]="es" dateFormat="YYYYMMDD HHmmss"
+          [(ngModel)]="fechaHasta" name="fechaHasta"></owl-date-time>
+      </div>
+      <div class="col-md-3" *ngIf="!responseAuth.Response.is_bombero">
+        <label for="Bombero">Bombero</label>
+        <select name="bomberoSelected" [(ngModel)]="bomberoSelected" class="form-control">
+          <option *ngFor="let bombero of bomberos" value="{{bombero.name}}">{{bombero.name}}</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="product">Productos</label>
+        <select name="productSelected" [(ngModel)]="productSelected" class="form-control">
+          <option selected value="">TODOS</option>
+          <option *ngFor="let product of products" value="{{product.description}}">{{product.description}}</option>
+        </select>
+      </div>
+
+      <div class="col-md-12">
+        <button (click)="generateSalesReport()" type="button" class="btn btn-warning float-md-right m-1">Generar reporte</button>
+        <button (click)="getSales()" type="button" class="btn btn-primary float-md-right m-1">Filtrar</button>
+
+      </div>
+
+    </div>
+
+    <div *ngIf="creando || mostrando" class="col-md-12">
+      <div class="col-sm-14" style="display: block;">
+        <form name="formSale" #formSale="ngForm" (ngSubmit)="onSubmit();">
+          <div class="row">
+            <div class="col-sm-12 col-sm-offset-0 col-lg-12 col-lg-offset-0 main">
+              <div class="row">
+                <div class="col-lg-4 left">
+                  <div class="form-group">
+                    <button [disabled]="mostrando==true && !creando" data-toggle="modal" data-target="#modalProductos"
+                      type="button" class="btn btn-info">
+                      <i class="fa fa-search"></i>
+                      Buscar Productos
+                    </button>
+                  </div>
+                </div>
+                <!-- <div class="col-lg-4 left">
+                  <div class="form-group">
+                    <label for="tipo_pago">Tipo de Pago</label>
+                    <select [(ngModel)]="Venta.tipo_pago" name="tipo_pago" class="form-control">
+                      <option value="0">Seleccione tipo de pago</option>
+                      <option value="Efectivo">Efectivo</option>
+                      <option value="Tarjeta">Tarjeta</option>
+                    </select>
+                  </div>
+                </div> -->
+                <div *ngIf="Venta.tipo_pago=='Tarjeta'" class="col-lg-4 left">
+                  <div class="form-group">
+                    <label for="tarjeta">Tarjeta</label>
+                    <input maxlength="4" type="text" [(ngModel)]="Venta.tarjeta" name="tarjeta" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-9 col-lg-12 main">
+            <p *ngIf="!Venta.detalles || Venta.detalles.length==0" class="text-danger">Debe seleccionar productos</p>
+            <div class="table-responsive">
+              <table cellpadding="0" class="table table-striped table-hover table-bordered" cellspacing="0" border="1">
+                <thead>
+                  <tr>
+                    <th class="text-center">Producto</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-center">Precio-Venta</th>
+                    <th class="text-center">Importe</th>
+                    <th class="text-center">Opción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let id of Venta.detalles">
+                    <td class="text-center">{{id.product}}</td>
+                    <td class="text-center">
+                      <input *ngIf="mostrando==false && creando==true" type="number" class="form-control" min="1"
+                        name="quantity" #quantity="ngModel"
+                        [(ngModel)]="Venta.detalles[Venta.detalles.indexOf(id)].quantity">
+                      <p *ngIf="mostrando==true && creando==false">{{id.quantity | number:'1.0-2'}}</p>
+                    </td>
+                    <td class="text-center">RD${{id.price | number:'1.0-2'}}</td>
+                    <td class="text-center">RD${{(id.price * id.quantity) | number:'1.0-2'}}</td>
+                    <td class="text-center">
+                      <button [disabled]="mostrando==true && !creando" (click)="removeProduct(id)" type="button"
+                        data-toggle="tooltip" title="Quitar producto" class="btn btn-danger"
+                        data-original-title="Quitar producto">
+                        <i class="fa fa-remove"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-sm-9 col-lg-12 main">
+              <div class="row">
+                <div class="col-lg-4 left has-error">
+                  <div class="input-group">
+                    <div class="input-group-addon">M/L Total:</div>
+                    <input value="RD${{TotalizarDetails() | number:'1.0-2'}}" type="text" class="form-control"
+                      placeholder="Total" disabled="">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="col-lg-12 left">
+              <button *ngIf="(creando && Venta.detalles.length > 0 ) && !mostrando" class="btn btn-success m-2" type="submit">
+                <i class="fa fa-floppy-o"></i> Registrar Venta</button>
+              <button type="button" (click)="cancelar();" class="btn btn-primary">
+                <i class="fa fa-remove"></i> Cancelar</button>
+              <hr>
+              <span class="lead text-primary"></span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="text-center" *ngIf="loading">
+        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+        <span class="sr-only">Cargando...</span>
+      </div>
+    </div>
+
+    <div class="col-md-12" *ngIf="!creando && !mostrando">
+      <h2>Listado de Ventas</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th class="text-center">Código</th>
+              <th class="text-center">Fecha</th>
+              <th class="text-center">Bombero</th>
+              <th class="text-center">Tipo Pago</th>
+              <th class="text-center">Tarjeta</th>
+              <th class="text-center">Total</th>
+              <th class="text-center">Estado</th>
+              <th class="text-center">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let factura of facturas">
+              <td class="text-center">{{factura.codigo}}</td>
+              <td class="text-center">{{factura.date}}</td>
+              <td class="text-center">{{factura.bombero}}</td>
+              <td class="text-center">{{factura.tipo_pago}}</td>
+              <td class="text-center">{{factura.tarjeta}}</td>
+              <td class="text-center">RD${{factura.total | number:'1.0-2'}}</td>
+              <td class="text-center">
+                <button [ngClass]="{'btn-success': factura.estado=='EMITIDA', 'btn-danger': factura.estado=='ANULADO' }"
+                  class="btn">{{factura.estado}}</button>
+              </td>
+              <td class="text-center">
+                <button (click)="verVenta(factura)" class="btn btn-success" data-toggle="tooltip" title=""
+                  data-original-title="Ver Detalle">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <button (click)="cancelVentaConfirm(factura)" class="btn btn-danger" data-toggle="tooltip" title=""
+                  data-original-title="Cancelar Venta">
+                  <i class="fa fa-ban"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="modalProductos" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Productos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <input (keyup)="getProducts()"  [(ngModel)]="search" type="text" class="form-control" placeholder="Buscar por Nombre || Codigo" [autofocus]="true">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Categoria</th>
+                  <th scope="col">Codigo</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let product of products
+                      | paginate
+                        : {
+                            id: 'serverConsulting',
+                            itemsPerPage: limit,
+                            currentPage: page,
+                            totalItems: total
+                          }
+                  "
+                >
+                  <td>{{ product.description }}</td>
+                  <td>{{ product.categoria }}</td>
+                  <td>{{ product.code }}</td>
+                  <td>{{ product.price.toFixed(2) }}</td>
+                  <td class="text-center">
+                    <button (click)="addProductToList(product)" class="btn btn-warning" data-toggle="tooltip"
+                      title="Agregar" data-original-title="Agregar">
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="text-center">
+              <pagination-controls
+                (pageChange)="getProducts($event)"
+                id="serverConsulting"
+                previousLabel="Anterior"
+                nextLabel="Siguiente"
+                screenReaderPaginationLabel="Paginación"
+                screenReaderPageLabel="Página"
+                screenReaderCurrentLabel="Se encuentra en la página"
+              ></pagination-controls>
+            </div>
+          </div>
+        </div>
+     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page Footer-->
+<app-footer></app-footer>

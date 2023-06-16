@@ -1,0 +1,63 @@
+<app-header titulo="Tipos clientes fidelizados" menu="Ofertas"></app-header>
+<div class="container-fluid">
+    <button type="button" class="btn btn-outline-danger" (click)="initEntidad(); crear = false;" *ngIf="crear">Cancelar</button>
+    <button type="button" class="btn btn-outline-info" (click)="crear = true;" *ngIf="!crear">Crear Tipo de cliente fidelizado</button>
+    <div class="clearfix">
+        <form #formCliente="ngForm" (ngSubmit)="guardar()" *ngIf="crear" class="mt-5">
+            <div class="row row-flex row-flex-wrap">
+                <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':nombres.value=='' && nombres.touched}">
+                    <label class="form-control-feedback" for="nombres">Nombre tipo cliente</label>
+                    <input type="text" class="form-control" #nombres="ngModel" [(ngModel)]="tipoClienteFidelizado.Tipo_cliente"
+                        required placeholder="Nombres" name="nombres">
+                    <div class="form-control-feedback" *ngIf="tipoClienteFidelizado.Tipo_cliente===''">
+                        El nombre del tipo de cliente es obligatorio
+                    </div>
+                </div>
+                <div class="form-group col-md-6 col-xs-12">
+                        <div class="i-checks">
+                          <input id="tipoClienteFidelizado.IsActive" name="tipoClienteFidelizado.IsActive" type="checkbox" [checked]="tipoClienteFidelizado.IsActive"
+                            (change)="tipoClienteFidelizado.IsActive=!tipoClienteFidelizado.IsActive" value="" checked="" class="checkbox-template">
+                          <label for="tipoClienteFidelizado.IsActive">Activo?</label>
+                        </div>
+                      </div>
+            </div>
+            <input type="submit" value="Guardar" class="btn btn-success">
+        </form>
+        <form class="form-inline float-right">
+            <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" #searchInput
+                (keyup.enter)="searchTiposClients(searchInput.value)">
+            <button class="btn btn-info my-2 my-sm-0" type="button" (click)="searchTiposClients(searchInput.value)">Buscar</button>
+        </form>
+    </div>
+    <div class="table-responsive mt-5">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">Nombre tipo cliente</th>
+                    <th class="text-center">Activo</th>
+                    <th class="text-center">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tipoCliente of tipoClientesFidelizados | paginate: {itemsPerPage: 10, currentPage: pagina, totalItems: tipoClientesFidelizados.length }">
+                    <td class="text-center">{{tipoCliente.Tipo_cliente}}</td>
+                    <td class="text-center">
+                        <label *ngIf="tipoCliente.IsActive"> Si </label>
+                        <label *ngIf="!tipoCliente.IsActive">No </label>
+                    </td>
+
+                    <td class="text-center">
+                        <button (click)="modificar(tipoCliente)" type="button" class="btn btn-md btn-outline-warning">Modificar</button>
+                        <button (click)="confirmar(tipoCliente)" type="button" class="btn btn-md btn-outline-danger">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-center">
+            <pagination-controls (pageChange)="cargar($event)" previousLabel="Anterior" nextLabel="Siguiente"
+                screenReaderPaginationLabel="Paginación" screenReaderPageLabel="Página" screenReaderCurrentLabel="Se encuentra en la página"></pagination-controls>
+        </div>
+    </div>
+    <iframe frameborder="0" style="display: none;" #iframe></iframe>
+</div>
+<app-footer></app-footer>

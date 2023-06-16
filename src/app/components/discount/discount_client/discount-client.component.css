@@ -1,0 +1,15 @@
+section {
+  margin-top: 13px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-box-shadow: 5px 5px 20px 0.2px rgba(000, 000, 000, 0.2);
+  box-shadow: 5px 5px 20px 0.2px rgba(000, 000, 000, 0.2);
+}
+
+.search {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-style: none;
+}

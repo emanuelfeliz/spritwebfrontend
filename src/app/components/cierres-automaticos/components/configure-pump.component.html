@@ -1,0 +1,28 @@
+<div class="container-fluid">
+    <div class="row row-flex row-flex-wrap">
+        <div class="form-group col-md-3 col-xs-12">
+            <label for="fecha_hora">Hora</label>
+            <owl-date-time [showSecondsTimer]="true" dataType="string" [locale]="es"
+                    dateFormat="YYYYMMDD HHmmss" [(ngModel)]="fecha_hora" name="fecha_hora"></owl-date-time>
+        </div>
+        <div class="form-group col-md-3 col-xs-12">
+            <label for="activo">Activo</label>
+            <div class="i-checks">
+                <input type="checkbox" (change)="activated=!activated" [checked]="activated" value="" class="checkbox-template">
+            </div>
+        </div>        
+    </div>
+    <button (click)="selectAll()" class="btn btn-outline-dark">Todos los lados</button>
+    <div class="row row-flex row-flex-wrap">
+        <div class="form-group col-md-2"
+        *ngFor="let lado of dataLados;let i=index">            
+            <span>{{lado.lado}}</span>
+            <div class="i-checks">
+                <input [checked]="dataLados[i].seleccionado"
+                (change)="dataLados[i].seleccionado=!dataLados[i].seleccionado"
+                  type="checkbox" value="" class="checkbox-template">
+            </div>
+        </div>
+        {{fecha_hora}}
+    </div>
+</div>

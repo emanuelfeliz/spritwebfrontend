@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="form-inline">
+    <button type="button" name="button" class="btn btn-outline-primary btn-lg" (click)="GoBack()">(*) Volver</button>
+  </div>
+  <app-sale *ngIf="venta" [venta]="venta" [i]="indice"></app-sale>
+  <div *ngIf="canje && configuracionActiva" class="alert alert-warning">
+    <h2>El cliente tiene {{ puntosFidelizacion }} puntos de fidelización.</h2>
+    <h2>{{ configuracionPuntos }} puntos equivalen a {{ configuracionParametroModalidad }} {{ getUnidad() }}.</h2>
+    <h2>Se pueden pagar mediante fidelización {{ descuento }} {{ getUnidad() }} de esta venta{{ getMontoDescuento() }}</h2>
+    <h2>El cliente tendrá que pagar {{ costoFinalVenta }} pesos.</h2>
+    <h2>Esta operación canjeará {{ puntosACanjear }} puntos de fidelización.</h2>
+  </div>
+  <div *ngIf="incentivo && configuracionActiva" class="alert alert-warning">
+    <h2>El incentivo tiene {{ puntosFidelizacion }} puntos de fidelización.</h2>
+    <h2>{{ configuracionPuntos }} puntos equivalen a {{ configuracionParametroModalidad }} {{ getUnidad() }}.</h2>
+    <h2>Se pueden pagar mediante el incentivo {{ descuento }} {{ getUnidad() }} de esta venta{{ getMontoDescuento() }}</h2>
+    <h2>El cliente tendrá que pagar {{ costoFinalVenta }} pesos.</h2>
+    <h2>Este incentivo no podrá volver a ser usado.</h2>
+  </div>
+  <div *ngIf="!ventaPagadaTotalmenteConFidelizacion; else ventaPagadaTotalmenteConFidelizacionTemplate">
+    <h3 class="text-center" *ngIf="!canje">Seleccione el Metodo de Pago</h3>
+    <h3 class="text-center" *ngIf="canje">Seleccione el Metodo de Pago para completar la venta</h3>
+    <div class="text-center">
+      <div class="btn-group-vertical" role="group" aria-label="Basic example">
+        <button (click)="efectivo()" type="button" class="btn btn-warning btn-lg">(1) Efectivo</button>
+        <button (click)="tarjeta()" type="button" class="btn btn-primary btn-lg">(2) Tarjeta</button>
+        <button (click)="otros()" type="button" class="btn btn-dark btn-lg">(3) Otros</button>
+      </div>
+    </div>
+  </div>
+  <ng-template #ventaPagadaTotalmenteConFidelizacionTemplate>
+    <div class="text-center">
+      <button (click)="continuar()" type="button" class="btn btn-success btn-lg">(1) Continuar</button>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,57 @@
+<app-header titulo="Categorías" menu="Almacen"></app-header>
+<div class="container-fluid" style="display: block;">
+  <button (click)="botones();" class="btn btn-outline-primary" type="button" name="button">
+    {{textoBoton}}
+  </button>
+  <form *ngIf="creando || editando" #formCategoria="ngForm" (ngSubmit)="onSubmit();">
+    <div class="row row-flex row-flex-wrap">
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':description.value=='' && description.touched}">
+        <label class="form-control-feedback" for="description">Categoría</label>
+        <input type="text" class="form-control" #description="ngModel" [(ngModel)]="category.description" required placeholder="Categoría"
+          name="description">
+        <div class="form-control-feedback" *ngIf="description.touched && description.value==''">
+          El nombre de la categoría es obligatorio
+        </div>
+      </div>
+      <div class="form-group col-md-6 col-xs-12" [ngClass]="{'has-danger':code.value=='' && code.touched}">
+        <label class="form-control-feedback" for="code">Código</label>
+        <input type="text" class="form-control" #code="ngModel" [(ngModel)]="category.code" required placeholder="Categoría" name="code">
+        <div class="form-control-feedback" *ngIf="code.touched && code.value==''">
+          El código de la categoría es obligatorio
+        </div>
+      </div>
+    </div>
+    <button [disabled]="!validateModel(category)" class="btn btn-success" type="submit">{{creando? "Guardar":"Guardar cambios"}}</button>
+  </form>
+
+  <hr>
+  <div class="text-center" *ngIf="loading">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Cargando...</span>
+  </div>
+  <div class="table-responsive">
+    <table id="tableCategorias" width="100%" class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">Id</th>
+          <th class="text-center">Categoría</th>
+          <th class="text-center">Código</th>
+          <th class="text-center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <td class="text-center">{{category.id}}</td>
+          <td class="text-center">{{category.description}}</td>
+          <td class="text-center">{{category.code}}</td>
+          <td class="text-center">
+            <button (click)="editarCategoria(category)" type="button" class="btn btn-md btn-outline-warning">Modificar</button>
+            <button (click)="confirmarBorrarCategoria(category)" type="button" class="btn btn-md btn-outline-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Page Footer-->
+<app-footer></app-footer>

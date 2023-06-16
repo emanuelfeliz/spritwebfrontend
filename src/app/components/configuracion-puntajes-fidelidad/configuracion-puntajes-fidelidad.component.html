@@ -1,0 +1,83 @@
+<app-header titulo="Configuración puntajes de fidelidad" menu="Ofertas"></app-header>
+<div class="container-fluid">
+    <button type="button" class="btn btn-outline-danger" (click)="initEntidad(); crear = false;" *ngIf="crear">Cancelar</button>
+    <button type="button" class="btn btn-outline-info" (click)="crear = true;" *ngIf="!crear">Crear configuración</button>
+    <form #formConfiguracion="ngForm" (ngSubmit)="guardar()" *ngIf="crear" class="mt-5">
+        <div class="row row-flex row-flex-wrap">
+            <div class="form-group col-md-6 col-xs-12">
+                <label for="operacion">Operación</label>
+                <select name="operacion" class="form-control" [(ngModel)]="operacion" [disabled]="configuracionPuntajesFidelidad.tipoCliente === 'incentivo'">
+                    <option value="">Seleccione la operación</option>
+                    <option value="fidelizacion">Fidelización</option>
+                    <option value="canje">Canje</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-xs-12">
+                <label for="modalidad">Modalidad</label>
+                <select name="modalidad" class="form-control" [(ngModel)]="modalidad">
+                    <option value="">Seleccione la modalidad</option>
+                    <option value="galones">Por galones</option>
+                    <option value="precio">Por monto</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-xs-12">
+                <label class="form-control-feedback" for="parametroModalidad">{{ getUnidad({ porGalones: modalidad === 'galones' ? true : false, porPrecio: modalidad === 'precio' ? true : false }) | titlecase }}</label>
+                <input type="text" class="form-control" [(ngModel)]="configuracionPuntajesFidelidad.parametroModalidad" placeholder="Cantidad"
+                    name="parametroModalidad">
+            </div>
+            <div class="form-group col-md-6 col-xs-12">
+                <label class="form-control-feedback" for="puntos">Puntos de fidelización</label>
+                <input type="text" class="form-control" [(ngModel)]="configuracionPuntajesFidelidad.puntos" placeholder="Puntos"
+                    name="puntos">
+            </div>
+            <div class="form-group col-md-6 col-xs-12">
+                <label for="tipoCliente">Tipo</label>
+                <select name="tipoCliente" class="form-control" [(ngModel)]="configuracionPuntajesFidelidad.tipoCliente" #tipo="ngModel" (change)="selectTipo(tipo.value)">
+                    <option value="">Seleccione el tipo</option>
+                    <option *ngFor= "let tipoCliente of tiposCliente"  [value]="tipoCliente.Id+'/'+tipoCliente.Tipo_cliente">{{tipoCliente.Tipo_cliente}}</option>
+                    <!-- <option [value]="TiposClienteEnum.clienteIndependiente">{{TiposClienteEnum.clienteIndependiente}}</option>
+                    <option [value]="TiposClienteEnum.clienteNormal">{{TiposClienteEnum.clienteNormal}}</option>
+                    <option [value]="TiposClienteEnum.incentivo">{{TiposClienteEnum.incentivo}}</option> -->
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-xs-12">
+                <label class="form-control-feedback" for="minimoConsumido">Mínimo de {{ getUnidad({ porGalones: modalidad === 'galones' ? true : false, porPrecio: modalidad === 'precio' ? true : false }) }} consumidos para aplicar</label>
+                <input type="text" class="form-control" [(ngModel)]="configuracionPuntajesFidelidad.minimoConsumido" placeholder="Mínimo consumido"
+                    name="minimoConsumido" [disabled]="configuracionPuntajesFidelidad.tipoCliente === 'incentivo'">
+            </div>
+        </div>
+        <button class="btn btn-success" type="submit">Guardar</button>
+    </form>
+
+    <div class="table-responsive mt-5">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">Operación</th>
+                    <th class="text-center">Modalidad</th>
+                    <th class="text-center">Parametro modalidad</th>
+                    <th class="text-center">Puntos</th>
+                    <th class="text-center">Mínimo consumido para aplicar</th>
+                    <th class="text-center">Tipo</th>
+                    <th class="text-center">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let configuracion of configuracionesPuntajesFidelidad">
+                    <td class="text-center">{{ getOperacion(configuracion.operacion) }}</td>
+                    <td class="text-center">{{ getModalidad(configuracion.modalidad) }}</td>
+                    <td class="text-center">{{ configuracion.parametroModalidad }} {{ getUnidad(configuracion.modalidad) }}</td>
+                    <td class="text-center">{{ configuracion.puntos }}</td>
+                    <td class="text-center">{{ configuracion.minimoConsumido }} {{ getUnidad(configuracion.modalidad) }}</td>
+                    <td class="text-center">{{ configuracion.tipoCliente }}</td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-outline-warning" (click)="modificar(configuracion)">Modificar</button>
+                        <button type="button" class="btn btn-outline-danger" (click)="confirmar(configuracion)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,26 @@
+<div class="border alert" [ngClass]="{
+    'alert-danger': ResumenLado.pump.status=='OFFLINE',
+    'alert-secondary': ResumenLado.pump.status=='ERROR',
+    'alert-dark': ResumenLado.pump.status=='AUTHORIZED',
+    'alert-success': ResumenLado.pump.status=='IDLE',
+    'alert-info': ResumenLado.pump.status=='STARTING',
+    'alert-primary': ResumenLado.pump.status=='CALLING',
+    'alert-warning': ResumenLado.pump.status=='FUELLING'
+    }">
+
+  <img src="{{'assets/images/pump/pump-' + ResumenLado.pump.status + '.gif'}}" alt="..." class="img-fluid">
+  <h6 class="reduce-space text-center">Lado {{ResumenLado.Lado}}</h6>
+  <h6 class="reduce-space text-center">Estatus : {{ResumenLado.pump.status}}</h6>
+  <h6 class="reduce-space text-center">Venta : {{ResumenLado.pump.saleProgress}}</h6>
+  <h6 class="reduce-space small-text badge badge-pill badge-warning">Turno Actual {{ResumenLado.TurnoActual}}</h6>
+  <h6 *ngIf="ResumenLado.aperturado" class="reduce-space small-text badge badge-pill badge-success">Bombero: {{ResumenLado.bombero}}</h6>
+  <h6 *ngIf="!ResumenLado.aperturado" class="reduce-space small-text badge badge-pill badge-danger">No asignado</h6>
+
+  <div *ngIf="responseAuth.Response.func_abrir_cerrar_seleccionados && habilitarChecks" class="i-checks">
+    <input #check name="Selected" [(ngModel)]="Selected"
+      (change)="changeSelect(ResumenLado.Lado,ResumenLado.TurnoActual,ResumenLado.aperturado)" type="checkbox"
+      value="Selected" class="checkbox-template">
+  </div>
+  <button *ngIf="habilitarBoton" class="btn btn-outline-dark btn-lg btn-block mx-auto"
+    style="width: 70%;">Seleccionar</button>
+</div>

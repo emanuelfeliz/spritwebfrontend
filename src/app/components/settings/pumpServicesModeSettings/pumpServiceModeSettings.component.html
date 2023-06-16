@@ -1,0 +1,28 @@
+<app-header titulo="Configuración de los Dispensadores" menu="Configuración"></app-header>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <div class="border alert alert-secondary col-2 mt-4 mr-4" *ngFor="let pump of pumpServicesModes">
+
+     <div class="col-12">
+      <img src="{{'assets/images/pump/pump-IDLE.gif'}}" alt="..." class="img-fluid">
+      <h6>Id: {{pump.id}}</h6>
+      <h6>Pump No: {{pump.pump}}</h6>
+      <h6>Tipo de servicio: {{pump.serviceMode}}</h6>
+     </div>
+      <div class="col-12 mb-2">
+        <button class="btn btn-outline-primary" (click)="updatePumpServiceMode(pump, 0)">SELF SERVICE</button>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-outline-info" (click)="updatePumpServiceMode(pump, 1)">FULL SERVICE</button>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+</div>
